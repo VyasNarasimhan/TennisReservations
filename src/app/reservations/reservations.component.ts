@@ -29,7 +29,11 @@ export class ReservationsComponent implements OnInit {
   ngOnInit(): void {
   }
   saveName() {
-    this.reservationsService.save(this.enteredName);
+    this.reservationsService.save(this.enteredName).subscribe((resp) => {
+      console.log('Name saved');
+    }, (err) => {
+      console.log('Save Failed');
+    });
   }
 
 }
