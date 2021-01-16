@@ -17,4 +17,9 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     } catch (err) {
       return next(err);
     }
-  });
+});
+
+router.get('/test', async (req: Request, res: Response, next: NextFunction) => {
+  res.status(200).send({ success: 'yay' });
+});
+
