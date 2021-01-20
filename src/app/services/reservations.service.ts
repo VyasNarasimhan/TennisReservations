@@ -10,7 +10,7 @@ export class ReservationsService {
 
   constructor(private http: HttpClient) { }
   
-  save(aName: string): Observable<any> {
-    return this.http.get(environment.apiRoot + '/tennis/reservations/test');
+  save(data: any): Observable<any> {
+    return this.http.put(environment.apiRoot + '/tennis/reservations', data);
   }
 }

@@ -8,7 +8,7 @@ import { ReservationsService } from '../services/reservations.service';
 })
 export class ReservationsComponent implements OnInit {
 
-  enteredName: string = '';
+  data: any = {};
   
   constructor(private reservationsService: ReservationsService) {
     var counter = 0
@@ -29,7 +29,7 @@ export class ReservationsComponent implements OnInit {
   ngOnInit(): void {
   }
   saveName() {
-    this.reservationsService.save(this.enteredName).subscribe((resp) => {
+    this.reservationsService.save(this.data).subscribe((resp) => {
       console.log('Name saved');
     }, (err) => {
       console.log('Save Failed');
