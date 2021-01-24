@@ -1,0 +1,24 @@
+<mat-form-field>
+    <mat-label></mat-label>
+    <input matInput placeholder="Display Name" type="text" [(ngModel)]="data.displayName" maxlength="80" />
+</mat-form-field>
+<mat-form-field>
+    <mat-label></mat-label>
+    <input matInput placeholder="Email" type="text" [(ngModel)]="data.enteredEmail" maxlength="80" />
+</mat-form-field>
+<mat-form-field>
+    <mat-label></mat-label>
+    <input matInput placeholder="Password" type="text" [(ngModel)]="data.enteredPassword" maxlength="80" />
+</mat-form-field>
+<mat-form-field>
+    <mat-label></mat-label>
+    <input matInput placeholder="Confirm Password" type="text" [(ngModel)]="data.confirmPassword" maxlength="80" />
+</mat-form-field>
+<mat-form-field>
+    <mat-label></mat-label>
+    <mat-select [(value)]="data.role">
+        <mat-option value="coach">Coach</mat-option>
+        <mat-option value="resident">Resident</mat-option>
+    </mat-select>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="addUser()">Register</button>

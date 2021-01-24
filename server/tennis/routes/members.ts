@@ -4,7 +4,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 export const router: Router = Router();
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside reservations put' + req);
+  console.log('Inside members put' + req);
   try {
     const nameToInsert = req.body.enteredName;
     res.send({
@@ -19,7 +19,15 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get('/test', async (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send({ success: 'yay' });
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    console.log('Inside members post' + req);
+    try {
+        const email = req.body.enteredEmail;
+        const password = req.body.enteredPassword;
+        res.send((await db.query('SELECT email, password FROM users where $1 = email AND $2 = password ', [email, password])));
+    } catch (err) {
+        console.log('Not found');
+        return next(err);
+    }
 });
 

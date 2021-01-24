@@ -6,11 +6,11 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ReservationsService {
+export class MemberService {
 
   constructor(private http: HttpClient) { }
 
-  save(data: any): Observable<any> {
-    return this.http.put(environment.apiRoot + '/tennis/reservations', data);
+  checkUserIsValid(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members', data);
   }
 }
