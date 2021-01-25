@@ -1,0 +1,32 @@
+@import "sass/fonts";
+@import "sass/normalize";
+@import "sass/theme";
+
+html {
+  width: 100%;
+  height: 100%;
+  color: #151515;
+  * {
+    font-family: "Ubuntu", sans-serif;
+  }
+}
+
+.error {
+  color: red;
+}
+
+p.hint {
+  color: #999;
+  font-size: 0.8em;
+}
+
+@media only screen and (max-width: 768px) {
+  mat-form-field,
+  .mat-form-field {
+    width: 100%;
+  }
+  button {
+    width: 100%;
+    margin-left: 0;
+  }
+}
