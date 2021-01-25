@@ -13,7 +13,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     const existingUserResult = await db.query('SELECT email FROM users WHERE $1 = email', [req.body.enteredEmail.toUpperCase()]);
     const hash = bcrypt.hashSync(user.enteredPassword, SALT);
     if (existingUserResult.rows.length === 1) {
-      res.send();
+      res.status(422).send({ error: 'User already exists'});
     } else {
       res.send({
         updated: (await db.query('insert into users (email, password, displayName, role) values ($1, $2, $3, $4)',
@@ -35,9 +35,10 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         const password = req.body.enteredPassword.toUpperCase();
         const member = (await db.query('SELECT * FROM users where $1 = email', [email])).rows[0];
         if (bcrypt.compareSync(password, member.password)) {
+          // TODO fetch member reservations and send it back
           res.send(member);
         } else {
-          res.send();
+          res.status(401).send({ error: 'unauthorized' });
         }
     } catch (err) {
         console.log('Not found');

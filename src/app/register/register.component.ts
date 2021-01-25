@@ -16,10 +16,14 @@ export class RegisterComponent implements OnInit {
   // tslint:disable-next-line: typedef
   addUser() {
     this.memberService.createUser(this.data).subscribe((resp) => {
-      if (resp.length === 1) {
-        console.log('User created!');
+      if (resp) {
+        if (resp.updated) {
+          console.log('User created!');
+        } else {
+          console.log(resp.error);
+        }
       } else {
-        console.log('Could not create user');
+        console.log('Unknown error');
       }
     }, (err) => {
       console.log(err);
