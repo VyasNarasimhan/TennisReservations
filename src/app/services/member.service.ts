@@ -13,4 +13,7 @@ export class MemberService {
   checkUserIsValid(data: any): Observable<any> {
     return this.http.post(environment.apiRoot + '/tennis/members', data);
   }
+  createUser(data: any): Observable<any> {
+    return this.http.put(environment.apiRoot + '/tennis/members', data);
+  }
 }
