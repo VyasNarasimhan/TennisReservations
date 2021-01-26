@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   addUser() {
+
     this.memberService.createUser(this.data).subscribe((resp) => {
       if (resp) {
         if (resp.updated) {

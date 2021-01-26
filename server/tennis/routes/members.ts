@@ -16,9 +16,9 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       res.status(422).send({ error: 'User already exists'});
     } else {
       res.send({
-        updated: (await db.query('insert into users (email, password, displayName, role) values ($1, $2, $3, $4)',
+        updated: (await db.query('insert into users (email, displayName, role, password) values ($1, $2, $3, $4)',
           [
-            user.enteredEmail.toUpperCase(), hash.toUpperCase(), user.displayName.toUpperCase(), user.role.toUpperCase()
+            user.enteredEmail.toUpperCase(), user.displayName.toUpperCase(), user.role.toUpperCase(), hash
           ])).rowCount
       });
     }
@@ -32,7 +32,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     console.log('Inside members post' + req);
     try {
         const email = req.body.enteredEmail.toUpperCase();
-        const password = req.body.enteredPassword.toUpperCase();
+        const password = req.body.enteredPassword;
         const member = (await db.query('SELECT * FROM users where $1 = email', [email])).rows[0];
         if (bcrypt.compareSync(password, member.password)) {
           // TODO fetch member reservations and send it back

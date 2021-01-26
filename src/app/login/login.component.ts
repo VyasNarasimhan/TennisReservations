@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../services/member.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,18 +9,15 @@ import { MemberService } from '../services/member.service';
 })
 export class LoginComponent implements OnInit {
   data: any = {};
-  constructor(private memberService: MemberService) { }
+  constructor(private router: Router, private memberService: MemberService) { }
 
   ngOnInit(): void {
   }
   // tslint:disable-next-line: typedef
   validateUser() {
     this.memberService.checkUserIsValid(this.data).subscribe((resp) => {
-      if (resp.length === 1) {
-        console.log('User is valid!');
-      } else {
-        console.log('Could not find email or password');
-      }
+      console.log('User is valid!');
+      this.router.navigate(['reservations']);
     }, (err) => {
       console.log(err);
     });
