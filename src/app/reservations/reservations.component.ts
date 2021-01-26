@@ -12,16 +12,18 @@ export class ReservationsComponent implements OnInit {
 
   constructor(private reservationsService: ReservationsService) {
     let counter = 0;
+    let suffix = 'AM';
     for (let i = 0; i < 2; i++) {
-      this.times[counter] = '12:00';
+      this.times[counter] = '12:00 ' + suffix;
       counter++;
-      this.times[counter] = '12:30';
+      this.times[counter] = '12:30 ' + suffix;
       counter++;
       for (let hour = 1; hour < 12; hour++) {
-        this.times[counter] = hour + ':00';
-        this.times[counter + 1] = hour + ':30';
+        this.times[counter] = hour + ':00 ' + suffix;
+        this.times[counter + 1] = hour + ':30 ' + suffix;
         counter += 2;
       }
+      suffix = 'PM';
     }
   }
   times: Array<string> = new Array<string>(48);
@@ -36,8 +38,9 @@ export class ReservationsComponent implements OnInit {
       console.log('Save Failed');
     });
   }
-  addReservation(timeSlot: string, date: Date) {
-    this.reservations.push({timeSlot, date});
+  // tslint:disable-next-line: typedef
+  addReservation(timeSlot: string, date: Date, court: number) {
+    this.reservations.push({timeSlot, date, court});
   }
 
 }
