@@ -8,7 +8,7 @@ import { ReservationsService } from '../services/reservations.service';
 })
 export class ReservationsComponent implements OnInit {
 
-  data: any = {};
+  reservations: Array<any> = [];
 
   constructor(private reservationsService: ReservationsService) {
     let counter = 0;
@@ -29,12 +29,15 @@ export class ReservationsComponent implements OnInit {
   ngOnInit(): void {
   }
   // tslint:disable-next-line: typedef
-  saveName() {
-    this.reservationsService.save(this.data).subscribe((resp) => {
+  makeReservations() {
+    this.reservationsService.save(this.reservations).subscribe((resp) => {
       console.log('Name saved');
     }, (err) => {
       console.log('Save Failed');
     });
+  }
+  addReservation(timeSlot: string, date: Date) {
+    this.reservations.push({timeSlot, date});
   }
 
 }
