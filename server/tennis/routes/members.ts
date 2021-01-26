@@ -36,7 +36,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         const member = (await db.query('SELECT * FROM users where $1 = email', [email])).rows[0];
         if (bcrypt.compareSync(password, member.password)) {
           // TODO fetch member reservations and send it back
-          res.send(member);
+          res.send([member, await db.query('SELECT * FROM reservations where reservation_date >= NOW() + INTERVAL 0 DAY AND reservation_date < NOW() + INTERVAL +7 DAY')]);
         } else {
           res.status(401).send({ error: 'unauthorized' });
         }
