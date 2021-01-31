@@ -1,20 +1,24 @@
-<table class="table table-bordered">
-    <thead>
-      <tr>
-        <th scope="col">Time</th>
-        <th scope="col">Court 1</th>
-        <th scope="col">Court 2</th>
-        <th scope="col">Court 3</th>
-        <th scope="col">Court 4</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let time of times">
-        <th scope="row">{{time}}</th>
-        <td><button mat-raised-button color="primary">Hello</button></td>
-        <td><button mat-raised-button color="primary">hi</button></td>
-        <td><button mat-raised-button color="primary">sup</button></td>
-        <td><button mat-raised-button color="primary">aa</button></td>
-      </tr>
-    </tbody>
-</table>
+<div id="reservations">
+  <h1>Date: 1/29/20</h1>
+  <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Time</th>
+          <th scope="col">Court 1</th>
+          <th scope="col">Court 2</th>
+          <th scope="col">Court 3</th>
+          <th scope="col">Court 4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let time of times; let i = index">
+          <th scope="row">{{time}}</th>
+          <td><button mat-raised-button color="primary">{{reservationsDisplay[i][0]}}</button></td>
+          <td><button mat-raised-button color="primary">{{reservationsDisplay[i][1]}}</button></td>
+          <td><button mat-raised-button color="primary">{{reservationsDisplay[i][2]}}</button></td>
+          <td><button mat-raised-button color="primary">{{reservationsDisplay[i][3]}}</button></td>
+        </tr>
+        <td><button mat-raised-button color="primary">Save</button></td>
+      </tbody>
+  </table>
+</div>

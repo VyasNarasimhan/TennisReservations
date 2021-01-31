@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservationsService } from '../services/reservations.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservations',
@@ -9,8 +10,9 @@ import { ReservationsService } from '../services/reservations.service';
 export class ReservationsComponent implements OnInit {
 
   reservations: Array<any> = [];
+  reservationsDisplay: any[][] = [];
 
-  constructor(private reservationsService: ReservationsService) {
+  constructor(private router: Router, private reservationsService: ReservationsService) {
     let counter = 0;
     let suffix = 'AM';
     for (let i = 0; i < 2; i++) {
@@ -29,6 +31,11 @@ export class ReservationsComponent implements OnInit {
   times: Array<string> = new Array<string>(48);
 
   ngOnInit(): void {
+    if (localStorage.getItem('memberInfo') == null) {
+      this.router.navigate(['login']);
+    } else {
+      this.generateReservationTable(new Date(2020, 1, 30));
+    }
   }
   // tslint:disable-next-line: typedef
   makeReservations() {
@@ -42,5 +49,24 @@ export class ReservationsComponent implements OnInit {
   addReservation(timeSlot: string, date: Date, court: number) {
     this.reservations.push({timeSlot, date, court});
   }
+  // tslint:disable-next-line: typedef
+  generateReservationTable(date: Date) {
+      // tslint:disable-next-line: typedef
+      const allReservations: any = localStorage.getItem('allReservations');
+      if (allReservations) {
+        // filter out all reservations for current date
+        // tslint:disable-next-line: typedef
+        const filteredReservations = JSON.parse(allReservations).filter((resn: { reservation_date: Date; }) => {
+          return resn.reservation_date.valueOf() === date.valueOf();
+        });
 
+        // go thru the filtered reservations and build the reservation display table
+        // tslint:disable-next-line: max-line-length
+        filteredReservations.forEach((reservation: { timeslot: string; user_fk: any; displayName: any; court: number; }) => {
+          // tslint:disable-next-line: max-line-length
+          const timeslotEntry = {timeslot: reservation.timeslot, memberid : reservation.user_fk, membername : reservation.displayName, courtnumber : reservation.court, editable : false};
+          this.reservationsDisplay[this.times.indexOf(reservation.timeslot)][reservation.court] = timeslotEntry;
+        });
+      }
+  }
 }
