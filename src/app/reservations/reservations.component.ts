@@ -34,7 +34,7 @@ export class ReservationsComponent implements OnInit {
     if (localStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     } else {
-      this.generateReservationTable(new Date(2020, 1, 30));
+      this.generateReservationTable(new Date());
     }
   }
   // tslint:disable-next-line: typedef
@@ -57,6 +57,8 @@ export class ReservationsComponent implements OnInit {
         // filter out all reservations for current date
         // tslint:disable-next-line: typedef
         const filteredReservations = JSON.parse(allReservations).filter((resn: { reservation_date: Date; }) => {
+          console.log(resn.reservation_date);
+          console.log(date.toISOString().slice(0, 10));
           return resn.reservation_date.valueOf() === date.valueOf();
         });
 
