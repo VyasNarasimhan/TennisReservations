@@ -10,6 +10,8 @@ import * as moment from 'moment';
 })
 export class ReservationsComponent implements OnInit {
 
+  memberInfo: any;
+
   reservations: Array<any> = [];
   reservationsDisplay1: any;
   reservationsDisplay2: any;
@@ -43,28 +45,24 @@ export class ReservationsComponent implements OnInit {
     if (localStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     } else {
+      const memberls: any = localStorage.getItem('memberInfo')
+      this.memberInfo = JSON.parse(memberls);
       this.generateReservationTable(this.currentDate);
     }
   }
   // tslint:disable-next-line: typedef
-  addReservation(index: number, court: number) {
-    const tempArray = [this.reservationsDisplay1, this.reservationsDisplay2, this.reservationsDisplay3, this.reservationsDisplay4];
-    const cellclicked = tempArray[court - 1][index];
-    if (!cellclicked) {
-      console.log('unreserved');
-      // tslint:disable-next-line: max-line-length
-      this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: this.currentDate, courtnumber: court}).subscribe((resp) => {
-        localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
-        this.generateReservationTable(this.currentDate);
-        console.log('Reservations saved');
-      }, (err) => {
-        console.log('Save Failed');
-      });
-    } else if (tempArray[court - 1][index].length > 0) {
-      console.log('reserved');
-      let member = localStorage.getItem('memberInfo');
-    }
+  addReservation(index: number, court: number) {  
+    // tslint:disable-next-line: max-line-length
+    this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: this.currentDate, courtnumber: court}).subscribe((resp) => {
+      localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
+      this.generateReservationTable(this.currentDate);
+      console.log('Reservations saved');
+    }, (err) => {
+      console.log('Save Failed');
+    }); 
   }
+
+  
   // tslint:disable-next-line: typedef
   generateReservationTable(date: Date) {
 
