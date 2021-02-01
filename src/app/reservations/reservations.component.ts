@@ -45,13 +45,13 @@ export class ReservationsComponent implements OnInit {
     if (localStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     } else {
-      const memberls: any = localStorage.getItem('memberInfo')
+      const memberls: any = localStorage.getItem('memberInfo');
       this.memberInfo = JSON.parse(memberls);
       this.generateReservationTable(this.currentDate);
     }
   }
   // tslint:disable-next-line: typedef
-  addReservation(index: number, court: number) {  
+  addReservation(index: number, court: number) {
     // tslint:disable-next-line: max-line-length
     this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: this.currentDate, courtnumber: court}).subscribe((resp) => {
       localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
@@ -59,10 +59,21 @@ export class ReservationsComponent implements OnInit {
       console.log('Reservations saved');
     }, (err) => {
       console.log('Save Failed');
-    }); 
+    });
   }
 
-  
+  // tslint:disable-next-line: typedef
+  unreserve(index: number, court: number) {
+    // tslint:disable-next-line: max-line-length
+    this.reservationsService.cancel({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: this.currentDate, courtnumber: court}).subscribe((resp) => {
+      localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
+      this.generateReservationTable(this.currentDate);
+      console.log('Reservation canceled');
+    }, (err) => {
+      console.log('Cancel Failed');
+      console.log(err);
+    });
+  }
   // tslint:disable-next-line: typedef
   generateReservationTable(date: Date) {
 
