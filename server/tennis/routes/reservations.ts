@@ -6,7 +6,6 @@ export const router: Router = Router();
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside reservations put' + req);
   const reservation = req.body;
-  console.log(reservation);
   const memberInfo = JSON.parse(reservation.member);
   const updatedReservations = (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7')).rows;
   try {

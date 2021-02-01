@@ -47,18 +47,11 @@ export class ReservationsComponent implements OnInit {
     }
   }
   // tslint:disable-next-line: typedef
-  makeReservations() {
-    this.reservationsService.save(this.reservations).subscribe((resp) => {
-      console.log('Reservations saved');
-    }, (err) => {
-      console.log('Save Failed');
-    });
-  }
-  // tslint:disable-next-line: typedef
   addReservation(index: number, court: number) {
     const tempArray = [this.reservationsDisplay1, this.reservationsDisplay2, this.reservationsDisplay3, this.reservationsDisplay4];
-    if (tempArray[court - 1][index] == null) {
-      console.log(localStorage.getItem('memberInfo'));
+    const cellclicked = tempArray[court - 1][index];
+    if (!cellclicked) {
+      console.log('unreserved');
       // tslint:disable-next-line: max-line-length
       this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: this.currentDate, courtnumber: court}).subscribe((resp) => {
         localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
@@ -67,6 +60,9 @@ export class ReservationsComponent implements OnInit {
       }, (err) => {
         console.log('Save Failed');
       });
+    } else if (tempArray[court - 1][index].length > 0) {
+      console.log('reserved');
+      let member = localStorage.getItem('memberInfo');
     }
   }
   // tslint:disable-next-line: typedef
@@ -86,9 +82,6 @@ export class ReservationsComponent implements OnInit {
 
         const filteredReservations = allresobj
         .filter((resn: { reservation_date: string; }) => {
-          console.log('resn date type .. ' + typeof resn.reservation_date);
-          console.log('resn date.. ' + moment(new Date(resn.reservation_date)));
-          console.log('date..' + moment(date, 'YYYYMMDD'));
           return moment(new Date(resn.reservation_date), 'YYYYMMDD').isSame(moment(date, 'YYYYMMDD'), 'day');
         });
 
