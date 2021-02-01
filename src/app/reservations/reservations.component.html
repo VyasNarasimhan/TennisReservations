@@ -13,12 +13,11 @@
       <tbody>
         <tr *ngFor="let time of times; let i = index">
           <th scope="row">{{time}}</th>
-          <td><button mat-raised-button color="primary">{{reservationsDisplay[i][0]}}</button></td>
-          <td><button mat-raised-button color="primary">{{reservationsDisplay[i][1]}}</button></td>
-          <td><button mat-raised-button color="primary">{{reservationsDisplay[i][2]}}</button></td>
-          <td><button mat-raised-button color="primary">{{reservationsDisplay[i][3]}}</button></td>
+          <td><button mat-raised-button color="primary" (click)="addReservation(i, 1)">{{!!reservationsDisplay1[time]?reservationsDisplay1[time].membername:'Unreserved'}}</button></td>
+          <td><button mat-raised-button color="primary" (click)="addReservation(i, 2)">{{!!reservationsDisplay2[time]?reservationsDisplay2[time].membername:'Unreserved'}}</button></td>
+          <td><button mat-raised-button color="primary" (click)="addReservation(i, 3)">{{!!reservationsDisplay3[time]?reservationsDisplay3[time].membername:'Unreserved'}}</button></td>
+          <td><button mat-raised-button color="primary" (click)="addReservation(i, 4)">{{!!reservationsDisplay4[time]?reservationsDisplay4[time].membername:'Unreserved'}}</button></td>
         </tr>
-        <td><button mat-raised-button color="primary">Save</button></td>
       </tbody>
   </table>
 </div>
