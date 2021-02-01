@@ -61,6 +61,8 @@ export class ReservationsComponent implements OnInit {
       console.log(localStorage.getItem('memberInfo'));
       // tslint:disable-next-line: max-line-length
       this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: this.currentDate, courtnumber: court}).subscribe((resp) => {
+        localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
+        this.generateReservationTable(this.currentDate);
         console.log('Reservations saved');
       }, (err) => {
         console.log('Save Failed');
