@@ -1,6 +1,6 @@
 <div id="reservations">
   <h1>Date: {{displayDatesForNextWeek[selectedIndex]}}</h1>
-  <h2>Number of Reservations you can still make: {{reservationsLeft}}</h2>
+  <h2 *ngIf="memberInfo.rolename === 'RESIDENT'">Number of Reservations you can still make: {{reservationsLeft}}</h2>
   <mat-form-field>
     <mat-label>Date</mat-label>
     <mat-select>
