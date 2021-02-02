@@ -110,16 +110,16 @@ export class ReservationsComponent implements OnInit {
         this.times.forEach((timeslot) => {
             resnForTimeSlot = filteredReservations.filter((res: { timeslot: string; }) => {
              return res.timeslot === timeslot;
-           });
+            });
 
            // if no entries for this time slot in any of the courts ?
 
             resnForTimeSlot.forEach((res: { timeslot: string | number; user_fk: any; displayname: any; court: number; }) => {
             const timeslotEntry = {timeslot: res.timeslot,
-               memberid : res.user_fk,
-                membername : res.displayname,
-                 courtnumber : res.court,
-                  editable : false};
+              memberid : res.user_fk,
+              membername : res.displayname,
+                courtnumber : res.court,
+                editable : false};
             if (this.memberInfo.rolename === 'COACH') {
               tempReservationLeft = 1000;
             } else if (res.user_fk === this.memberInfo.id) {
@@ -138,9 +138,12 @@ export class ReservationsComponent implements OnInit {
             if (res.court === 4){
               this.reservationsDisplay4[res.timeslot] = timeslotEntry;
             }
-           });
+            });
         });
       }
+    if (tempReservationLeft < 0) {
+      tempReservationLeft = 0;
+    }
     this.reservationsLeft = tempReservationLeft;
   }
 }
