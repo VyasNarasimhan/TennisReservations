@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../services/member.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +9,7 @@ import { MemberService } from '../services/member.service';
 })
 export class RegisterComponent implements OnInit {
   data: any = {};
-  constructor(private memberService: MemberService) { }
+  constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
       if (resp) {
         if (resp.updated) {
           console.log('User created!');
+          this.router.navigate(['login']);
         } else {
           console.log(resp.error);
         }

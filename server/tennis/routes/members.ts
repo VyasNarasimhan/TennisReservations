@@ -47,3 +47,16 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+router.post('/change', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside members post' + req);
+  try {
+      const password = req.body.data.newPassword;
+      const hash = bcrypt.hashSync(password, SALT);
+      const email = req.body.userInfo.email;
+      const changePassword = (await db.query('UPDATE users SET password = $1 WHERE email = $2', [hash, email]));
+      res.send({updated: changePassword});
+  } catch (err) {
+      console.log('Not found');
+      return next(err);
+  }
+});

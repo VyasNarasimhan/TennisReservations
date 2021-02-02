@@ -16,4 +16,7 @@ export class MemberService {
   createUser(data: any): Observable<any> {
     return this.http.put(environment.apiRoot + '/tennis/members', data);
   }
+  updatePassword(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members/change', data);
+  }
 }
