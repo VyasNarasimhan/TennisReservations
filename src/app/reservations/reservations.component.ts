@@ -24,6 +24,7 @@ export class ReservationsComponent implements OnInit {
   currentDate = this.datesForNextWeek[0];
   displayDatesForNextWeek: string[] = [];
   selectedIndex = 0;
+  reservationsLeft = 0;
 
   constructor(private router: Router, private reservationsService: ReservationsService) {
     let counter = 0;
@@ -58,7 +59,7 @@ export class ReservationsComponent implements OnInit {
   // tslint:disable-next-line: typedef
   addReservation(index: number, court: number) {
     // tslint:disable-next-line: max-line-length
-    this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: this.currentDate, courtnumber: court}).subscribe((resp) => {
+    this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: new Date(this.currentDate).toISOString().slice(0, 10), courtnumber: court}).subscribe((resp) => {
       localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
       this.generateReservationTable(this.currentDate);
       console.log('Reservations saved');
@@ -70,7 +71,7 @@ export class ReservationsComponent implements OnInit {
   // tslint:disable-next-line: typedef
   unreserve(index: number, court: number) {
     // tslint:disable-next-line: max-line-length
-    this.reservationsService.cancel({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: this.currentDate, courtnumber: court}).subscribe((resp) => {
+    this.reservationsService.cancel({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: new Date(this.currentDate).toISOString().slice(0, 10), courtnumber: court}).subscribe((resp) => {
       localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
       this.generateReservationTable(this.currentDate);
       console.log('Reservation canceled');
@@ -88,6 +89,7 @@ export class ReservationsComponent implements OnInit {
     this.reservationsDisplay4 = {};
     this.currentDate = date;
     this.selectedIndex = this.datesForNextWeek.indexOf(date);
+    let tempReservationLeft = 3;
     console.log(this.selectedIndex);
       // tslint:disable-next-line: typedef
     const allReservations: any = localStorage.getItem('allReservations');
@@ -118,7 +120,11 @@ export class ReservationsComponent implements OnInit {
                 membername : res.displayname,
                  courtnumber : res.court,
                   editable : false};
-
+            if (this.memberInfo.rolename === 'COACH') {
+              tempReservationLeft = 1000;
+            } else if (res.user_fk === this.memberInfo.id) {
+              tempReservationLeft -= 1;
+            }
             // add it to the appropriate court num array
             if (res.court === 1){
               this.reservationsDisplay1[res.timeslot] = timeslotEntry;
@@ -135,5 +141,6 @@ export class ReservationsComponent implements OnInit {
            });
         });
       }
+    this.reservationsLeft = tempReservationLeft;
   }
 }

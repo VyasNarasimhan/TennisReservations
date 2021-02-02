@@ -5,13 +5,8 @@ export const router: Router = Router();
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside reservations put' + req);
-  const temp = new Date(req.body.date);
-  temp.setDate(temp.getDate() - 1);
-  req.body.date = temp.toISOString().slice(0, 10);
-  console.log(req.body.date);
   const reservation = req.body;
   const memberInfo = JSON.parse(reservation.member);
-
   try {
     // tslint:disable-next-line: max-line-length
     const checkIfExists = (await db.query('SELECT * FROM reservations WHERE reservation_date = $1 and timeslot = $2 and court = $3 and canceled = \'FALSE\'', [reservation.date, reservation.timeslot, reservation.courtnumber]));
@@ -39,9 +34,6 @@ router.get('/test', async (req: Request, res: Response, next: NextFunction) => {
 
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside reservations post' + req);
-  const temp = new Date(req.body.date);
-  temp.setDate(temp.getDate() - 1);
-  req.body.date = temp.toISOString().slice(0, 10);
   const reservation = req.body;
   const memberInfo = JSON.parse(reservation.member);
   try {
