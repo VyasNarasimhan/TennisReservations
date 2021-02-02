@@ -11,6 +11,7 @@ export class ReservationsService {
   constructor(private http: HttpClient) { }
 
   save(data: any): Observable<any> {
+    console.log(data.date);
     return this.http.put(environment.apiRoot + '/tennis/reservations', data);
   }
   cancel(data: any): Observable<any> {

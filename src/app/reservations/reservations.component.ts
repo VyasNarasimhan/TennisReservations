@@ -22,6 +22,8 @@ export class ReservationsComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   datesForNextWeek = [new Date(), new Date(Date.now() + this.nextDay), new Date(Date.now() + 2 * this.nextDay), new Date(Date.now() + 3 * this.nextDay), new Date(Date.now() + 4 * this.nextDay), new Date(Date.now() + 5 * this.nextDay), new Date(Date.now() + 6 * this.nextDay)];
   currentDate = this.datesForNextWeek[0];
+  displayDatesForNextWeek: string[] = [];
+  selectedIndex = 0;
 
   constructor(private router: Router, private reservationsService: ReservationsService) {
     let counter = 0;
@@ -48,6 +50,9 @@ export class ReservationsComponent implements OnInit {
       const memberls: any = localStorage.getItem('memberInfo');
       this.memberInfo = JSON.parse(memberls);
       this.generateReservationTable(this.currentDate);
+    }
+    for (const date of this.datesForNextWeek) {
+      this.displayDatesForNextWeek.push(date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
     }
   }
   // tslint:disable-next-line: typedef
@@ -81,7 +86,9 @@ export class ReservationsComponent implements OnInit {
     this.reservationsDisplay2 = {};
     this.reservationsDisplay3 = {};
     this.reservationsDisplay4 = {};
-
+    this.currentDate = date;
+    this.selectedIndex = this.datesForNextWeek.indexOf(date);
+    console.log(this.selectedIndex);
       // tslint:disable-next-line: typedef
     const allReservations: any = localStorage.getItem('allReservations');
     if (allReservations) {

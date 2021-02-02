@@ -5,7 +5,10 @@ export const router: Router = Router();
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside reservations put' + req);
-  req.body.date = req.body.date.slice(0, 10);
+  const temp = new Date(req.body.date);
+  temp.setDate(temp.getDate() - 1);
+  req.body.date = temp.toISOString().slice(0, 10);
+  console.log(req.body.date);
   const reservation = req.body;
   const memberInfo = JSON.parse(reservation.member);
 
@@ -36,7 +39,9 @@ router.get('/test', async (req: Request, res: Response, next: NextFunction) => {
 
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside reservations post' + req);
-  req.body.date = req.body.date.slice(0, 10);
+  const temp = new Date(req.body.date);
+  temp.setDate(temp.getDate() - 1);
+  req.body.date = temp.toISOString().slice(0, 10);
   const reservation = req.body;
   const memberInfo = JSON.parse(reservation.member);
   try {

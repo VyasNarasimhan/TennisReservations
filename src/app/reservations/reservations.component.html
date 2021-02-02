@@ -1,5 +1,11 @@
 <div id="reservations">
-  <h1>Date: {{currentDate}}</h1>
+  <h1>Date: {{displayDatesForNextWeek[selectedIndex]}}</h1>
+  <mat-form-field>
+    <mat-label>Date</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let date of displayDatesForNextWeek; let i = index" value="i" (click)="generateReservationTable(datesForNextWeek[i])">{{date}}</mat-option>
+    </mat-select>
+</mat-form-field>
   <table class="table table-bordered">
       <thead>
         <tr>
