@@ -13,6 +13,7 @@ import { RegisterComponent } from './register/register.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ChangepasswordComponent } from './changepassword/changepassword.compone
     ReservationsComponent,
     LoginComponent,
     RegisterComponent,
-    ChangepasswordComponent
+    ChangepasswordComponent,
+    ForgotpasswordComponent
   ],
   imports: [
     BrowserModule,

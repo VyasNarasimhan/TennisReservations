@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { RegisterComponent } from './register/register.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 const routes: Routes = [{
   path: 'reservations',
@@ -17,6 +18,9 @@ const routes: Routes = [{
 }, {
   path: 'changepassword',
   component: ChangepasswordComponent,
+}, {
+  path: 'forgotpassword',
+  component: ForgotpasswordComponent,
 }];
 
 @NgModule({

@@ -59,7 +59,7 @@ export class ReservationsComponent implements OnInit {
   // tslint:disable-next-line: typedef
   addReservation(index: number, court: number) {
     // tslint:disable-next-line: max-line-length
-    this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: new Date(this.currentDate).toISOString().slice(0, 10), courtnumber: court}).subscribe((resp) => {
+    this.reservationsService.save({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
       localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
       this.generateReservationTable(this.currentDate);
       console.log('Reservations saved');
@@ -71,7 +71,7 @@ export class ReservationsComponent implements OnInit {
   // tslint:disable-next-line: typedef
   unreserve(index: number, court: number) {
     // tslint:disable-next-line: max-line-length
-    this.reservationsService.cancel({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: new Date(this.currentDate).toISOString().slice(0, 10), courtnumber: court}).subscribe((resp) => {
+    this.reservationsService.cancel({member: localStorage.getItem('memberInfo'), timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
       localStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
       this.generateReservationTable(this.currentDate);
       console.log('Reservation canceled');

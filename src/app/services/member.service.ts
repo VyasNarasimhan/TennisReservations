@@ -19,4 +19,7 @@ export class MemberService {
   updatePassword(data: any): Observable<any> {
     return this.http.post(environment.apiRoot + '/tennis/members/change', data);
   }
+  resetPassword(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members/forgot', data);
+  }
 }

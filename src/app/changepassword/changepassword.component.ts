@@ -9,6 +9,7 @@ import { MemberService } from '../services/member.service';
 export class ChangepasswordComponent implements OnInit {
 
   data: any = {};
+  confirmPassword = '';
 
   constructor(private memberService: MemberService) { }
 
@@ -17,12 +18,14 @@ export class ChangepasswordComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   updatePassword() {
-    let memberInfo: any = localStorage.getItem('memberInfo');
-    memberInfo = JSON.parse(memberInfo);
-    this.memberService.updatePassword({data: this.data, userInfo: memberInfo}).subscribe((resp) => {
-      console.log('Password updated!');
-    }, (err) => {
-      console.log(err);
-    });
+    if (this.confirmPassword === this.data.newPassword) {
+      let memberInfo: any = localStorage.getItem('memberInfo');
+      memberInfo = JSON.parse(memberInfo);
+      this.memberService.updatePassword({data: this.data, userInfo: memberInfo}).subscribe((resp) => {
+        console.log('Password updated!');
+      }, (err) => {
+        console.log(err);
+      });
+    }
   }
 }
