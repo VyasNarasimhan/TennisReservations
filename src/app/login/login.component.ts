@@ -25,4 +25,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  forgotpwd() {
+    this.router.navigate(['forgotpassword']);
+  }
+
 }

@@ -1,0 +1,10 @@
+<div class="navbar">
+    <div *ngIf="!loggedIn">
+        <a routerLink='/login'>Login</a>
+    </div>
+    <div *ngIf="loggedIn">
+        <a routerLink='/reservations'>Reservations</a>
+        <a routerLink='/changepassword'>Change Password</a>
+        <a class="nav-link" (click)="logout()">Logout</a>
+    </div>
+</div>

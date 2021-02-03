@@ -1,11 +1,24 @@
 <div id="loginpage">
-    <mat-form-field appearance="standard">
-        <mat-label>Enter your email</mat-label>
-        <input matInput placeholder="Email" [(ngModel)]="data.enteredEmail" />
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Enter your password</mat-label>
-        <input matInput type="password" [(ngModel)]="data.enteredPassword" />
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="validateUser()">Login</button>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="standard">
+                <mat-label>Enter your email</mat-label>
+                <input matInput placeholder="Email" [(ngModel)]="data.enteredEmail" />
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Enter your password</mat-label>
+                <input matInput type="password" [(ngModel)]="data.enteredPassword" />
+            </mat-form-field>
+        </div>
+    </div>        
+    <div class="row">
+        <div class="col-md-6">
+            <button mat-raised-button color="primary" (click)="validateUser()">Login</button>
+            <button mat-raised-button color="primary" (click)="forgotpwd()">Forgot Password</button>
+        </div>
+    </div>
 </div>
