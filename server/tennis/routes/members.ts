@@ -1,11 +1,15 @@
 import db from '../../db/db';
 import { NextFunction, Request, Response, Router } from 'express';
 import * as bcrypt from 'bcrypt';
-import { SMTPClient } from 'emailjs';
+import emailservice  from '../services/emailservice';
 
 export const router: Router = Router();
 
 const SALT = 9;
+
+// Set the AWS Region
+const REGION = "us-east-1"; //e.g. "us-east-1"
+
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside members put' + req);
@@ -73,6 +77,9 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
       }
       const hash = bcrypt.hashSync(newPass, SALT);
       const changePassword = (await db.query('UPDATE users SET password = $1 WHERE email = $2', [hash, email.toUpperCase()]));
+      
+      emailservice.sendEmail(emailservice.buildPasswordResetEmailConfig('narasimhan.shyamala@gmail.com', email, newPass));
+
       res.send({updated: changePassword, newPassword: newPass});
   } catch (err) {
       console.log('Not found');

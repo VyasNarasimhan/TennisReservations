@@ -24,6 +24,7 @@
     "@angular/platform-browser": "~9.1.7",
     "@angular/platform-browser-dynamic": "~9.1.7",
     "@angular/router": "~9.1.7",
+    "@aws-sdk/client-ses": "^3.4.1",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.6",
     "@types/pg": "^7.14.3",
