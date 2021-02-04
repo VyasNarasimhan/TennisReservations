@@ -37,7 +37,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         // tslint:disable-next-line: max-line-length
         const member = (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [email])).rows[0];
         if (bcrypt.compareSync(password, member.password)) {
-          const reservations = (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7')).rows;
+          const reservations = (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = \'FALSE\'')).rows;
           res.send({memberInfo : member, allReservations : reservations});
         } else {
           res.status(401).send({ error: 'unauthorized' });
