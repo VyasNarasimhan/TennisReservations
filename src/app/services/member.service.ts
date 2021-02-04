@@ -39,6 +39,7 @@ export class MemberService {
 
   logout(): void {
     localStorage.removeItem('memberInfo');
+    localStorage.removeItem('allReservations');
     this.loggedIn.next(false);
   }
 }
