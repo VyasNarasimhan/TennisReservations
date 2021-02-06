@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnDestroy {
   title = 'tennisreservations';
-  
   constructor(private router: Router) { }
 
   // tslint:disable-next-line: typedef

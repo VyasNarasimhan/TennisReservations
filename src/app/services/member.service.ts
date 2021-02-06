@@ -29,7 +29,6 @@ export class MemberService {
     return this.http.post(environment.apiRoot + '/tennis/members/forgot', data);
   }
 
-  
   isLoggedIn(): boolean {
     const memberls: any = localStorage.getItem('memberInfo');
     const isLoggedIn = !!memberls;
