@@ -4,7 +4,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 export const router: Router = Router();
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside reservations put' + req);
+  console.log('Inside reservations create' + req);
   const reservation = req.body;
   const memberInfo = JSON.parse(reservation.member);
   try {
@@ -22,17 +22,13 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       });
       console.log('Saved ' + req.body);
     }
-  } catch (err) {
-    return next(err);
+  } catch (err){
+    res.status(410).send({ error: 'Reservation empty' });
   }
 });
 
-router.get('/test', async (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send({ success: 'yay' });
-});
-
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside reservations post' + req);
+  console.log('Inside reservations update' + req);
   const reservation = req.body;
   const memberInfo = JSON.parse(reservation.member);
   try {
