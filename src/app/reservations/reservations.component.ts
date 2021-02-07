@@ -6,7 +6,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-reservations',
   templateUrl: './reservations.component.html',
-  styleUrls: ['./reservations.component.sass']
+  styleUrls: ['./reservations.component.scss']
 })
 export class ReservationsComponent implements OnInit {
 
