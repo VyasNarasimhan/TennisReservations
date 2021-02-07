@@ -11,7 +11,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     // tslint:disable-next-line: max-line-length
     const checkIfExists = (await db.query('SELECT * FROM reservations WHERE reservation_date = $1 and timeslot = $2 and court = $3 and canceled = false', [reservation.date, reservation.timeslot, reservation.courtnumber]));
     if (checkIfExists.rowCount > 0) {
-      res.status(410).send({error: 'Reservation already exists'});
+      res.status(420).send({error: 'Reservation already exists'});
     } else {
       const newres = (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows;
       res.send({
@@ -23,6 +23,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       console.log('Saved ' + req.body);
     }
   } catch (err){
+    console.log(err);
     res.status(410).send({ error: 'Reservation empty' });
   }
 });
