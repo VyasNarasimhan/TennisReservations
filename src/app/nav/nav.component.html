@@ -1,16 +1,14 @@
-<div class="nav-container">
+<div class="nav-container clearfix">
     <div class="logo">
         <img src = "../../assets/wellesley-logo-light.jpg" />
     </div>
     <div class="navbar">
-        <a mat-button [routerLink]="['/home']">Home</a>
-        <div *ngIf="!loggedIn">
-            <a mat-button routerLink='/login'>Login</a>
-        </div>
-        <div *ngIf="loggedIn">
-            <a mat-button routerLink='/reservations'>Reservations</a>
-            <a mat-button routerLink='/changepassword'>Change Password</a>
-            <a mat-button class="nav-link" (click)="logout()">Logout</a>
-        </div>
+        <a mat-button [routerLink]="['/home']">HOME</a>
+        <a *ngIf="!loggedIn" a mat-button routerLink='/login'>LOGIN</a>
+        <span *ngIf="loggedIn">
+            <a mat-button routerLink='/reservations'>RESERVATIONS</a>
+            <a mat-button routerLink='/changepassword'>CHANGE PASSWORD</a>
+            <a mat-button class="nav-link" (click)="logout()">LOGOUT</a>
+        </span>
     </div>
 </div>

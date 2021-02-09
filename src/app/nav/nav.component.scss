@@ -1,3 +1,25 @@
+.navbar 
+{
+    float: right;
+    text-align:center;
+    //Todo align text to vertical middle of logo.
+}
+.navbar span a, .navbar a {
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0px;
+    font-style: normal;
+    color: #88929e;
+}
 .logo {
     float: left;
+    width: 20%;
+    margin-left: 15px;
+}
+.clearfix {
+    overflow: auto;
+}
+.nav-container {
+    margin-top: 20px;
 }
