@@ -1,14 +1,16 @@
-<div class="logo">
-    <img src = "../../assets/wellesley-logo-light.jpg" />
-</div>
-<div class="navbar">
-    <a mat-button [routerLink]="['/home']">Home</a>
-    <div *ngIf="!loggedIn">
-        <a mat-button routerLink='/login'>Login</a>
+<div class="nav-container">
+    <div class="logo">
+        <img src = "../../assets/wellesley-logo-light.jpg" />
     </div>
-    <div *ngIf="loggedIn">
-        <a mat-button routerLink='/reservations'>Reservations</a>
-        <a mat-button routerLink='/changepassword'>Change Password</a>
-        <a mat-button class="nav-link" (click)="logout()">Logout</a>
+    <div class="navbar">
+        <a mat-button [routerLink]="['/home']">Home</a>
+        <div *ngIf="!loggedIn">
+            <a mat-button routerLink='/login'>Login</a>
+        </div>
+        <div *ngIf="loggedIn">
+            <a mat-button routerLink='/reservations'>Reservations</a>
+            <a mat-button routerLink='/changepassword'>Change Password</a>
+            <a mat-button class="nav-link" (click)="logout()">Logout</a>
+        </div>
     </div>
 </div>
