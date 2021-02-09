@@ -29,6 +29,10 @@ export class MemberService {
     return this.http.post(environment.apiRoot + '/tennis/members/forgot', data);
   }
 
+  checkAdminIsValid(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members/admin', data);
+  }
+
   isLoggedIn(): boolean {
     const memberls: any = localStorage.getItem('memberInfo');
     const isLoggedIn = !!memberls;

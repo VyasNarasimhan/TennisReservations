@@ -16,6 +16,7 @@ import { ChangepasswordComponent } from './changepassword/changepassword.compone
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HomeComponent } from './home/home.component';
     ChangepasswordComponent,
     ForgotpasswordComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

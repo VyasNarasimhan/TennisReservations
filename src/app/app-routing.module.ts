@@ -6,6 +6,7 @@ import { ReservationsComponent } from './reservations/reservations.component';
 import { RegisterComponent } from './register/register.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [{
   path: 'home',
@@ -29,6 +30,9 @@ const routes: Routes = [{
   path: '',
   pathMatch: 'full',
   redirectTo: 'home'
+}, {
+  path: 'admin',
+  component: AdminComponent,
 }];
 
 @NgModule({

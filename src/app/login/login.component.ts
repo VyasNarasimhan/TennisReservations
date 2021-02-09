@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line: typedef
   forgotpwd() {
     this.router.navigate(['forgotpassword']);
   }

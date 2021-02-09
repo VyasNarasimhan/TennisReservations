@@ -1,0 +1,7 @@
+<mat-form-field>
+    <mat-label>Enter the admin password</mat-label>
+    <input matInput type="text" [(ngModel)]="data.enteredPassword" maxlength="80" />
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="confirmAdmin()">Enter</button>
+
+<p *ngIf="loggedIn">admin works!</p>
