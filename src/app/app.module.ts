@@ -17,6 +17,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AdminComponent } from './admin/admin.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

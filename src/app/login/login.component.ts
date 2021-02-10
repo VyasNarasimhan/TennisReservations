@@ -17,9 +17,14 @@ export class LoginComponent implements OnInit {
   validateUser() {
     this.memberService.checkUserIsValid(this.data).subscribe((resp) => {
       console.log('User is valid!');
-      localStorage.setItem('memberInfo', JSON.stringify(resp.memberInfo));
-      localStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
-      this.router.navigate(['reservations']);
+      if (resp.memberInfo !== 'admin') {
+        localStorage.setItem('memberInfo', JSON.stringify(resp.memberInfo));
+        localStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
+        this.router.navigate(['reservations']);
+      } else {
+        localStorage.setItem('memberInfo', 'admin');
+        this.router.navigate(['admin']);
+      }
     }, (err) => {
       console.log(err);
     });

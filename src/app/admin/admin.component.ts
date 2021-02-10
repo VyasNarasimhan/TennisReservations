@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../services/member.service';
+import {Observable} from 'rxjs';
+import {distinctUntilChanged, map} from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -7,21 +10,24 @@ import { MemberService } from '../services/member.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+
   allUsers: any = [];
   data: any = {};
-  constructor(private memberService: MemberService) { }
-  loggedIn = false;
+  enteredUser = '';
+
+  constructor(private memberService: MemberService, private router: Router) { }
+
   ngOnInit(): void {
+    if (localStorage.getItem('memberInfo') == null) {
+      this.router.navigate(['login']);
+    }
   }
 
-  // tslint:disable-next-line: typedef
-  confirmAdmin() {
-    this.memberService.checkAdminIsValid(this.data).subscribe((resp) => {
-      console.log('Admin is valid!');
-      this.allUsers = resp.allUsers;
-      this.loggedIn = true;
-    }, (err) => {
-      console.log(err);
-    });
-  }
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      distinctUntilChanged(),
+      map(term => term.length < 2 ? []
+        // tslint:disable-next-line: max-line-length
+        : this.allUsers.filter((user: { email: string}) => user.email.indexOf(term.toUpperCase()) > -1).slice(0, 10))
+    )
 }

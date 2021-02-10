@@ -1,7 +1,6 @@
-<mat-form-field>
-    <mat-label>Enter the admin password</mat-label>
-    <input matInput type="text" [(ngModel)]="data.enteredPassword" maxlength="80" />
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="confirmAdmin()">Enter</button>
+<div>
+    <label for="typeahead-basic">Search for a user:</label>
+    <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="enteredUser" [ngbTypeahead]="search"/>
+    <hr>
+</div>
 
-<p *ngIf="loggedIn">admin works!</p>
