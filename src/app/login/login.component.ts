@@ -18,11 +18,11 @@ export class LoginComponent implements OnInit {
     this.memberService.checkUserIsValid(this.data).subscribe((resp) => {
       console.log('User is valid!');
       if (resp.memberInfo !== 'admin') {
-        localStorage.setItem('memberInfo', JSON.stringify(resp.memberInfo));
-        localStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
+        sessionStorage.setItem('memberInfo', JSON.stringify(resp.memberInfo));
+        sessionStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
         this.router.navigate(['reservations']);
       } else {
-        localStorage.setItem('memberInfo', 'admin');
+        sessionStorage.setItem('memberInfo', 'admin');
         this.router.navigate(['admin']);
       }
     }, (err) => {

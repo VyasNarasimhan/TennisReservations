@@ -18,7 +18,7 @@ export class ForgotpasswordComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   resetPassword() {
-    let memberInfo: any = localStorage.getItem('memberInfo');
+    let memberInfo: any = sessionStorage.getItem('memberInfo');
     memberInfo = JSON.parse(memberInfo);
     this.memberService.resetPassword({data: this.data, userInfo: memberInfo}).subscribe((resp) => {
       console.log('Password updated!');

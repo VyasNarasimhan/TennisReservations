@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
   constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
-    if (localStorage.getItem('memberInfo') == null) {
+    if (sessionStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     }
 

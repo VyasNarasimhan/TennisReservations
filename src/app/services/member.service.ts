@@ -40,15 +40,15 @@ export class MemberService {
   }
 
   isLoggedIn(): boolean {
-    const memberls: any = localStorage.getItem('memberInfo');
+    const memberls: any = sessionStorage.getItem('memberInfo');
     const isLoggedIn = !!memberls;
     this.loggedIn.next(isLoggedIn);
     return isLoggedIn;
   }
 
   logout(): void {
-    localStorage.removeItem('memberInfo');
-    localStorage.removeItem('allReservations');
+    sessionStorage.removeItem('memberInfo');
+    sessionStorage.removeItem('allReservations');
     this.loggedIn.next(false);
   }
 }

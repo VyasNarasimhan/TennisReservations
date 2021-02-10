@@ -13,7 +13,7 @@ export class AppComponent implements OnDestroy {
 
   // tslint:disable-next-line: typedef
   ngOnDestroy() {
-    localStorage.removeItem('memberInfo');
-    localStorage.removeItem('allReservations');
+    sessionStorage.removeItem('memberInfo');
+    sessionStorage.removeItem('allReservations');
   }
 }
