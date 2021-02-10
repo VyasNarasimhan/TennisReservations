@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../services/member.service';
 import {Observable} from 'rxjs';
-import {distinctUntilChanged, map} from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SearchMeta } from '../models/search-meta';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +18,7 @@ export class AdminComponent implements OnInit {
   memberFromDb: any;
   searchTerm: any; // ng-typeahead search model
   searchMeta = new SearchMeta();
-  loadError: string = '';
+  loadError = '';
 
   constructor(private memberService: MemberService, private router: Router) { }
 
@@ -27,7 +26,6 @@ export class AdminComponent implements OnInit {
     if (sessionStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     }
-
     this.searchTerm = null;
   }
 
@@ -35,10 +33,12 @@ export class AdminComponent implements OnInit {
     return this.memberService.searchMembersByEmailWildCard(text$, searchMetaRef);
   }
 
+  // tslint:disable-next-line: typedef
   memberSearchFormatter(x: { email: string }) {
     return x.email;
   }
 
+  // tslint:disable-next-line: typedef
   selectedItem(ev: NgbTypeaheadSelectItemEvent) {
 
     // the next two lines are used to clear the search input after selecting an item
@@ -46,16 +46,16 @@ export class AdminComponent implements OnInit {
     this.searchTerm = null;
 
     /* istanbul ignore else */
-    if (ev.item['email']) {
+    if (ev.item.email) {
 
       // TODO fetch the single user by email
-      this.memberService.findMemberByEmail(ev.item['email']).subscribe (
+      this.memberService.findMemberByEmail(ev.item.email).subscribe (
         (data: any) => {
           this.memberFromDb = data;
-        },(errorData: HttpErrorResponse) => {           
-            this.loadError = errorData ? errorData.error: 'Unable to find member';
+        }, (errorData: HttpErrorResponse) => {
+            this.loadError = errorData ? errorData.error : 'Unable to find member';
           }
         );
     }
-  }  
+  }
 }

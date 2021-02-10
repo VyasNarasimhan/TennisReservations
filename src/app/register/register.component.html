@@ -14,11 +14,4 @@
     <mat-label>Confirm Password</mat-label>
     <input matInput type="password" [(ngModel)]="data.confirmPassword" maxlength="80" />
 </mat-form-field>
-<mat-form-field>
-    <mat-label>Role</mat-label>
-    <mat-select [(value)]="data.role">
-        <mat-option value="2">Coach</mat-option>
-        <mat-option value="3">Resident</mat-option>
-    </mat-select>
-</mat-form-field>
 <button mat-raised-button color="primary" (click)="addUser()">Register</button>

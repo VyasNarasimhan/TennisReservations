@@ -18,10 +18,9 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
         res.status(422).send({ error: 'User already exists'});
       } else {
         res.send({
-          // TODO get the MEMBER role obj by code and use that id here
           updated: (await db.query('insert into users (email, displayName, role, password) values ($1, $2, $3, $4)',
             [
-              user.enteredEmail.toUpperCase(), user.displayName, user.role.toUpperCase(), hash
+              user.enteredEmail.toUpperCase(), user.displayName, user.role, hash
             ])).rowCount
         });
       }
@@ -120,5 +119,34 @@ router.post('/admin', async (req: Request, res: Response, next: NextFunction) =>
   } catch (err) {
       console.log('Error during adminCheck .. Not found');
       return next(err);
+  }
+});
+
+router.get('/resident', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside resident get');
+  try {
+    const id = (await db.query('SELECT id FROM roles WHERE rolename=\'RESIDENT\'')).rows[0];
+    res.send({residentId: id});
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+});
+
+router.get('/search', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside search get');
+  try {
+    res.send({listOfUsers: (await db.query('SELECT displayName, email FROM users WHERE email LIKE \'%$1\'', [req.body])).rows});
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside get');
+  try {
+    res.send({user: (await db.query('SELECT * FROM users WHERE email=$1', [req.body])).rows[0]});
+  } catch (err) {
+    return next(err);
   }
 });

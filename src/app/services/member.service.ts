@@ -30,13 +30,16 @@ export class MemberService {
     return this.http.post(environment.apiRoot + '/tennis/members/forgot', data);
   }
 
-  searchMembersByEmailWildCard (email: any, searchObj: SearchMeta): Observable<any> {
-    // TODO do a member wild card search by email
+  searchMembersByEmailWildCard(email: any, searchObj: SearchMeta): Observable<any> {
     return this.http.get(environment.apiRoot + '/tennis/members/search', email);
   }
 
-  findMemberByEmail (email: any) : Observable<any> {
+  findMemberByEmail(email: any): Observable<any> {
     return this.http.get(environment.apiRoot + '/tennis/member', email);
+  }
+
+  getResidentId(): Observable<any> {
+    return this.http.get(environment.apiRoot + '/tennis/members/resident', {});
   }
 
   isLoggedIn(): boolean {

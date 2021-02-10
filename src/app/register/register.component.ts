@@ -12,11 +12,13 @@ export class RegisterComponent implements OnInit {
   constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
+    this.memberService.getResidentId().subscribe((resp) => {
+      this.data.role = resp.residentId.id;
+    });
   }
 
   // tslint:disable-next-line: typedef
   addUser() {
-
     this.memberService.createUser(this.data).subscribe((resp) => {
       if (resp) {
         if (resp.updated) {
