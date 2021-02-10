@@ -12,6 +12,7 @@ export class RegisterComponent implements OnInit {
   constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
+    // fetch coach and user roles from the db and use those to set the value of the select
   }
 
   // tslint:disable-next-line: typedef
