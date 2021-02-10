@@ -18,6 +18,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
         res.status(422).send({ error: 'User already exists'});
       } else {
         res.send({
+          // TODO get the MEMBER role obj by code and use that id here
           updated: (await db.query('insert into users (email, displayName, role, password) values ($1, $2, $3, $4)',
             [
               user.enteredEmail.toUpperCase(), user.displayName, user.role.toUpperCase(), hash

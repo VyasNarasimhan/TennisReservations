@@ -3,6 +3,11 @@ import { MemberService } from '../services/member.service';
 import {Observable} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SearchMeta } from '../models/search-meta';
+import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import {  HttpErrorResponse } from '@angular/common/http';
+
+let searchMetaRef: SearchMeta;
 
 @Component({
   selector: 'app-admin',
@@ -11,9 +16,10 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
 
-  allUsers: any = [];
-  data: any = {};
-  enteredUser = '';
+  memberFromDb: any;
+  searchTerm: any; // ng-typeahead search model
+  searchMeta = new SearchMeta();
+  loadError: string = '';
 
   constructor(private memberService: MemberService, private router: Router) { }
 
@@ -21,13 +27,35 @@ export class AdminComponent implements OnInit {
     if (localStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     }
+
+    this.searchTerm = null;
   }
 
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      distinctUntilChanged(),
-      map(term => term.length < 2 ? []
-        // tslint:disable-next-line: max-line-length
-        : this.allUsers.filter((user: { email: string}) => user.email.indexOf(term.toUpperCase()) > -1).slice(0, 10))
-    )
+  searchEmail(text$: Observable<string>): Observable<any> {
+    return this.memberService.searchMembersByEmailWildCard(text$, searchMetaRef);
+  }
+
+  memberSearchFormatter(x: { email: string }) {
+    return x.email;
+  }
+
+  selectedItem(ev: NgbTypeaheadSelectItemEvent) {
+
+    // the next two lines are used to clear the search input after selecting an item
+    ev.preventDefault();
+    this.searchTerm = null;
+
+    /* istanbul ignore else */
+    if (ev.item['email']) {
+
+      // TODO fetch the single user by email
+      this.memberService.findMemberByEmail(ev.item['email']).subscribe (
+        (data: any) => {
+          this.memberFromDb = data;
+        },(errorData: HttpErrorResponse) => {           
+            this.loadError = errorData ? errorData.error: 'Unable to find member';
+          }
+        );
+    }
+  }  
 }

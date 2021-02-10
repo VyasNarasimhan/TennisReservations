@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
+import { SearchMeta } from '../models/search-meta';
 
 
 @Injectable({
@@ -27,6 +28,15 @@ export class MemberService {
   }
   resetPassword(data: any): Observable<any> {
     return this.http.post(environment.apiRoot + '/tennis/members/forgot', data);
+  }
+
+  searchMembersByEmailWildCard (email: any, searchObj: SearchMeta): Observable<any> {
+    // TODO do a member wild card search by email
+    return this.http.get(environment.apiRoot + '/tennis/members/search', email);
+  }
+
+  findMemberByEmail (email: any) : Observable<any> {
+    return this.http.get(environment.apiRoot + '/tennis/member', email);
   }
 
   isLoggedIn(): boolean {

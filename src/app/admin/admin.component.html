@@ -1,6 +1,23 @@
-<div>
-    <label for="typeahead-basic">Search for a user:</label>
-    <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="enteredUser" [ngbTypeahead]="search"/>
-    <hr>
-</div>
+<div class = "row">
+  <div class="col-sm-8 mr-auto">
+    <ng-template #rt let-r="result" let-t="term">
+      <span class="row">
+        <strong class="col-6">{{r.displayName}}-{{r.email}}</strong>
+      </span>
+    </ng-template>
 
+    <div class="form-group row ngb-typeahead-wide">
+      <label for="typeahead-basic" class="col-sm-2 col-form-label">Search by Email:</label>
+      <div class="input-group col-sm-10">
+        <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="searchTerm" #email="ngModel"
+          [ngbTypeahead]="searchEmail" [resultTemplate]="rt" [inputFormatter]="memberSearchFormatter"
+          oninput="this.value = this.value.toUpperCase()" (selectItem)="selectedItem($event)"
+          name="email" class="form-control" [ngClass]="{'loading': searchMeta.searching }" />        
+        <div class="input-checking"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!!memberFromDb" class="memberinfo">
+    display member info here and show coach check box as well
+</div>
