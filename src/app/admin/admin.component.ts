@@ -19,8 +19,11 @@ export class AdminComponent implements OnInit {
   searchTerm: any; // ng-typeahead search model
   searchMeta = new SearchMeta();
   loadError = '';
+  memberService : MemberService;
 
-  constructor(private memberService: MemberService, private router: Router) { }
+  constructor(private memService: MemberService, private router: Router) {
+    this.memberService = memService;
+   }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('memberInfo') == null) {

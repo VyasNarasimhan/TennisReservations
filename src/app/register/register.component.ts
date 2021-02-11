@@ -12,13 +12,9 @@ export class RegisterComponent implements OnInit {
   constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
-<<<<<<< HEAD
     this.memberService.getResidentId().subscribe((resp) => {
       this.data.role = resp.residentId.id;
     });
-=======
-    // fetch coach and user roles from the db and use those to set the value of the select
->>>>>>> b4b416c07ed10a8f5196bcda5d793b808b190a62
   }
 
   // tslint:disable-next-line: typedef
