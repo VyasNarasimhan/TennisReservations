@@ -133,9 +133,8 @@ router.get('/resident', async (req: Request, res: Response, next: NextFunction) 
   }
 });
 
-router.get('/search', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside search get');
-  console.log(req.body.searchText);
+router.get('/search/$1', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside search wildcard');
   try {
     res.send({listOfUsers: (await db.query('SELECT displayName, email FROM users WHERE email LIKE \'%$1%\'', [req.body.searchText])).rows});
   } catch (err) {

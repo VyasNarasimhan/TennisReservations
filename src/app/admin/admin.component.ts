@@ -34,7 +34,7 @@ export class AdminComponent implements OnInit {
   }
 
   searchEmail(text$: Observable<string>): Observable<any> {
-    return memberService.searchMembersByEmailWildCard({searchText: text$}, searchMetaRef);
+    return memberService.searchMembersByEmailWildCard(text$, searchMetaRef);
   }
 
   // tslint:disable-next-line: typedef
