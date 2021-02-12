@@ -39,6 +39,7 @@ export class AdminComponent implements OnInit {
   changeRole() {
     this.memberService.changeRole(this.memberFromDb).subscribe((resp) => {
       this.memberFromDb.userRole = resp.role;
+      console.log(this.memberFromDb.userRole);
     }, (err) => {
       console.log(err);
       this.loadError = err;

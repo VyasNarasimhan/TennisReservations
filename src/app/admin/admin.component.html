@@ -7,14 +7,22 @@
 </div>
 <div *ngIf="memberFromDb" class="row">
   <div class="col">
+    <h1>Click on the role button to change the user's role from coach to resident and vice versa</h1>
     <table class = "table table-bordered">
       <thead>
         <tr>
-          <th scope="col">{{memberFromDb.displayname}}</th>
-          <th scope="col">{{memberFromDb.email}}</th>
-          <th scope="col"><button mat-raised-button (click)="changeRole()">{{memberFromDb.userRole}}</button></th>
+          <th>Display Name</th>
+          <th>Email</th>
+          <th>Current Role</th>
         </tr>
       </thead>
+      <tbody>
+        <tr>
+          <td scope="col">{{memberFromDb.displayname}}</td>
+          <td scope="col">{{memberFromDb.email}}</td>
+          <td scope="col"><button mat-raised-button (click)="changeRole()">{{memberFromDb.userRole}}</button></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>
