@@ -10,9 +10,9 @@
     <table class = "table table-bordered">
       <thead>
         <tr>
-          <th scope="col">{{memberFromDb.displayName}}</th>
+          <th scope="col">{{memberFromDb.displayname}}</th>
           <th scope="col">{{memberFromDb.email}}</th>
-          <th scope="col">{{memberFromDb.role}}</th>
+          <th scope="col"><button mat-raised-button (click)="changeRole()">{{memberFromDb.userRole}}</button></th>
         </tr>
       </thead>
     </table>

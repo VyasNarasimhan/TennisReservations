@@ -32,8 +32,11 @@ export class MemberService {
   }
 
   findMemberByEmail(data: any): Observable<any> {
-    console.log(data);
-    return this.http.get(environment.apiRoot + '/tennis/members/user', data);
+    return this.http.post(environment.apiRoot + '/tennis/members/user', data);
+  }
+
+  changeRole(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members/changerole', data);
   }
 
   getResidentId(): Observable<any> {

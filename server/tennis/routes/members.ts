@@ -133,11 +133,24 @@ router.get('/resident', async (req: Request, res: Response, next: NextFunction) 
   }
 });
 
-router.get('/user', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside get');
-  console.log(req.body);
+router.post('/user', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside user get');
+  const getUser = (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0];
+  const userRole = (await db.query('SELECT rolename FROM roles WHERE id=$1', [getUser.role])).rows[0];
   try {
-    res.send({user: (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0]});
+    res.send({user: (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0], role: userRole});
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/changerole', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside changerole get');
+  const user = req.body;
+  const newRole = (user.userRole === 'COACH') ? 'RESIDENT' : 'COACH';
+  const newRoleId = (await db.query('SELECT id FROM roles WHERE rolename=$1', [newRole])).rows[0].id;
+  try {
+    res.send({updated: (await db.query('UPDATE users SET role=$1 WHERE email=$2', [newRoleId, user.email])), role: newRole});
   } catch (err) {
     return next(err);
   }
