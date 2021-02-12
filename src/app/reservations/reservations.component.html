@@ -20,12 +20,11 @@
       <tbody>
         <tr *ngFor="let time of times; let i = index">
           <th scope="row">{{time}}</th>
-          <td align="center">
-            <span *ngIf="!reservationsDisplay1[time] && reservationsLeft > 0"><button class="res-button" mat-raised-button (click)="addReservation(i, 1)">Reserve</button></span>
-            <span *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid === memberInfo.id"><button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 1)">Cancel</button></span>
-            <span *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid !== memberInfo.id">{{reservationsDisplay1[time].membername}}</span>
-            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay1[time]"><button class="res-button" mat-raised-button>Unavailable</button></span>
-          </td>
+          <td align="center" *ngIf="!reservationsDisplay1[time] && reservationsLeft > 0"><button class="res-button" mat-raised-button (click)="addReservation(i, 1)">Reserve</button></td>
+          <td align="center" *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid === memberInfo.id"><button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 1)">Cancel</button></td>
+          <td align="center" class="info" *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid !== memberInfo.id">{{reservationsDisplay1[time].membername}}</td>
+          <td align="center" class="info" *ngIf="reservationsLeft <= 0 && !reservationsDisplay1[time]">Unavailable</td>
+            
           <td align="center">
             <span *ngIf="!reservationsDisplay2[time] && reservationsLeft > 0"><button class="res-button" mat-raised-button (click)="addReservation(i, 2)">Reserve</button></span>
             <span *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid === memberInfo.id"><button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 2)">Cancel</button></span>
