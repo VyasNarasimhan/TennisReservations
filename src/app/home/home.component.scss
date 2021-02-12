@@ -1,14 +1,22 @@
 .hometitle {
     text-align: center;
-}
-.hometitle {
-    color:black;
-}
-.hometitle span {
     margin-top: 20px;
+    margin-bottom: 30px;
+}
+.hometitle span{
+    color: white;
+    font-size: 36px;
+    font-style:normal;
+    font-weight: 550;
+    font-family: Libre Baskerville;
 
 }
-.content {
+.homebody {
     background-color: #8c704d;
     color: white;
+    width:100%;
+}
+.tenniscourtimg {
+    margin-left: 10px;
+    
 }
