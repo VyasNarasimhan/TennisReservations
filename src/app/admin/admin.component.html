@@ -1,23 +1,20 @@
-<div class = "row">
-  <div class="col-sm-8 mr-auto">
-    <ng-template #rt let-r="result" let-t="term">
-      <span class="row">
-        <strong class="col-6">{{r.displayName}}-{{r.email}}</strong>
-      </span>
-    </ng-template>
-
-    <div class="form-group row ngb-typeahead-wide">
-      <label for="typeahead-basic" class="col-sm-2 col-form-label">Search by Email:</label>
-      <div class="input-group col-sm-10">
-        <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="searchTerm" #email="ngModel"
-          [ngbTypeahead]="searchEmail" [resultTemplate]="rt" [inputFormatter]="memberSearchFormatter"
-          oninput="this.value = this.value.toUpperCase()" (selectItem)="selectedItem($event)"
-          name="email" class="form-control" [ngClass]="{'loading': searchMeta.searching }" />        
-        <div class="input-checking"></div>
-      </div>
-    </div>
-  </div>
+<div class = "searchForUser">
+  <mat-form-field>
+    <mat-label>Search for user</mat-label>
+    <input matInput type="text" [(ngModel)]="data.enteredEmail" maxlength="80" />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="searchForUser()">Search for user</button>
 </div>
-<div *ngIf="!!memberFromDb" class="memberinfo">
-    display member info here and show coach check box as well
+<div *ngIf="memberFromDb" class="row">
+  <div class="col">
+    <table class = "table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">{{memberFromDb.displayName}}</th>
+          <th scope="col">{{memberFromDb.email}}</th>
+          <th scope="col">{{memberFromDb.role}}</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
 </div>

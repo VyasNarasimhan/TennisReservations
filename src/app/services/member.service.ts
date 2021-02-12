@@ -31,31 +31,9 @@ export class MemberService {
     return this.http.post(environment.apiRoot + '/tennis/members/forgot', data);
   }
 
-  autoSearchMembersByEmailWildcard(type: string, text$: Observable<string>, searchObj: SearchMeta): Observable<object | {} | any[]> {
-    return text$.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap(() => searchObj.searching = true),
-      switchMap(term => term.length < 3 ? of([]) :
-        this.searchMembersByEmailWildCard(term: string): Observable<object> {
-          (type, term).pipe(
-          tap(() => searchObj.searchFailed = false),
-          catchError(() => {
-            searchObj.searchFailed = true;
-            return of([]);
-          }), )),
-      tap(() => searchObj.searching = false),
-      merge(new Observable(() => () => searchObj.searching = false)), );
-  }
-
-  searchMembersByEmailWildCard(term: string): Observable<object> {
-    return this.http
-      .get<Array<{email: string}>>(environment.apiRoot + '/tennis/members/search/'+term).pipe(
-      map(response => response['data'] ? response['data'].map( (val: any) => ({email: val.email})) : undefined));
-  }
-
-  findMemberByEmail(email: any): Observable<any> {
-    return this.http.get(environment.apiRoot + '/tennis/members', email);
+  findMemberByEmail(data: any): Observable<any> {
+    console.log(data);
+    return this.http.get(environment.apiRoot + '/tennis/members/user', data);
   }
 
   getResidentId(): Observable<any> {

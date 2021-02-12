@@ -133,19 +133,11 @@ router.get('/resident', async (req: Request, res: Response, next: NextFunction) 
   }
 });
 
-router.get('/search/$1', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside search wildcard');
-  try {
-    res.send({listOfUsers: (await db.query('SELECT displayName, email FROM users WHERE email LIKE \'%$1%\'', [req.body.searchText])).rows});
-  } catch (err) {
-    return next(err);
-  }
-});
-
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/user', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside get');
+  console.log(req.body);
   try {
-    res.send({user: (await db.query('SELECT * FROM users WHERE email=$1', [req.body])).rows[0]});
+    res.send({user: (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0]});
   } catch (err) {
     return next(err);
   }
