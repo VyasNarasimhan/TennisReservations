@@ -13,8 +13,9 @@ import { catchError, debounceTime, distinctUntilChanged, map, merge, switchMap, 
 export class MemberService {
 
   private loggedIn = new Subject<boolean>();
-
+  private isAdmin = new Subject<boolean>();
   loggedIn$ = this.loggedIn.asObservable();
+  isAdmin$ = this.isAdmin.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -48,6 +49,11 @@ export class MemberService {
     const isLoggedIn = !!memberls;
     this.loggedIn.next(isLoggedIn);
     return isLoggedIn;
+  }
+  checkIsAdmin(): boolean {
+    const admin: any = sessionStorage.getItem('memberInfo');
+    this.isAdmin.next(admin === 'admin');
+    return admin === 'admin';
   }
 
   logout(): void {

@@ -10,28 +10,35 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit, OnDestroy {
-  
-  loggedIn: boolean = false;
+
+  loggedIn: string | null = '';
+  isAdmin = '';
   private subscription: Subscription | undefined;
-
-  constructor(private memberService: MemberService, private router: Router) {
-
+  memberService: MemberService;
+  constructor(private membService: MemberService, private router: Router) {
+    this.memberService = membService;
   }
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
-    this.loggedIn = this.memberService.isLoggedIn();
-    this.subscription = this.memberService.loggedIn$.subscribe( isLoggedIn => {
-      this.loggedIn = isLoggedIn;
-    });
+    if (!!sessionStorage.getItem('loggedIn')) {
+      this.loggedIn = sessionStorage.getItem('loggedIn');
+      if (sessionStorage.getItem('memberInfo') === 'admin') {
+        this.isAdmin = 'true';
+      }
+    }
   }
 
+  // tslint:disable-next-line: typedef
   ngOnDestroy() {
     if (!!this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
+  // tslint:disable-next-line: typedef
   logout() {
+    sessionStorage.setItem('loggedIn', 'false');
     this.memberService.logout();
     this.router.navigateByUrl('login');
   }

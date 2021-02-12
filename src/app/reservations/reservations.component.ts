@@ -47,6 +47,8 @@ export class ReservationsComponent implements OnInit {
   ngOnInit(): void {
     if (sessionStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
+    } else if (sessionStorage.getItem('memberInfo') === 'admin') {
+      this.router.navigate(['admin']);
     } else {
       const memberls: any = sessionStorage.getItem('memberInfo');
       this.memberInfo = JSON.parse(memberls);

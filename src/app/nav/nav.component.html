@@ -4,11 +4,11 @@
     </div>
     <div class="navbar">
         <a mat-button [routerLink]="['/home']">HOME</a>
-        <a *ngIf="!loggedIn" a mat-button routerLink='/login'>LOGIN</a>
-        <span *ngIf="loggedIn">
+        <a *ngIf="!memberService.isLoggedIn()" a mat-button routerLink='/login'>LOGIN</a>
+        <span *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()">
             <a mat-button routerLink='/reservations'>RESERVATIONS</a>
             <a mat-button routerLink='/changepassword'>CHANGE PASSWORD</a>
-            <a mat-button class="nav-link" (click)="logout()">LOGOUT</a>
         </span>
+        <a *ngIf="memberService.isLoggedIn()" mat-button class="nav-link" (click)="logout()">LOGOUT</a>
     </div>
 </div>
