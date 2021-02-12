@@ -41,7 +41,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         if (user) {
           const email = user.enteredEmail.toUpperCase();
           const password = user.enteredPassword;
-          if (email === 'ADMIN' && password === 'Wellesley12345') {
+          if (email === 'ADMIN' && password === '1234') {
             res.send({memberInfo: 'admin', allReservations: null});
           } else {
             // tslint:disable-next-line: max-line-length
@@ -135,8 +135,9 @@ router.get('/resident', async (req: Request, res: Response, next: NextFunction) 
 
 router.get('/search', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside search get');
+  console.log(req.body.searchText);
   try {
-    res.send({listOfUsers: (await db.query('SELECT displayName, email FROM users WHERE email LIKE \'%$1\'', [req.body])).rows});
+    res.send({listOfUsers: (await db.query('SELECT displayName, email FROM users WHERE email LIKE \'%$1%\'', [req.body.searchText])).rows});
   } catch (err) {
     return next(err);
   }

@@ -6,6 +6,7 @@ import { SearchMeta } from '../models/search-meta';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import {  HttpErrorResponse } from '@angular/common/http';
 
+let memberService: MemberService;
 let searchMetaRef: SearchMeta;
 
 @Component({
@@ -19,10 +20,10 @@ export class AdminComponent implements OnInit {
   searchTerm: any; // ng-typeahead search model
   searchMeta = new SearchMeta();
   loadError = '';
-  memberService : MemberService;
 
   constructor(private memService: MemberService, private router: Router) {
-    this.memberService = memService;
+    memberService = memService;
+    searchMetaRef = this.searchMeta;
    }
 
   ngOnInit(): void {
@@ -33,7 +34,7 @@ export class AdminComponent implements OnInit {
   }
 
   searchEmail(text$: Observable<string>): Observable<any> {
-    return this.memberService.searchMembersByEmailWildCard(text$, searchMetaRef);
+    return memberService.searchMembersByEmailWildCard({searchText: text$}, searchMetaRef);
   }
 
   // tslint:disable-next-line: typedef
@@ -52,7 +53,7 @@ export class AdminComponent implements OnInit {
     if (ev.item.email) {
 
       // TODO fetch the single user by email
-      this.memberService.findMemberByEmail(ev.item.email).subscribe (
+      memberService.findMemberByEmail(ev.item.email).subscribe (
         (data: any) => {
           this.memberFromDb = data;
         }, (errorData: HttpErrorResponse) => {

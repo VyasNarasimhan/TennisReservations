@@ -35,7 +35,7 @@ export class MemberService {
   }
 
   findMemberByEmail(email: any): Observable<any> {
-    return this.http.get(environment.apiRoot + '/tennis/member', email);
+    return this.http.get(environment.apiRoot + '/tennis/members', email);
   }
 
   getResidentId(): Observable<any> {
