@@ -15,3 +15,6 @@
     <input matInput type="password" [(ngModel)]="data.confirmPassword" maxlength="80" />
 </mat-form-field>
 <button mat-raised-button color="primary" (click)="addUser()">Register</button>
+<div *ngIf="!!error" id="error">
+    <p>{{error}}</p>
+</div>

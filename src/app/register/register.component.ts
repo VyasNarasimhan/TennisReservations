@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   data: any = {};
+  error = '';
   constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
@@ -19,6 +20,7 @@ export class RegisterComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   addUser() {
+    this.error = '';
     this.memberService.createUser(this.data).subscribe((resp) => {
       if (resp) {
         if (resp.updated) {
@@ -32,6 +34,7 @@ export class RegisterComponent implements OnInit {
       }
     }, (err) => {
       console.log(err);
+      this.error = err;
     });
   }
 }

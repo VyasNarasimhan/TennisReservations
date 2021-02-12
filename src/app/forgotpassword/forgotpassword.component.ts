@@ -10,6 +10,7 @@ export class ForgotpasswordComponent implements OnInit {
 
   data: any = {};
   newpass = '';
+  error = '';
 
   constructor(private memberService: MemberService) { }
 
@@ -18,6 +19,7 @@ export class ForgotpasswordComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   resetPassword() {
+    this.error = '';
     let memberInfo: any = sessionStorage.getItem('memberInfo');
     memberInfo = JSON.parse(memberInfo);
     this.memberService.resetPassword({data: this.data, userInfo: memberInfo}).subscribe((resp) => {
@@ -25,6 +27,7 @@ export class ForgotpasswordComponent implements OnInit {
       this.newpass = resp.newPassword;
     }, (err) => {
       console.log(err);
+      this.error = err;
     });
   }
 

@@ -10,12 +10,14 @@ import { EventEmitter } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   data: any = {};
+  error = '';
   constructor(private router: Router, private memberService: MemberService) { }
 
   ngOnInit(): void {
   }
   // tslint:disable-next-line: typedef
   validateUser() {
+    this.error = '';
     this.memberService.checkUserIsValid(this.data).subscribe((resp) => {
       console.log('User is valid!');
       if (resp.memberInfo !== 'admin') {
@@ -28,6 +30,7 @@ export class LoginComponent implements OnInit {
       }
     }, (err) => {
       console.log(err);
+      this.error = err;
     });
   }
 
