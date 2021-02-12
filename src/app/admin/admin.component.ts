@@ -3,6 +3,7 @@ import { MemberService } from '../services/member.service';
 import { Router } from '@angular/router';
 import {  HttpErrorResponse } from '@angular/common/http';
 import { ThrowStmt } from '@angular/compiler';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -14,7 +15,7 @@ export class AdminComponent implements OnInit {
   memberFromDb: any;
   loadError = '';
   data: any = {};
-
+  email = new FormControl('', [Validators.required, Validators.email]);
   constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
@@ -33,6 +34,14 @@ export class AdminComponent implements OnInit {
       console.log(err);
       this.loadError = err;
     });
+  }
+
+  // tslint:disable-next-line: typedef
+  getEmailErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'Email is required';
+    }
+    return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
   // tslint:disable-next-line: typedef
