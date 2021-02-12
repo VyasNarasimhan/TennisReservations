@@ -20,29 +20,29 @@
       <tbody>
         <tr *ngFor="let time of times; let i = index">
           <th scope="row">{{time}}</th>
-          <td>
-            <span *ngIf="!reservationsDisplay1[time] && reservationsLeft > 0"><button mat-raised-button (click)="addReservation(i, 1)">Reserve</button></span>
-            <span *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid === memberInfo.id"><button mat-raised-button color="primary" (click)="unreserve(i, 1)">Cancel</button></span>
+          <td align="center">
+            <span *ngIf="!reservationsDisplay1[time] && reservationsLeft > 0"><button class="res-button" mat-raised-button (click)="addReservation(i, 1)">Reserve</button></span>
+            <span *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid === memberInfo.id"><button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 1)">Cancel</button></span>
             <span *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid !== memberInfo.id">{{reservationsDisplay1[time].membername}}</span>
-            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay1[time]"><button mat-raised-button>Unavailable</button></span>
+            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay1[time]"><button class="res-button" mat-raised-button>Unavailable</button></span>
           </td>
-          <td>
-            <span *ngIf="!reservationsDisplay2[time] && reservationsLeft > 0"><button mat-raised-button (click)="addReservation(i, 2)">Reserve</button></span>
-            <span *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid === memberInfo.id"><button mat-raised-button color="primary" (click)="unreserve(i, 2)">Cancel</button></span>
+          <td align="center">
+            <span *ngIf="!reservationsDisplay2[time] && reservationsLeft > 0"><button class="res-button" mat-raised-button (click)="addReservation(i, 2)">Reserve</button></span>
+            <span *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid === memberInfo.id"><button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 2)">Cancel</button></span>
             <span *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid !== memberInfo.id">{{reservationsDisplay2[time].membername}}</span>
-            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay2[time]"><button mat-raised-button>Unavailable</button></span>        
+            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay2[time]"><button class="res-button" mat-raised-button>Unavailable</button></span>        
           </td>
-          <td>
-            <span *ngIf="!reservationsDisplay3[time] && reservationsLeft > 0"><button mat-raised-button (click)="addReservation(i, 3)">Reserve</button></span>
-            <span *ngIf="!!reservationsDisplay3[time] && reservationsDisplay3[time].memberid === memberInfo.id"><button mat-raised-button color="primary" (click)="unreserve(i, 3)">Cancel</button></span>
+          <td align="center">
+            <span *ngIf="!reservationsDisplay3[time] && reservationsLeft > 0"><button class="res-button" mat-raised-button (click)="addReservation(i, 3)">Reserve</button></span>
+            <span *ngIf="!!reservationsDisplay3[time] && reservationsDisplay3[time].memberid === memberInfo.id"><button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 3)">Cancel</button></span>
             <span *ngIf="!!reservationsDisplay3[time] && reservationsDisplay3[time].memberid !== memberInfo.id">{{reservationsDisplay3[time].membername}}</span>
-            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay3[time]"><button mat-raised-button>Unavailable</button></span>           
+            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay3[time]"><button class="res-button" mat-raised-button>Unavailable</button></span>           
           </td>
-          <td>
-            <span *ngIf="!reservationsDisplay4[time] && reservationsLeft > 0"><button mat-raised-button (click)="addReservation(i, 4)">Reserve</button></span>
-            <span *ngIf="!!reservationsDisplay4[time] && reservationsDisplay4[time].memberid === memberInfo.id"><button mat-raised-button color="primary" (click)="unreserve(i, 4)">Cancel</button></span>
+          <td align="center">
+            <span *ngIf="!reservationsDisplay4[time] && reservationsLeft > 0"><button class="res-button" mat-raised-button (click)="addReservation(i, 4)">Reserve</button></span>
+            <span *ngIf="!!reservationsDisplay4[time] && reservationsDisplay4[time].memberid === memberInfo.id"><button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 4)">Cancel</button></span>
             <span *ngIf="!!reservationsDisplay4[time] && reservationsDisplay4[time].memberid !== memberInfo.id">{{reservationsDisplay4[time].membername}}</span>
-            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay4[time]"><button mat-raised-button>Unavailable</button></span>
+            <span *ngIf="reservationsLeft <= 0 && !reservationsDisplay4[time]"><button class="res-button" mat-raised-button>Unavailable</button></span>
           </td>
         </tr>
       </tbody>
