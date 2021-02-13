@@ -27,7 +27,7 @@ export class ForgotpasswordComponent implements OnInit {
       this.newpass = resp.newPassword;
     }, (err) => {
       console.log(err);
-      this.error = err;
+      this.error = err.error.error;
     });
   }
 

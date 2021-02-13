@@ -69,7 +69,7 @@ export class ReservationsComponent implements OnInit {
       console.log('Reservations saved');
     }, (err) => {
       console.log('Save Failed');
-      this.error = err;
+      this.error = err.error.error;
     });
   }
 
@@ -84,7 +84,7 @@ export class ReservationsComponent implements OnInit {
     }, (err) => {
       console.log('Cancel Failed');
       console.log(err);
-      this.error = err;
+      this.error = err.error.error;
     });
   }
   // tslint:disable-next-line: typedef

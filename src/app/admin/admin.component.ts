@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit {
       console.log(this.memberFromDb.userRole);
     }, (err) => {
       console.log(err);
-      this.loadError = err;
+      this.loadError = err.error.error;
     });
   }
 
