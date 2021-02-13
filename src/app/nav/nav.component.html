@@ -5,6 +5,7 @@
     <div class="navbar">
         <a mat-button [routerLink]="['/home']">HOME</a>
         <a *ngIf="!memberService.isLoggedIn()" a mat-button routerLink='/login'>LOGIN</a>
+        <a mat-button [routerLink]="['/register']">REGISTER</a>
         <span *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()">
             <a mat-button routerLink='/reservations'>RESERVATIONS</a>
             <a mat-button routerLink='/changepassword'>CHANGE PASSWORD</a>
