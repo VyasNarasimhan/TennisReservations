@@ -19,6 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatIconModule } from '@angular/material/icon';
+import { LoginRegisterComponent } from './login-register/login-register.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
     ForgotpasswordComponent,
     NavComponent,
     HomeComponent,
-    AdminComponent
+    AdminComponent,
+    LoginRegisterComponent
   ],
   imports: [
     BrowserModule,
