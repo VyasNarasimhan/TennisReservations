@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +41,7 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatCardModule,
     MatInputModule,
     HttpClientModule,
     BrowserAnimationsModule,
