@@ -40,7 +40,7 @@ export class NavComponent implements OnInit, OnDestroy {
   logout() {
     sessionStorage.setItem('loggedIn', 'false');
     this.memberService.logout();
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('login-register');
   }
 
 }
