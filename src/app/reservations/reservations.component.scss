@@ -2,3 +2,25 @@
     display: block;
    position:relative;
 }
+
+.res-button {
+    width: 100%;
+    display:block;
+}
+
+.reservedDisplay {
+    background-color: lightblue;
+}
+.pageBackground {
+    background-color: lightgrey;
+}
+.table-bordered {
+    border: 1px solid black;
+}
+.table-bordered th, .table-bordered td {
+    border: 1px solid black;
+}
+.dateColor {
+    margin-top: 20px;
+
+}

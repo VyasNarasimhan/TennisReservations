@@ -10,7 +10,7 @@ export class ChangepasswordComponent implements OnInit {
 
   data: any = {};
   confirmPassword = '';
-
+  error = '';
   constructor(private memberService: MemberService) { }
 
   ngOnInit(): void {
@@ -25,6 +25,7 @@ export class ChangepasswordComponent implements OnInit {
         console.log('Password updated!');
       }, (err) => {
         console.log(err);
+        this.error = err.error.error;
       });
     }
   }

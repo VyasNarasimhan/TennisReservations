@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-wellesleytennis-dev-153219-authRole",
+      "UnauthRoleArn": "arn:aws:iam::025542263361:role/amplify-wellesleytennis-dev-153219-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::025542263361:role/amplify-wellesleytennis-dev-153219-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-wellesleytennis-dev-153219-deployment",
+      "UnauthRoleName": "amplify-wellesleytennis-dev-153219-unauthRole",
+      "StackName": "amplify-wellesleytennis-dev-153219",
+      "StackId": "arn:aws:cloudformation:us-east-1:025542263361:stack/amplify-wellesleytennis-dev-153219/69b58d50-6d71-11eb-91b0-0afe492705d7",
+      "AmplifyAppId": "d2tjphpl4dnl5x"
+    }
+  }
+}

@@ -13,7 +13,6 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     if (checkIfExists.rowCount > 0) {
       res.status(420).send({error: 'Reservation already exists'});
     } else {
-      const newres = (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows;
       res.send({
         updated: (await db.query('insert into reservations (user_fk, dateCreated, timeslot, court, reservation_date, canceled) values ($1, CURRENT_DATE, $2, $3, $4, $5)',
           [
@@ -24,7 +23,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     }
   } catch (err){
     console.log(err);
-    res.status(410).send({ error: 'Reservation empty' });
+    res.status(410).send({ error: 'Could not make reservation' });
   }
 });
 
@@ -38,7 +37,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     console.log(cancel.rowCount);
     res.send({canceledRows: cancel, newReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows});
   } catch (err) {
-    console.log('Error');
+    console.log('Could not cancel reservation');
     return next(err);
   }
 });

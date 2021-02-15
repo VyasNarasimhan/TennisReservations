@@ -1,17 +1,28 @@
-<mat-form-field>
+<mat-form-field hintLabel="Max 20 Characters, can contain letters, numbers, space ( ), apostrophe ('), and period (.)">
     <mat-label>Display Name</mat-label>
-    <input matInput type="text" [(ngModel)]="data.displayName" maxlength="80" />
+    <input matInput type="text" [(ngModel)]="data.displayName" maxlength="20" #displayName="ngModel" name="displayName" pattern="^[a-zA-Z0-9.'\s]{1,20}$" required>
+    <mat-error *ngIf="displayName?.errors?.pattern">Display Name is invalid</mat-error>
+    <mat-error *ngIf="displayName?.errors?.required">Display Name is required</mat-error>
 </mat-form-field>
-<mat-form-field>
+<mat-form-field hintLabel="Max 30 Characters">
     <mat-label>Email</mat-label>
-    <input matInput type="text" [(ngModel)]="data.enteredEmail" maxlength="80" />
+    <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="30" required>
+    <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
 </mat-form-field>
-<mat-form-field>
+<mat-form-field hintLabel="Must be greater than 6 characters and less than 14 characters, can contain letters, numbers, period (.), comma (,), exclamation (!), and hashtag (#)">
     <mat-label>Password</mat-label>
-    <input matInput type="password" [(ngModel)]="data.enteredPassword" maxlength="80" />
+    <input matInput type="password" [(ngModel)]="data.enteredPassword" #password="ngModel" maxlength="14" 
+    minlength="6" name="password" pattern="^[a-zA-Z0-9.,!#]{6,14}$" required>
+    <mat-error *ngIf="password?.errors?.required">Password is required</mat-error>
+    <mat-error *ngIf="password?.errors?.pattern">Password is invalid</mat-error>
 </mat-form-field>
 <mat-form-field>
     <mat-label>Confirm Password</mat-label>
-    <input matInput type="password" [(ngModel)]="data.confirmPassword" maxlength="80" />
+    <input matInput type="password" [(ngModel)]="data.confirmPassword" maxlength="14" minlength="6" #confirmPassword="ngModel" name="confirmPassword" pattern={{data.enteredPassword}} required>
+    <mat-error *ngIf="confirmPassword?.errors?.required">This field is required</mat-error>
+    <mat-error *ngIf="confirmPassword?.errors?.pattern">Passwords need to match</mat-error>
 </mat-form-field>
 <button mat-raised-button color="primary" (click)="addUser()">Register</button>
+<div *ngIf="!!error" id="error">
+    <p>{{error}}</p>
+</div>

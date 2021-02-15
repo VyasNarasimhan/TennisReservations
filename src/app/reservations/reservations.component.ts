@@ -25,6 +25,7 @@ export class ReservationsComponent implements OnInit {
   displayDatesForNextWeek: string[] = [];
   selectedIndex = 0;
   reservationsLeft = 0;
+  error = '';
 
   constructor(private router: Router, private reservationsService: ReservationsService) {
     let counter = 0;
@@ -60,6 +61,7 @@ export class ReservationsComponent implements OnInit {
   }
   // tslint:disable-next-line: typedef
   addReservation(index: number, court: number) {
+    this.error = '';
     // tslint:disable-next-line: max-line-length
     this.reservationsService.save({member: sessionStorage.getItem('memberInfo'), timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
       sessionStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
@@ -67,11 +69,13 @@ export class ReservationsComponent implements OnInit {
       console.log('Reservations saved');
     }, (err) => {
       console.log('Save Failed');
+      this.error = err.error.error;
     });
   }
 
   // tslint:disable-next-line: typedef
   unreserve(index: number, court: number) {
+    this.error = '';
     // tslint:disable-next-line: max-line-length
     this.reservationsService.cancel({member: sessionStorage.getItem('memberInfo'), timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
       sessionStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
@@ -80,11 +84,12 @@ export class ReservationsComponent implements OnInit {
     }, (err) => {
       console.log('Cancel Failed');
       console.log(err);
+      this.error = err.error.error;
     });
   }
   // tslint:disable-next-line: typedef
   generateReservationTable(date: Date) {
-
+    this.error = '';
     this.reservationsDisplay1 = {};
     this.reservationsDisplay2 = {};
     this.reservationsDisplay3 = {};

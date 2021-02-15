@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { AdminComponent } from './admin/admin.component';
+import { LoginRegisterComponent } from './login-register/login-register.component';
 
 const routes: Routes = [{
   path: 'home',
@@ -33,6 +34,9 @@ const routes: Routes = [{
 }, {
   path: 'admin',
   component: AdminComponent,
+}, {
+  path: 'login-register',
+  component: LoginRegisterComponent,
 }];
 
 @NgModule({

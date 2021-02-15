@@ -50,11 +50,11 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
               const reservations = (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows;
               res.send({memberInfo : member, allReservations : reservations});
             } else {
-              res.status(401).send({ error: 'unauthorized' });
+              res.status(401).send({ error: 'Incorrect username or password' });
             }
           }
         } else {
-          res.status(401).send({ error: 'unauthorized' });
+          res.status(401).send({ error: 'Incorrect username or password' });
         }
     } catch (err) {
         console.log('Not found');
@@ -74,7 +74,7 @@ router.post('/change', async (req: Request, res: Response, next: NextFunction) =
         res.send({updated: changePassword});
       }
       else {
-        res.status(401).send({ error: 'unauthorized' });
+        res.status(401).send({ error: 'Could not change password' });
       }
   } catch (err) {
       console.log('change password error');
@@ -98,7 +98,7 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
         emailservice.sendEmail(emailservice.buildPasswordResetEmailConfig('narasimhan.shyamala@gmail.com', email, newPass));
         res.send({updated: changePassword, newPassword: newPass});
       } else {
-        res.status(401).send({ error: 'unauthorized' });
+        res.status(401).send({ error: 'Could not change password or password was blank' });
       }
   } catch (err) {
       console.log('Error during forgot password .. Not found');
@@ -114,7 +114,7 @@ router.post('/admin', async (req: Request, res: Response, next: NextFunction) =>
         const listOfUsers = (await db.query('SELECT * FROM users')).rows;
         res.send({allUsers: listOfUsers});
       } else {
-        res.status(401).send({ error: 'unauthorized' });
+        res.status(401).send({ error: 'Incorrect Password' });
       }
   } catch (err) {
       console.log('Error during adminCheck .. Not found');

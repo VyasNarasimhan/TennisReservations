@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MemberService } from '../services/member.service';
 import { Router } from '@angular/router';
-import { EventEmitter } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +10,15 @@ import { EventEmitter } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   data: any = {};
+  error = '';
+  email = new FormControl('', [Validators.required, Validators.email]);
   constructor(private router: Router, private memberService: MemberService) { }
 
   ngOnInit(): void {
   }
   // tslint:disable-next-line: typedef
   validateUser() {
+    this.error = '';
     this.memberService.checkUserIsValid(this.data).subscribe((resp) => {
       console.log('User is valid!');
       if (resp.memberInfo !== 'admin') {
@@ -28,7 +31,16 @@ export class LoginComponent implements OnInit {
       }
     }, (err) => {
       console.log(err);
+      this.error = err.error.error;
     });
+  }
+
+  // tslint:disable-next-line: typedef
+  getEmailErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'Email is required';
+    }
+    return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
   // tslint:disable-next-line: typedef
