@@ -22,28 +22,35 @@ export class ReservationsComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   datesForNextWeek = [new Date(), new Date(Date.now() + this.nextDay), new Date(Date.now() + 2 * this.nextDay), new Date(Date.now() + 3 * this.nextDay), new Date(Date.now() + 4 * this.nextDay), new Date(Date.now() + 5 * this.nextDay), new Date(Date.now() + 6 * this.nextDay)];
   currentDate = this.datesForNextWeek[0];
+  displayDate = moment(new Date(this.currentDate)).format('MM-DD-YYYY');
   displayDatesForNextWeek: string[] = [];
   selectedIndex = 0;
   reservationsLeft = 0;
   error = '';
 
   constructor(private router: Router, private reservationsService: ReservationsService) {
+    let tempTimes = new Array<string>(48);
     let counter = 0;
     let suffix = 'AM';
     for (let i = 0; i < 2; i++) {
-      this.times[counter] = '12:00 ' + suffix;
+      tempTimes[counter] = '12:00 ' + suffix;
       counter++;
-      this.times[counter] = '12:30 ' + suffix;
+      tempTimes[counter] = '12:30 ' + suffix;
       counter++;
       for (let hour = 1; hour < 12; hour++) {
-        this.times[counter] = hour + ':00 ' + suffix;
-        this.times[counter + 1] = hour + ':30 ' + suffix;
+        tempTimes[counter] = hour + ':00 ' + suffix;
+        tempTimes[counter + 1] = hour + ':30 ' + suffix;
         counter += 2;
       }
       suffix = 'PM';
     }
+    counter = 0;
+    for (let i = 14; i < 44; i++) {
+      this.times[counter] = tempTimes[i];
+      counter++;
+    }
   }
-  times: Array<string> = new Array<string>(48);
+  times: Array<string> = [];
 
   ngOnInit(): void {
     if (sessionStorage.getItem('memberInfo') == null) {
@@ -95,6 +102,7 @@ export class ReservationsComponent implements OnInit {
     this.reservationsDisplay3 = {};
     this.reservationsDisplay4 = {};
     this.currentDate = date;
+    this.displayDate = moment(new Date(this.currentDate)).format('MM-DD-YYYY');
     this.selectedIndex = this.datesForNextWeek.indexOf(date);
     let tempReservationLeft = 3;
     console.log(this.selectedIndex);

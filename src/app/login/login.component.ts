@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line: typedef
   validateUser() {
     this.error = '';
-    if (this.inputErrors !== '' && this.data.enteredPassword && this.data.enteredEmail) {
+    if (this.inputErrors === '' && this.data.enteredPassword && this.data.enteredEmail) {
       this.memberService.checkUserIsValid(this.data).subscribe((resp) => {
         console.log('User is valid!');
         if (resp.memberInfo !== 'admin') {

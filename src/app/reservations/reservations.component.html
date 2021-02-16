@@ -2,7 +2,7 @@
   <div id="reservations">
     <h2 *ngIf="memberInfo.rolename === 'RESIDENT'">Number of Reservations you can still make: {{reservationsLeft}}</h2>
     <mat-form-field>
-      <mat-label>Date</mat-label>
+      <mat-label>Date: {{displayDate}}</mat-label>
       <mat-select>
           <mat-option *ngFor="let date of displayDatesForNextWeek; let i = index" value="i" (click)="generateReservationTable(datesForNextWeek[i])">{{date}}</mat-option>
       </mat-select>

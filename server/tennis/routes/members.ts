@@ -17,11 +17,13 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       if (existingUserResult.rows.length === 1) {
         res.status(422).send({ error: 'User already exists'});
       } else {
+        const id = (await db.query('SELECT id FROM roles WHERE rolename=\'RESIDENT\'')).rows[0].id;
         res.send({
           updated: (await db.query('insert into users (email, displayName, role, password) values ($1, $2, $3, $4)',
             [
-              user.enteredEmail.toUpperCase(), user.displayName, user.role, hash
-            ])).rowCount
+              user.enteredEmail.toUpperCase(), user.displayName, id, hash
+            // tslint:disable-next-line: max-line-length
+            ])).rowCount, memberInfo: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [user.enteredEmail.toUpperCase()])).rows[0], allReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows
         });
       }
       console.log('Saved ' + req.body.displayName);
@@ -103,17 +105,6 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
   } catch (err) {
       console.log('Error during forgot password .. Not found');
       return next(err);
-  }
-});
-
-router.get('/resident', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside resident get');
-  try {
-    const id = (await db.query('SELECT id FROM roles WHERE rolename=\'RESIDENT\'')).rows[0];
-    res.send({residentId: id});
-  } catch (err) {
-    console.log(err);
-    return next(err);
   }
 });
 

@@ -40,10 +40,6 @@ export class MemberService {
     return this.http.post(environment.apiRoot + '/tennis/members/changerole', data);
   }
 
-  getResidentId(): Observable<any> {
-    return this.http.get(environment.apiRoot + '/tennis/members/resident', {});
-  }
-
   isLoggedIn(): boolean {
     const memberls: any = sessionStorage.getItem('memberInfo');
     const isLoggedIn = !!memberls;

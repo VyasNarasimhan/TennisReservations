@@ -19,9 +19,6 @@ export class RegisterComponent implements OnInit {
   constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
-    this.memberService.getResidentId().subscribe((resp) => {
-      this.data.role = resp.residentId.id;
-    });
   }
 
   // tslint:disable-next-line: typedef
@@ -54,7 +51,9 @@ export class RegisterComponent implements OnInit {
         if (resp) {
           if (resp.updated) {
             console.log('User created!');
-            this.router.navigate(['login']);
+            sessionStorage.setItem('memberInfo', JSON.stringify(resp.memberInfo));
+            sessionStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
+            this.router.navigate(['reservations']);
           } else {
             console.log(resp.error);
           }
