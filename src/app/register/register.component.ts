@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../services/member.service';
 import { Router } from '@angular/router';
 import {FormControl, Validators} from '@angular/forms';
-import { relativeTimeThreshold } from 'moment';
 
 @Component({
   selector: 'app-register',
