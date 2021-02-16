@@ -67,7 +67,7 @@ router.post('/change', async (req: Request, res: Response, next: NextFunction) =
   try {
       const chgpwddata = req.body;
       if (chgpwddata) {
-        const password = chgpwddata.data.newPassword;
+        const password = chgpwddata.data.enteredPassword;
         const hash = bcrypt.hashSync(password, SALT);
         const email = chgpwddata.userInfo.email;
         const changePassword = (await db.query('UPDATE users SET password = $1 WHERE email = $2', [hash, email]));

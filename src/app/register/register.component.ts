@@ -14,6 +14,8 @@ export class RegisterComponent implements OnInit {
   inputErrors = '';
   hide = true;
   email = new FormControl('', [Validators.required, Validators.email]);
+  regexpNumber: RegExp = new RegExp('^[a-zA-Z0-9.,!#]{6,14}$');
+
   constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
@@ -25,22 +27,29 @@ export class RegisterComponent implements OnInit {
   // tslint:disable-next-line: typedef
   getEmailErrorMessage() {
     if (this.email.hasError('required')) {
+      this.inputErrors = 'Email is required';
       return 'Email is required';
+    } else {
+      this.inputErrors =  '';
     }
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    this.inputErrors = this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.inputErrors;
   }
 
   // tslint:disable-next-line: typedef
   validateConfirmPassword() {
     if (this.data.enteredPassword !== this.data.confirmPassword) {
       this.inputErrors = 'Confirm Password needs to match';
+    } else {
+      this.inputErrors = '';
     }
   }
 
   // tslint:disable-next-line: typedef
   addUser() {
     this.error = '';
-    if (!this.inputErrors) {
+    // tslint:disable-next-line: max-line-length
+    if (this.data.enteredPassword && this.data.confirmPassword && this.data.enteredPassword === this.data.confirmPassword && this.data.enteredEmail && this.data.displayName && this.data.enteredPassword.length >= 6 && this.data.enteredPassword.length <= 14 && this.regexpNumber.test(this.data.enteredPassword)) {
       this.memberService.createUser(this.data).subscribe((resp) => {
         if (resp) {
           if (resp.updated) {
