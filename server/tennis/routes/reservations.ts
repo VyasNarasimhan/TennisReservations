@@ -19,6 +19,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
             memberInfo.id, reservation.timeslot, reservation.courtnumber, reservation.date, false
           ])).rowCount, newReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows
       });
+      console.log((await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rowCount);
       console.log('Saved ' + req.body);
     }
   } catch (err){
