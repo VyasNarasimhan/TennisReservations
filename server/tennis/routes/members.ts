@@ -106,22 +106,6 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
   }
 });
 
-router.post('/admin', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside admin..' + req);
-  try {
-      const adminPassword = req.body.enteredPassword;
-      if (adminPassword && adminPassword === 'Wellesley12345') {
-        const listOfUsers = (await db.query('SELECT * FROM users')).rows;
-        res.send({allUsers: listOfUsers});
-      } else {
-        res.status(401).send({ error: 'Incorrect Password' });
-      }
-  } catch (err) {
-      console.log('Error during adminCheck .. Not found');
-      return next(err);
-  }
-});
-
 router.get('/resident', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside resident get');
   try {
