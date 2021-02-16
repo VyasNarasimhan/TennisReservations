@@ -33,7 +33,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Build Angular App
-        run: npm install && ng build --prod
+        run: npm install && npm run build -- --prod
         
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./dist/ s3://tennisreservations --delete
