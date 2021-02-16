@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
       this.inputErrors = 'Email is required';
       return 'Email is required';
     } else {
-      this.inputErrors =  '';
+      this.inputErrors = '';
     }
     this.inputErrors = this.email.hasError('email') ? 'Not a valid email' : '';
     return this.inputErrors;
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
   addUser() {
     this.error = '';
     // tslint:disable-next-line: max-line-length
-    if (this.data.enteredPassword && this.data.confirmPassword && this.data.enteredPassword === this.data.confirmPassword && this.data.enteredEmail && this.data.displayName && this.data.enteredPassword.length >= 6 && this.data.enteredPassword.length <= 14 && this.regexpNumber.test(this.data.enteredPassword)) {
+    if (this.inputErrors === '' && this.data.enteredPassword && this.data.confirmPassword && this.data.enteredPassword === this.data.confirmPassword && this.data.enteredEmail && this.data.displayName && this.data.enteredPassword.length >= 6 && this.data.enteredPassword.length <= 14 && this.regexpNumber.test(this.data.enteredPassword)) {
       this.memberService.createUser(this.data).subscribe((resp) => {
         if (resp) {
           if (resp.updated) {

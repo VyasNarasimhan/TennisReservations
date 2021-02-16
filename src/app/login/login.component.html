@@ -10,7 +10,7 @@
                         <mat-label>Enter your email</mat-label>
                         <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="30"
                             required>
-                        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+                        <mat-error>{{getEmailErrorMessage()}}</mat-error>
                     </mat-form-field>
                 </div>
             </div>
