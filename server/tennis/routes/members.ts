@@ -119,6 +119,7 @@ router.get('/resident', async (req: Request, res: Response, next: NextFunction) 
 
 router.post('/user', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside user get');
+  console.log(req.body);
   const getUser = (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0];
   const userRole = (await db.query('SELECT rolename FROM roles WHERE id=$1', [getUser.role])).rows[0];
   try {
