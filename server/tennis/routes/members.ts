@@ -89,7 +89,7 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
   try {
       const forgotpwddata = req.body;
       if (forgotpwddata) {
-        const email = req.body.data.email;
+        const email = req.body.data.enteredEmail;
         const possible = '1234567890qwertyuiopasdfghjklzxcvbnm';
         let newPass = '';
         for (let i = 0; i < 8; i++) {
