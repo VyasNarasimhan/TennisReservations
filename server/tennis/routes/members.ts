@@ -97,7 +97,7 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
         }
         const hash = bcrypt.hashSync(newPass, SALT);
         const changePassword = (await db.query('UPDATE users SET password = $1 WHERE email = $2', [hash, email.toUpperCase()]));
-        emailservice.sendEmail(emailservice.buildPasswordResetEmailConfig('narasimhan.shyamala@gmail.com', email, newPass));
+        emailservice.sendEmail(emailservice.buildPasswordResetEmailConfig('wellesleyhoa.tennis@gmail.com', email, newPass));
         res.send({updated: changePassword, newPassword: newPass});
       } else {
         res.status(401).send({ error: 'Could not change password or password was blank' });
