@@ -249,6 +249,10 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   }
 }
 
+h2, h5 {
+  color: #102538;
+}
+
 a {
   text-decoration: none;
 }
