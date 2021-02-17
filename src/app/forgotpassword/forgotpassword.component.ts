@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { MemberService } from '../services/member.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class ForgotpasswordComponent implements OnInit {
   data: any = {};
   newpass = '';
   error = '';
-  regexpNumber: RegExp = new RegExp('^[a-zA-Z0-9.,!#]{6,14}$');
+  email = new FormControl('', [Validators.required, Validators.email]);
+  inputErrors = '';
 
   constructor(private memberService: MemberService) { }
 
@@ -19,10 +21,22 @@ export class ForgotpasswordComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
+  getEmailErrorMessage() {
+    if (this.email.hasError('required')) {
+      this.inputErrors = 'Email is required';
+      return 'Email is required';
+    } else {
+      this.inputErrors = '';
+    }
+    this.inputErrors = this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.inputErrors;
+  }
+
+  // tslint:disable-next-line: typedef
   resetPassword() {
     this.error = '';
     // tslint:disable-next-line: max-line-length
-    if (this.data.enteredPassword.length >= 6 && this.data.enteredPassword.length <= 14 && this.regexpNumber.test(this.data.enteredPassword)) {
+    if (this.data.enteredEmail && !this.inputErrors) {
       let memberInfo: any = sessionStorage.getItem('memberInfo');
       memberInfo = JSON.parse(memberInfo);
       this.memberService.resetPassword({data: this.data, userInfo: memberInfo}).subscribe((resp) => {
