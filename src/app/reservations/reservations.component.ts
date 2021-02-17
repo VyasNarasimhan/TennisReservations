@@ -45,7 +45,7 @@ export class ReservationsComponent implements OnInit {
       suffix = 'PM';
     }
     counter = 0;
-    for (let i = 14; i < 44; i++) {
+    for (let i = 14; i < 45; i++) {
       this.times[counter] = tempTimes[i];
       counter++;
     }
@@ -78,6 +78,21 @@ export class ReservationsComponent implements OnInit {
       console.log('Save Failed');
       this.error = err.error.error;
     });
+  }
+
+  // tslint:disable-next-line: typedef
+  compareTimeAndTimeSlot(timeSlot: string) {
+    const currentTime = moment(new Date());
+    const reqDate = moment(this.currentDate);
+    const timeSlotTime = moment(timeSlot, 'hh:mm A');
+    reqDate.set({hour: timeSlotTime.hour(), minute: timeSlotTime.minute()});
+    if (currentTime > reqDate) {
+      return 1;
+    } else if (currentTime === reqDate) {
+      return 0;
+    } else {
+      return -1;
+    }
   }
 
   // tslint:disable-next-line: typedef
