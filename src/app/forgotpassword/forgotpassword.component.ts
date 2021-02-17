@@ -20,6 +20,7 @@ export class ForgotpasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // tslint:disable-next-line: typedef
   getEmailErrorMessage() {
     if (this.email.hasError('required')) {
       this.inputErrors = 'Email is required';
