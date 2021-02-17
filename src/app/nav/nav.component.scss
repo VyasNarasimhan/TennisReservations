@@ -1,11 +1,12 @@
 .navbar 
 {
     float: right;
-    text-align:center;
+    vertical-align:middle;
 }
 .navbar span a, .navbar a {
-    font-weight: 550;
-    font-size: 16px;
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 15px;
     letter-spacing: 0px;
     font-style: normal;
     color: #88929e;
@@ -14,10 +15,15 @@
     float: left;
     width: 20%;
     margin-left: 15px;
+    vertical-align: middle;
 }
 .clearfix {
     overflow: auto;
 }
 .nav-container {
     margin-top: 20px;
+}
+
+a {
+    text-decoration: none;
 }
