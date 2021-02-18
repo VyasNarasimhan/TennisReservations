@@ -1,6 +1,28 @@
 mat-form-field {
-    width: 100%;
+    width: 75%;
   }
 mat-card-content {
     height: 230px;
 }
+
+mat-card-content {
+  .row {
+    height: 70px;
+  }
+}
+
+.mat-card>.mat-card-actions {
+  margin-top: 30px;
+}
+
+.registercardcontainer {
+  mat-card {
+    mat-card-header {
+      .mat-card-header-text {
+        margin: 0 0px;
+      }
+    }
+  }
+}
+
+

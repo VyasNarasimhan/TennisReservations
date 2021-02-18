@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReservationsComponent } from './reservations/reservations.component';
@@ -42,6 +43,7 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
+    MatTabsModule,
     MatInputModule,
     HttpClientModule,
     BrowserAnimationsModule,

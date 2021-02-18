@@ -256,3 +256,7 @@ h2, h5 {
 a {
   text-decoration: none;
 }
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  background-color:rgb(133, 112, 81);
+}

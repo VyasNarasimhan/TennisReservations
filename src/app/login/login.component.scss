@@ -4,3 +4,17 @@ mat-card-content {
 mat-form-field {
     width: 100%;
   }
+
+  .mat-card>.mat-card-actions {
+    margin-top: 30px;
+  }
+  
+  .logincardcontainer {
+    mat-card {
+      mat-card-header {
+        .mat-card-header-text {
+          margin: 0 0px;
+        }
+      }
+    }
+  }
