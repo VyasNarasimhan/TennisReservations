@@ -1,31 +1,31 @@
-.hometitle {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding-top: 15px;
-}
-.hometitle span{
-    color: white;
-    font-size: 36px;
-    font-style:normal;
-    font-weight: 550;
-    font-family: Arial, Helvetica, sans-serif;
-}
-.homebody {
-    background-color: #8c704d;
-    color: white;
-    width:100%;
-}
 .tenniscourtimg {
-    margin-left: 30px;
-    margin-top: 50px;
-    
+    padding-left: 30px;
 }
-.content {
-    font-family: Montserrat;
-    font-size: 15px;
-    font-weight: normal;
+
+.tenniscourtimg >img {
+    filter: drop-shadow(2px 2px 3px black)
 }
+
+.homebody {
+    mat-card {
+      mat-card-header {
+        .mat-card-header-text {
+            margin: 0 0px;
+            vertical-align: middle;
+        }
+      }
+    }
+}
+
+mat-card-content {
+    padding-top: 20px;   
+}
+ 
+mat-card-title {
+    padding-left: 30px;
+}
+
+
 .row {
     margin-left: 0px;
     margin-right: 0px;
