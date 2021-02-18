@@ -16,4 +16,10 @@ export class ReservationsService {
   cancel(data: any): Observable<any> {
     return this.http.post(environment.apiRoot + '/tennis/reservations', data);
   }
+  getMaintenanceStatus(): Observable<any> {
+    return this.http.get(environment.apiRoot + '/tennis/reservations');
+  }
+  changeMaintenanceInfo(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/reservations/modifyMaintenance', data);
+  }
 }

@@ -41,3 +41,25 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     return next(err);
   }
 });
+
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside maintenance get');
+  try {
+    res.send({maintenanceStatus: (await db.query('SELECT * FROM maintenance')).rows});
+  } catch (err) {
+    console.log('Could not get maintenance');
+    return next(err);
+  }
+});
+
+router.post('/modifyMaintenance', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside status post');
+  try {
+    // tslint:disable-next-line: max-line-length
+    res.send({updated: (await db.query('UPDATE maintenance SET inmaintenance=$1, message=$2 WHERE court=$3', [req.body.values.inmaintenance, req.body.values.message, req.body.court]))});
+  } catch (err) {
+    console.log('Could not set status');
+    return next(err);
+  }
+});
+

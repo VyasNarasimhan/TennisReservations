@@ -43,7 +43,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         if (user) {
           const email = user.enteredEmail.toUpperCase();
           const password = user.enteredPassword;
-          if (email === 'ADMIN' && password === '1234') {
+          if (email === 'ADMIN' && password === 'Wellesley1234') {
             res.send({memberInfo: 'admin', allReservations: null});
           } else {
             // tslint:disable-next-line: max-line-length

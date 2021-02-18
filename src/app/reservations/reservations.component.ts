@@ -27,9 +27,10 @@ export class ReservationsComponent implements OnInit {
   selectedIndex = 0;
   reservationsLeft = 0;
   error = '';
+  maintenanceStatus: any;
 
   constructor(private router: Router, private reservationsService: ReservationsService) {
-    let tempTimes = new Array<string>(48);
+    const tempTimes = new Array<string>(48);
     let counter = 0;
     let suffix = 'AM';
     for (let i = 0; i < 2; i++) {
@@ -65,6 +66,11 @@ export class ReservationsComponent implements OnInit {
     for (const date of this.datesForNextWeek) {
       this.displayDatesForNextWeek.push(date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
     }
+    const temp: any = sessionStorage.getItem('maintenanceInfo');
+    this.maintenanceStatus = JSON.parse(temp);
+    this.maintenanceStatus.sort((a: any, b: any) => {
+      return a.court - b.court;
+    });
   }
   // tslint:disable-next-line: typedef
   addReservation(index: number, court: number) {

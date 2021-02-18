@@ -30,3 +30,44 @@
 <div *ngIf="!!loadError" id="error">
   <p>{{loadError}}</p>
 </div>
+<div class = "setMaintenance">
+  <p>Maintenance happening on Court 1?</p>
+  <button mat-raised-button (click)="changeMaintenanceInfo(0)">{{!!maintenanceForCourts[0].inmaintenance}}</button>
+  <div class = "setMessage" *ngIf="!!maintenanceForCourts[0].inmaintenance === true">
+    <mat-form-field hintLabel="Make sure the message contains what court the maintenance will take place">
+      <mat-label>Enter maintenance message</mat-label>
+      <input matInput type="text" [(ngModel)]="!!maintenanceForCourts[0].message" maxlength="500" required>
+    </mat-form-field>
+    <button mat-raised-button (click)="changeMaintenanceMessage(0)">Enter</button>
+  </div>
+
+  <p>Maintenance happening on Court 2?</p>
+  <button mat-raised-button (click)="changeMaintenanceInfo(1)">{{!!maintenanceForCourts[1].inmaintenance}}</button>
+  <div class = "setMessage" *ngIf="!!maintenanceForCourts[1].inmaintenance === true">
+    <mat-form-field hintLabel="Make sure the message contains what court the maintenance will take place">
+      <mat-label>Enter maintenance message</mat-label>
+      <input matInput type="text" [(ngModel)]="!!maintenanceForCourts[1].message" maxlength="500" required>
+    </mat-form-field>
+    <button mat-raised-button (click)="changeMaintenanceMessage(1)">Enter</button>
+  </div>
+
+  <p>Maintenance happening on Court 3?</p>
+  <button mat-raised-button (click)="changeMaintenanceInfo(2)">{{!!maintenanceForCourts[2].inmaintenance}}</button>
+  <div class = "setMessage" *ngIf="!!maintenanceForCourts[2].inmaintenance === true">
+    <mat-form-field hintLabel="Make sure the message contains what court the maintenance will take place">
+      <mat-label>Enter maintenance message</mat-label>
+      <input matInput type="text" [(ngModel)]="!!maintenanceForCourts[2].message" maxlength="500" required>
+    </mat-form-field>
+    <button mat-raised-button (click)="changeMaintenanceMessage(2)">Enter</button>
+  </div>
+
+  <p>Maintenance happening on Court 4?</p>
+  <button mat-raised-button (click)="changeMaintenanceInfo(3)">{{!!maintenanceForCourts[3].inmaintenance}}</button>
+  <div class = "setMessage" *ngIf="!!maintenanceForCourts[3].inmaintenance === true">
+    <mat-form-field hintLabel="Make sure the message contains what court the maintenance will take place">
+      <mat-label>Enter maintenance message</mat-label>
+      <input matInput type="text" [(ngModel)]="!!maintenanceForCourts[3].message" maxlength="500" required>
+    </mat-form-field>
+    <button mat-raised-button (click)="changeMaintenanceMessage(3)">Enter</button>
+  </div>
+</div>
