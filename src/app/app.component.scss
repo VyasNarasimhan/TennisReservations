@@ -1,9 +1,15 @@
 footer {
     position : absolute;
     bottom : 0;
-    height : 40px;
-    margin-top : 40px;
+    height : 200px;
+    width: 100%;
     font-size: small;
+    background-color: #102538;
+    z-index: -1;
+  }
+
+  .maincontainer {
+      margin-bottom: 200px;
   }
 
   .contact {
