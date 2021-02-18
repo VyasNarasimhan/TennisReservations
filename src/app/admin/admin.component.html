@@ -36,7 +36,7 @@
   <div class = "setMessage" *ngIf="!!maintenanceForCourts[0].inmaintenance === true">
     <mat-form-field hintLabel="Make sure the message contains what court the maintenance will take place">
       <mat-label>Enter maintenance message</mat-label>
-      <input matInput type="text" [(ngModel)]="!!maintenanceForCourts[0].message" maxlength="500" required>
+      <input matInput type="text" [(ngModel)]="maintenanceForCourts[0].message" maxlength="500" required>
     </mat-form-field>
     <button mat-raised-button (click)="changeMaintenanceMessage(0)">Enter</button>
   </div>
@@ -46,7 +46,7 @@
   <div class = "setMessage" *ngIf="!!maintenanceForCourts[1].inmaintenance === true">
     <mat-form-field hintLabel="Make sure the message contains what court the maintenance will take place">
       <mat-label>Enter maintenance message</mat-label>
-      <input matInput type="text" [(ngModel)]="!!maintenanceForCourts[1].message" maxlength="500" required>
+      <input matInput type="text" [(ngModel)]="maintenanceForCourts[1].message" maxlength="500" required>
     </mat-form-field>
     <button mat-raised-button (click)="changeMaintenanceMessage(1)">Enter</button>
   </div>
@@ -56,7 +56,7 @@
   <div class = "setMessage" *ngIf="!!maintenanceForCourts[2].inmaintenance === true">
     <mat-form-field hintLabel="Make sure the message contains what court the maintenance will take place">
       <mat-label>Enter maintenance message</mat-label>
-      <input matInput type="text" [(ngModel)]="!!maintenanceForCourts[2].message" maxlength="500" required>
+      <input matInput type="text" [(ngModel)]="maintenanceForCourts[2].message" maxlength="500" required>
     </mat-form-field>
     <button mat-raised-button (click)="changeMaintenanceMessage(2)">Enter</button>
   </div>
@@ -66,7 +66,7 @@
   <div class = "setMessage" *ngIf="!!maintenanceForCourts[3].inmaintenance === true">
     <mat-form-field hintLabel="Make sure the message contains what court the maintenance will take place">
       <mat-label>Enter maintenance message</mat-label>
-      <input matInput type="text" [(ngModel)]="!!maintenanceForCourts[3].message" maxlength="500" required>
+      <input matInput type="text" [(ngModel)]="maintenanceForCourts[3].message" maxlength="500" required>
     </mat-form-field>
     <button mat-raised-button (click)="changeMaintenanceMessage(3)">Enter</button>
   </div>
