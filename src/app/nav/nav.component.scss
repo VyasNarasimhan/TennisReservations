@@ -3,18 +3,34 @@
     float: right;
     vertical-align:middle;
 }
-.navbar span a, .navbar a {
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0px;
-    font-style: normal;
-    color: #88929e;
-    text-decoration: none;    
+
+.navbar {
+    a {
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 0px;
+        font-style: normal;
+        color: #88929e;
+        text-decoration: none;  
+    }
+    a:hover {
+        color : #102538;
+    }
+    span {
+        a {
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 0px;
+            font-style: normal;
+            color: #88929e;
+            text-decoration: none; 
+        }
+        a:hover {
+            color : #102538;
+        }
+    }
 }
 
-.navbar span a:hover {
-    color : #102538;  
-} 
 
 .logo {
     float: left;
