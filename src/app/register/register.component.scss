@@ -9,6 +9,11 @@ mat-card-content {
   }
 }
 
+.mat-card>.mat-card-actions {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 .registercardcontainer {
   mat-card {
     mat-card-header {
