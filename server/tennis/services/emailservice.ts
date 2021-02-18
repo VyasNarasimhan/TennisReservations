@@ -1,8 +1,8 @@
 // Import required AWS SDK clients and commands for Node.js
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 
 // Set the AWS Region
-const REGION = "us-east-1"; //e.g. "us-east-1"
+const REGION = "us-east-1"; // e.g. "us-east-1"
 // Create SES service object
 const ses = new SESClient({ region: REGION });
 
@@ -15,9 +15,9 @@ const fns = {
      * @returns {Promise<{success: boolean, error: *}|{success: boolean, body: *}>}
      */
   sendEmail: async ( emailConfig: any ) => {
-    try {       
+    try {
       const data = await ses.send(new SendEmailCommand(emailConfig));
-      console.log("Success", data);        
+      console.log('Success', data);
       return { success: true, body: data };
     } catch ( err ) {
       return { success: false, error: err };
@@ -33,7 +33,7 @@ const fns = {
             /* more items */
           ],
           ToAddresses: [
-            to, //RECEIVER_ADDRESS
+            to, // RECEIVER_ADDRESS
             /* more To-email addresses */
           ],
         },
@@ -43,7 +43,7 @@ const fns = {
             /* required */
             Html: {
               Charset: "UTF-8",
-              Data: "<head></head><body>Your password has been reset. The new password is " + passtext + ".</body>",
+              Data: "<head></head><body>Your password has been reset. Your new password is " + passtext + "</body>",
             },
             Text: {
               Charset: "UTF-8",
