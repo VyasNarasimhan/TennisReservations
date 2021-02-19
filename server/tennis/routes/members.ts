@@ -45,6 +45,8 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
           const password = user.enteredPassword;
           if (email === 'ADMIN' && password === 'Wellesley1234') {
             res.send({memberInfo: 'admin', allReservations: null});
+          } else if (email === 'ADMIN' && password !== 'Wellesley1234') {
+            res.status(401).send({ error: 'Incorrect username or password' });
           } else {
             // tslint:disable-next-line: max-line-length
             const member = (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [email])).rows[0];
