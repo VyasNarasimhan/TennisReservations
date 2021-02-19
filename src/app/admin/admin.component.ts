@@ -34,13 +34,14 @@ export class AdminComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   searchForUser() {
+    this.loadError = '';
     this.data.enteredEmail = this.data.enteredEmail.toUpperCase();
     this.memberService.findMemberByEmail(this.data).subscribe((resp) => {
       this.memberFromDb = resp.user;
       this.memberFromDb.userRole = resp.role.rolename;
     }, (err) => {
       console.log(err);
-      this.loadError = err;
+      this.loadError = err.error.error;
     });
   }
 

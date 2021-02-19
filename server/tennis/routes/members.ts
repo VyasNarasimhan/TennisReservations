@@ -113,10 +113,14 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
 router.post('/user', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside user get');
   console.log(req.body);
-  const getUser = (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0];
-  const userRole = (await db.query('SELECT rolename FROM roles WHERE id=$1', [getUser.role])).rows[0];
   try {
-    res.send({user: (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0], role: userRole});
+    const getUser = (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows;
+    if (getUser.length > 0) {
+      const userRole = (await db.query('SELECT rolename FROM roles WHERE id=$1', [getUser[0].role])).rows[0];
+      res.send({user: (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0], role: userRole});
+    } else {
+      res.status(402).send({error: 'Could not find user with that email'});
+    }
   } catch (err) {
     return next(err);
   }
