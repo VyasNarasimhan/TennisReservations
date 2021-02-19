@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiRoot: 'http://ec2-54-161-202-239.compute-1.amazonaws.com:4201'
+  apiRoot: 'https://diuv8uk8fds1a.cloudfront.net'
 };
