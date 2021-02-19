@@ -1,7 +1,7 @@
 footer {
-    position : absolute;
+    position : fixed;
     bottom : 0;
-    height : 200px;
+    height : 100px;
     width: 100%;
     font-size: small;
     background-color: #102538;
@@ -9,8 +9,10 @@ footer {
   }
 
   .maincontainer {
-      margin-bottom: 200px;
-  }
+    padding-bottom: 110px;
+    z-index: 1;
+    position: relative;
+}
 
   .contact {
       float : right;
