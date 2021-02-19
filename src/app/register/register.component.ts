@@ -53,7 +53,6 @@ export class RegisterComponent implements OnInit {
           if (resp.updated) {
             console.log('User created!');
             sessionStorage.setItem('memberInfo', JSON.stringify(resp.memberInfo));
-            sessionStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
             this.reservationsService.getMaintenanceStatus().subscribe((response) => {
               sessionStorage.setItem('maintenanceInfo', JSON.stringify(response.maintenanceStatus));
               this.router.navigate(['reservations']);

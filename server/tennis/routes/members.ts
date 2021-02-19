@@ -23,7 +23,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
             [
               user.enteredEmail.toUpperCase(), user.displayName, id, hash
             // tslint:disable-next-line: max-line-length
-            ])).rowCount, memberInfo: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [user.enteredEmail.toUpperCase()])).rows[0], allReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows
+            ])).rowCount, memberInfo: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [user.enteredEmail.toUpperCase()])).rows[0]
         });
       }
       console.log('Saved ' + req.body.displayName);
@@ -51,8 +51,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
             // tslint:disable-next-line: max-line-length
             const member = (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [email])).rows[0];
             if (bcrypt.compareSync(password, member.password)) {
-              const reservations = (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows;
-              res.send({memberInfo : member, allReservations : reservations});
+              res.send({memberInfo : member});
             } else {
               res.status(401).send({ error: 'Incorrect username or password' });
             }
@@ -117,7 +116,8 @@ router.post('/user', async (req: Request, res: Response, next: NextFunction) => 
     const getUser = (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows;
     if (getUser.length > 0) {
       const userRole = (await db.query('SELECT rolename FROM roles WHERE id=$1', [getUser[0].role])).rows[0];
-      res.send({user: (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows[0], role: userRole});
+      // tslint:disable-next-line: max-line-length
+      res.send({user: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [req.body.enteredEmail])).rows[0], role: userRole});
     } else {
       res.status(402).send({error: 'Could not find user with that email'});
     }

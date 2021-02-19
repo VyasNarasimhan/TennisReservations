@@ -22,4 +22,7 @@ export class ReservationsService {
   changeMaintenanceInfo(data: any): Observable<any> {
     return this.http.post(environment.apiRoot + '/tennis/reservations/modifyMaintenance', data);
   }
+  getReservations(): Observable<any> {
+    return this.http.get(environment.apiRoot + '/tennis/reservations/getReservations');
+  }
 }

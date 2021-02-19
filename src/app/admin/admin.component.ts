@@ -28,7 +28,6 @@ export class AdminComponent implements OnInit {
       this.maintenanceForCourts.sort((a: any, b: any) => {
         return a.court - b.court;
       });
-      console.log(this.maintenanceForCourts);
     });
   }
 

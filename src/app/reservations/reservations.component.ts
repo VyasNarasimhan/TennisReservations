@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReservationsService } from '../services/reservations.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { MemberService } from '../services/member.service';
 
 @Component({
   selector: 'app-reservations',
@@ -11,6 +12,7 @@ import * as moment from 'moment';
 export class ReservationsComponent implements OnInit {
 
   memberInfo: any;
+  firstMemberInfo: any;
 
   reservations: Array<any> = [];
   reservationsDisplay1: any;
@@ -28,8 +30,13 @@ export class ReservationsComponent implements OnInit {
   reservationsLeft = 0;
   error = '';
   maintenanceStatus: any;
+  anotherUser = '';
+  reserveAsAnotherUserMessage = '';
 
-  constructor(private router: Router, private reservationsService: ReservationsService) {
+  constructor(private router: Router, private memberService: MemberService, private reservationsService: ReservationsService) { }
+  times: Array<string> = [];
+
+  ngOnInit(): void {
     const tempTimes = new Array<string>(48);
     let counter = 0;
     let suffix = 'AM';
@@ -50,10 +57,6 @@ export class ReservationsComponent implements OnInit {
       this.times[counter] = tempTimes[i];
       counter++;
     }
-  }
-  times: Array<string> = [];
-
-  ngOnInit(): void {
     if (sessionStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     } else if (sessionStorage.getItem('memberInfo') === 'admin') {
@@ -61,7 +64,13 @@ export class ReservationsComponent implements OnInit {
     } else {
       const memberls: any = sessionStorage.getItem('memberInfo');
       this.memberInfo = JSON.parse(memberls);
-      this.generateReservationTable(this.currentDate);
+      this.firstMemberInfo = JSON.parse(memberls);
+      this.reservationsService.getReservations().subscribe((resp) => {
+        sessionStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
+        this.generateReservationTable(this.currentDate);
+      }, (err) => {
+        console.log(err);
+      });
     }
     for (const date of this.datesForNextWeek) {
       this.displayDatesForNextWeek.push(date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
@@ -72,11 +81,27 @@ export class ReservationsComponent implements OnInit {
       return a.court - b.court;
     });
   }
+
+  // tslint:disable-next-line: typedef
+  searchForUser() {
+    this.error = '';
+    this.reserveAsAnotherUserMessage = '';
+    this.anotherUser = this.anotherUser.toUpperCase();
+    this.memberService.findMemberByEmail({enteredEmail: this.anotherUser}).subscribe((resp) => {
+      this.memberInfo = resp.user;
+      this.generateReservationTable(this.currentDate);
+      this.reserveAsAnotherUserMessage = 'Success! You can now reserve as ' + this.memberInfo.email;
+    }, (err) => {
+      console.log(err);
+      this.error = err.error.error;
+    });
+  }
+
   // tslint:disable-next-line: typedef
   addReservation(index: number, court: number) {
     this.error = '';
     // tslint:disable-next-line: max-line-length
-    this.reservationsService.save({member: sessionStorage.getItem('memberInfo'), timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
+    this.reservationsService.save({member: this.memberInfo, timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
       sessionStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
       this.generateReservationTable(this.currentDate);
       console.log('Reservations saved');
@@ -105,7 +130,7 @@ export class ReservationsComponent implements OnInit {
   unreserve(index: number, court: number) {
     this.error = '';
     // tslint:disable-next-line: max-line-length
-    this.reservationsService.cancel({member: sessionStorage.getItem('memberInfo'), timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
+    this.reservationsService.cancel({member: this.memberInfo, timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
       sessionStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
       this.generateReservationTable(this.currentDate);
       console.log('Reservation canceled');
@@ -126,7 +151,6 @@ export class ReservationsComponent implements OnInit {
     this.displayDate = moment(new Date(this.currentDate)).format('MM-DD-YYYY');
     this.selectedIndex = this.datesForNextWeek.indexOf(date);
     let tempReservationLeft = 3;
-    console.log(this.selectedIndex);
       // tslint:disable-next-line: typedef
     const allReservations: any = sessionStorage.getItem('allReservations');
     if (allReservations) {
