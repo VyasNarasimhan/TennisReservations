@@ -56,10 +56,11 @@ export class RegisterComponent implements OnInit {
             sessionStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
             this.reservationsService.getMaintenanceStatus().subscribe((response) => {
               sessionStorage.setItem('maintenanceInfo', JSON.stringify(response.maintenanceStatus));
+              this.router.navigate(['reservations']);
             }, (err) => {
               sessionStorage.setItem('maintenanceInfo', 'null');
+              this.router.navigate(['reservations']);
             });
-            this.router.navigate(['reservations']);
           } else {
             console.log(resp.error);
           }
