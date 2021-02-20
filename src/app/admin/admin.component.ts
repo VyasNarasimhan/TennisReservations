@@ -71,9 +71,10 @@ export class AdminComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  changeMaintenanceInfo(index: number) {
+  changeMaintenanceInfo(index: number, newStatus: boolean) {
     this.maintenanceError = '';
-    this.maintenanceForCourts[index].inmaintenance = !this.maintenanceForCourts[index].inmaintenance;
+    this.maintenanceForCourts[index].inmaintenance = newStatus;
+    console.log(this.maintenanceForCourts[index]);
     this.reservationsService.changeMaintenanceInfo({values: this.maintenanceForCourts[index], court: index + 1}).subscribe((resp) => {
       console.log('Maintenance info changed');
     }, (err) => {
