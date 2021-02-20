@@ -20,6 +20,7 @@ export class AdminComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   // tslint:disable-next-line: max-line-length
   maintenanceForCourts: any;
+  maintenanceError = '';
   constructor(private memberService: MemberService, private router: Router, private reservationsService: ReservationsService) { }
 
   ngOnInit(): void {
@@ -59,6 +60,7 @@ export class AdminComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   changeRole() {
+    this.loadError = '';
     this.memberService.changeRole(this.memberFromDb).subscribe((resp) => {
       this.memberFromDb.userRole = resp.role;
       console.log(this.memberFromDb.userRole);
@@ -70,22 +72,24 @@ export class AdminComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   changeMaintenanceInfo(index: number) {
+    this.maintenanceError = '';
     this.maintenanceForCourts[index].inmaintenance = !this.maintenanceForCourts[index].inmaintenance;
     this.reservationsService.changeMaintenanceInfo({values: this.maintenanceForCourts[index], court: index + 1}).subscribe((resp) => {
       console.log('Maintenance info changed');
     }, (err) => {
       console.log(err);
-      this.loadError = err.error.error;
+      this.maintenanceError = err.error.error;
     });
   }
 
   // tslint:disable-next-line: typedef
   changeMaintenanceMessage(index: number) {
+    this.maintenanceError = '';
     this.reservationsService.changeMaintenanceInfo({values: this.maintenanceForCourts[index], court: index + 1}).subscribe((resp) => {
       console.log('Message changed');
     }, (err) => {
       console.log(err);
-      this.loadError = err.error.error;
+      this.maintenanceError = err.error.error;
     });
   }
 
