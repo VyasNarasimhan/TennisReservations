@@ -180,7 +180,7 @@ export class ReservationsComponent implements OnInit {
               membername : res.displayname,
                 courtnumber : res.court,
                 editable : false};
-            if (this.memberInfo.rolename === 'COACH') {
+            if (this.firstMemberInfo.rolename === 'COACH') {
               tempReservationLeft = 1000;
             } else if (res.user_fk === this.memberInfo.id) {
               tempReservationLeft -= 1;

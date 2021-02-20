@@ -1,6 +1,6 @@
 <div class="pageBackground bg-light">
   <div id="reservations">
-    <h2 *ngIf="memberInfo.rolename === 'RESIDENT'">Number of Reservations you can still make: {{reservationsLeft}}</h2>
+    <h2 *ngIf="firstMemberInfo.rolename === 'RESIDENT'">Number of Reservations you can still make: {{reservationsLeft}}</h2>
     <div id="ReserveAs" *ngIf="firstMemberInfo.rolename === 'COACH'">
       <mat-form-field> 
         <mat-label>Reserve as: </mat-label>
