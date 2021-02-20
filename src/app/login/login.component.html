@@ -29,9 +29,9 @@
         </div>
     </mat-card-content>
     <mat-card-actions>
-       <button mat-raised-button color="primary"
-                    (click)="validateUser()">Login</button><button mat-raised-button color="primary"
-                    (click)="forgotpwd()">Forgot Password</button>        
+       <button mat-raised-button color="primary" (click)="validateUser()">Login</button>
+        <button mat-raised-button color="accent" (click)="forgotpwd()">Forgot Password</button>
+        <button mat-raised-button color="accent" (click)="register()">Create Account</button>        
     </mat-card-actions>
     <div *ngIf="!!error" id="error">
         <p>{{error}}</p>

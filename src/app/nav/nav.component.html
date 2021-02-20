@@ -2,13 +2,14 @@
     <div class="logo">
         <img src = "../../assets/wellesley-logo-light.jpg" [routerLink]="['/home']"/>
     </div>
-    <div class="navbar">
-        <a mat-button [routerLink]="['/home']">HOME</a>
-        <a *ngIf="!memberService.isLoggedIn()" mat-button routerLink='/login-register'>LOGIN/REGISTER</a>
+    <nav class="navbar navbar-light">
+        <a class="navbar-brand" mat-button [routerLink]="['/home']">HOME</a>
+        <a class="navbar-brand" *ngIf="!memberService.isLoggedIn()" mat-button routerLink='/login'>LOGIN/REGISTER</a>
         <span *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()">
-            <a mat-button routerLink='/reservations'>RESERVATIONS</a>
-            <a mat-button routerLink='/changepassword'>CHANGE PASSWORD</a>
+            <a class="navbar-brand" mat-button routerLink='/reservations'>RESERVATIONS</a>
+            <a class="navbar-brand" mat-button routerLink='/changepassword'>CHANGE PASSWORD</a>
         </span>
-        <a *ngIf="memberService.isLoggedIn()" mat-button class="nav-link" (click)="logout()">LOGOUT</a>
-    </div>
+        <a class="navbar-brand" *ngIf="memberService.isLoggedIn()" mat-button class="nav-link" (click)="logout()">LOGOUT</a>
+    </nav>
 </div>
+
