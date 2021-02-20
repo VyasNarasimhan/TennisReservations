@@ -13,28 +13,26 @@
 
     <div *ngIf="memberFromDb" class="row searchresults">
       <div class="col">
-        <h5>Click on the Role Button to change the user's role from Coach to Resident and vice-versa.</h5>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Display Name</th>
-              <th>Email</th>
-              <th>Current Role</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td scope="col">{{memberFromDb.displayname}}</td>
-              <td scope="col">{{memberFromDb.email}}</td>
-              <td scope="col"><button mat-raised-button (click)="changeRole()">{{memberFromDb.userRole}}</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <h6>Click on the Role Button to change the user's role from Coach to Resident and vice-versa.</h6>
+        <div class="row">
+          <div class="col">
+            <span class="font-weight-bold">Display Name: </span><span>{{memberFromDb.displayname}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span class="font-weight-bold">Email: </span><span>{{memberFromDb.email}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span class="font-weight-bold"> Current Role: </span><span><button mat-raised-button color="primary" (click)="changeRole()">{{memberFromDb.userRole}}</button></span>
+          </div>
+        </div>      
       </div>
     </div>
-    <div *ngIf="!!loadError" id="error">
-      <p>{{loadError}}</p>
+    <div *ngIf="!!loadError" id="error" class="alert alert-danger">
+        {{loadError}}
     </div>
   </mat-card-content>
 </mat-card>
