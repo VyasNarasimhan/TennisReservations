@@ -34,29 +34,9 @@ export class ReservationsComponent implements OnInit {
   reserveAsAnotherUserMessage = '';
 
   constructor(private router: Router, private memberService: MemberService, private reservationsService: ReservationsService) { }
-  times: Array<string> = [];
+  times: Array<string> = ['7:00 AM', '7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM', '9:00 PM', '9:30 PM', '10:00 PM'];
 
   ngOnInit(): void {
-    const tempTimes = new Array<string>(48);
-    let counter = 0;
-    let suffix = 'AM';
-    for (let i = 0; i < 2; i++) {
-      tempTimes[counter] = '12:00 ' + suffix;
-      counter++;
-      tempTimes[counter] = '12:30 ' + suffix;
-      counter++;
-      for (let hour = 1; hour < 12; hour++) {
-        tempTimes[counter] = hour + ':00 ' + suffix;
-        tempTimes[counter + 1] = hour + ':30 ' + suffix;
-        counter += 2;
-      }
-      suffix = 'PM';
-    }
-    counter = 0;
-    for (let i = 14; i < 45; i++) {
-      this.times[counter] = tempTimes[i];
-      counter++;
-    }
     if (sessionStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     } else if (sessionStorage.getItem('memberInfo') === 'admin') {
@@ -71,6 +51,11 @@ export class ReservationsComponent implements OnInit {
       }, (err) => {
         console.log(err);
       });
+    }
+    if (this.firstMemberInfo.rolename === 'COACH') {
+      for (let i = 7; i < 14; i++) {
+        this.datesForNextWeek.push(new Date(Date.now() + i * this.nextDay));
+      }
     }
     for (const date of this.datesForNextWeek) {
       this.displayDatesForNextWeek.push(date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());

@@ -18,7 +18,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
         updated: (await db.query('insert into reservations (user_fk, dateCreated, timeslot, court, reservation_date, canceled) values ($1, CURRENT_DATE, $2, $3, $4, $5)',
           [
             memberInfo.id, reservation.timeslot, reservation.courtnumber, reservation.date, false
-          ])).rowCount, newReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows
+          ])).rowCount, newReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 14 and canceled = false')).rows
       });
       console.log('Saved ' + req.body);
     }
@@ -36,7 +36,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     // tslint:disable-next-line: max-line-length
     const cancel = (await db.query('UPDATE reservations SET canceled = true where user_fk = $1 and reservation_date = $2 and timeslot = $3 and court = $4', [memberInfo.id, reservation.date.slice(0, 10), reservation.timeslot, reservation.courtnumber]));
     console.log(cancel.rowCount);
-    res.send({canceledRows: cancel, newReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows});
+    res.send({canceledRows: cancel, newReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 14 and canceled = false')).rows});
   } catch (err) {
     console.log('Could not cancel reservation');
     return next(err);
@@ -67,7 +67,7 @@ router.post('/modifyMaintenance', async (req: Request, res: Response, next: Next
 router.get('/getReservations', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside reservations get');
   try {
-    res.send({allReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 7 and canceled = false')).rows});
+    res.send({allReservations: (await db.query('SELECT res.*, u.displayName FROM reservations res, users u where res.user_fk = u.id and res.reservation_date >= CURRENT_DATE and res.reservation_date < CURRENT_DATE + 14 and canceled = false')).rows});
   } catch (err) {
     console.log('Could not get reservations');
     return next(err);
