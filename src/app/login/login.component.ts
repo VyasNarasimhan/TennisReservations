@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
         console.log('User is valid!');
         if (resp.memberInfo !== 'admin') {
           sessionStorage.setItem('memberInfo', JSON.stringify(resp.memberInfo));
+          sessionStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
           this.reservationsService.getMaintenanceStatus().subscribe((response) => {
             sessionStorage.setItem('maintenanceInfo', JSON.stringify(response.maintenanceStatus));
             this.router.navigate(['reservations']);
@@ -59,6 +60,10 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line: typedef
   forgotpwd() {
     this.router.navigate(['forgotpassword']);
+  }
+
+  register() {
+    this.router.navigate(['register']);
   }
 
 }
