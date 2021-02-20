@@ -7,18 +7,19 @@ mat-tab-group {
     margin-top: 30px auto;
     width: 50%;
 }
-mat-form-field {
-    width: 50%;
-  }
 
 
 .searchuserbutton {
     margin-bottom: 15px;
     margin-left: 4px;
 }
-
-.searchresults {
+.searchresults{
     margin-top: 10px;
     margin-bottom: 5px;
+    border: solid;
+    border-radius: 0.5em;
+    border-color: #e1e1ea;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
