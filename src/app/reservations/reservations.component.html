@@ -1,4 +1,4 @@
-<div class="pageBackground bg-light">
+<div class="pageBackground bg-light" *ngIf="isLoaded">
   <div id="reservations">
     <h2 *ngIf="firstMemberInfo.rolename === 'RESIDENT'">Number of Reservations you can still make: {{reservationsLeft}}</h2>
     <div id="ReserveAs" *ngIf="firstMemberInfo.rolename === 'COACH'">

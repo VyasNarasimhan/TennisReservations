@@ -11,6 +11,7 @@ import { ReservationsService } from '../services/reservations.service';
 })
 export class AdminComponent implements OnInit {
 
+  isLoaded = false;
   memberFromDb: any;
   userMaint = true;
   courtMaint = false;
@@ -22,6 +23,7 @@ export class AdminComponent implements OnInit {
   constructor(private memberService: MemberService, private router: Router, private reservationsService: ReservationsService) { }
 
   ngOnInit(): void {
+    this.isLoaded = false;
     if (sessionStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     }
@@ -30,6 +32,7 @@ export class AdminComponent implements OnInit {
       this.maintenanceForCourts.sort((a: any, b: any) => {
         return a.court - b.court;
       });
+      this.isLoaded = true;
     });
   }
 
