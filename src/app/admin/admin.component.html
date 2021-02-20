@@ -123,11 +123,10 @@
             <mat-form-field appearance="fill">
               <mat-label>Court 1 Under Maintenance ? </mat-label>
               <mat-select (change)="changeMaintenanceInfo(0)" [(ngModel)]="maintenanceForCourts[0].inmaintenance">
-                <mat-option *ngFor="let optval of changeMaintenanceInfo(0)" [value]="optval">
-                  {{optval}}
-                </mat-option>
+                <mat-option  [value]="true">YES</mat-option>
+                <mat-option  [value]="false">NO</mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field>            
         </div>
       </div>
       <div *ngIf="!!maintenanceForCourts[0].inmaintenance === true" class="row input-group mb-3">
