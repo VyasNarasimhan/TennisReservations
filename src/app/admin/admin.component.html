@@ -1,4 +1,4 @@
-<mat-card *ngIf="!!userMaint && userMaint" class="searchForUser bg-light">
+<mat-card *ngIf="(!!userMaint && userMaint) && isLoaded" class="searchForUser bg-light">
   <mat-card-header>
       <mat-card-title>User Maintenance</mat-card-title>
   </mat-card-header>
