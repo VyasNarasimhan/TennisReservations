@@ -1,40 +1,51 @@
-<mat-tab-group animationDuration="500ms">
-  <mat-tab label="Search User" >
-    <div class="searchForUser bg-light">
-        <mat-form-field>
-          <mat-label>Search for user</mat-label>
-          <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="30" required>
-          <mat-error>{{getEmailErrorMessage()}}</mat-error>
-        </mat-form-field>
-        <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForUser()">Search</button>
-        <div *ngIf="memberFromDb" class="row searchresults">
-          <div class="col">
-            <h5>Click on the Role Button to change the user's role from Coach to Resident and vice-versa.</h5>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Display Name</th>
-                  <th>Email</th>
-                  <th>Current Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td scope="col">{{memberFromDb.displayname}}</td>
-                  <td scope="col">{{memberFromDb.email}}</td>
-                  <td scope="col"><button mat-raised-button (click)="changeRole()">{{memberFromDb.userRole}}</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div *ngIf="!!loadError" id="error">
-          <p>{{loadError}}</p>
-        </div>
+<mat-card *ngIf="!!userMaint && userMaint" class="searchForUser bg-light">
+  <mat-card-header>
+      <mat-card-title>User Maintenance</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Search for user</mat-label>
+      <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="30" required>
+      <mat-error>{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForUser()">Search</button>
+    <button class="searchuserbutton" mat-raised-button color="accent" (click)="userMaint = false; courtMaint = true;">Court Maintenance</button>
+
+    <div *ngIf="memberFromDb" class="row searchresults">
+      <div class="col">
+        <h5>Click on the Role Button to change the user's role from Coach to Resident and vice-versa.</h5>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Display Name</th>
+              <th>Email</th>
+              <th>Current Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="col">{{memberFromDb.displayname}}</td>
+              <td scope="col">{{memberFromDb.email}}</td>
+              <td scope="col"><button mat-raised-button (click)="changeRole()">{{memberFromDb.userRole}}</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </mat-tab>
-  <mat-tab label="Maintenance" class="bg-light">
+    <div *ngIf="!!loadError" id="error">
+      <p>{{loadError}}</p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!!courtMaint && courtMaint" class="courtMaintenance bg-light">
+  <mat-card-header>
+      <mat-card-title>Court Maintenance</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <button class="searchuserbutton" mat-raised-button color="accent" (click)="userMaint = true; courtMaint = false;">User Maintenance</button>
+
     <table class="table table-bordered">
       <tr>
         <td>Under Maintenance ?</td>
@@ -98,5 +109,7 @@
         </td>
       </tr>
     </table>
-  </mat-tab>
-</mat-tab-group>
+  </mat-card-content>
+</mat-card>
+
+    
