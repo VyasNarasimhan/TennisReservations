@@ -21,7 +21,7 @@
         (click)="generateReservationTable(datesForNextWeek[i])">{{date}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <div id="div-no-mobile">
+  <div class="div-no-mobile">
     <div *ngFor="let info of maintenanceStatus">
       <p *ngIf="info.inmaintenance === true">{{info.message}}</p>
     </div>
@@ -136,7 +136,7 @@
       </div>
     </div>
     <div *ngIf="courtNum === 'court1'" class="row">
-      <div class="Col">
+      <div class="col">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -173,7 +173,7 @@
       </div>
     </div>
     <div *ngIf="courtNum === 'court2'" class="row">
-      <div class="Col">
+      <div class="col">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -210,7 +210,7 @@
       </div>
     </div>
     <div *ngIf="courtNum === 'court3'" class="row">
-      <div class="Col">
+      <div class="col">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -247,7 +247,7 @@
       </div>
     </div>
     <div *ngIf="courtNum === 'court4'" class="row">
-      <div class="Col">
+      <div class="col">
         <table class="table table-bordered">
           <thead>
             <tr>
