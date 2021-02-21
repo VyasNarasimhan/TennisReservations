@@ -15,6 +15,8 @@ export class ReservationsComponent implements OnInit {
   memberInfo: any;
   firstMemberInfo: any;
 
+  courtNum: string = 'court1';
+
   reservations: Array<any> = [];
   reservationsDisplay1: any;
   reservationsDisplay2: any;
