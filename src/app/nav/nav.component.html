@@ -1,4 +1,4 @@
-
+<div class="clearfix">
     <div class="logo">
         <img src = "../../assets/wellesley-logo-light.jpg" [routerLink]="['/home']"/>
     </div>    
@@ -8,4 +8,4 @@
         <a *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()" routerLink='/reservations'>RESERVATIONS</a>
         <a *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()" routerLink='/changepassword'>CHANGE PASSWORD</a> 
       </div>
-
+</div>
