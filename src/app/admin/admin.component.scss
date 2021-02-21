@@ -23,3 +23,20 @@ mat-tab-group {
     padding-bottom: 5px;
 }
 
+.div-only-mobile {
+    display: none;
+}
+.div-no-mobile {
+    display: block;
+}
+@media screen and (max-width: 600px) {
+
+.div-no-mobile {
+    display:none
+}
+
+.div-only-mobile {
+    display: block;
+}
+
+}
