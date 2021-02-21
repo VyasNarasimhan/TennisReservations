@@ -1,5 +1,5 @@
 mat-form-field {
-    width: 75%;
+    width: 50%;
   }
 
 mat-card-content {
@@ -24,4 +24,11 @@ mat-card-content {
   }
 }
 
-
+@media only screen and (max-width: 600px) {
+  mat-form-field {
+    width: 100%;
+  }
+  .mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
+    margin: 0 0px;
+  }
+}

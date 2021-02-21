@@ -261,3 +261,11 @@ a {
 .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
   background-color:rgb(133, 112, 81);
 }
+
+.mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+  background-color: white;
+  color: black;
+  border: solid;
+  border-width: 3px;
+  border-color: rgb(133, 112, 81);
+}

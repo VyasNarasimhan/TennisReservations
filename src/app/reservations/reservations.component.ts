@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReservationsService } from '../services/reservations.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { MemberService } from '../services/member.service';
 
 @Component({
   selector: 'app-reservations',
@@ -10,7 +11,11 @@ import * as moment from 'moment';
 })
 export class ReservationsComponent implements OnInit {
 
+  isLoaded = false;
   memberInfo: any;
+  firstMemberInfo: any;
+
+  courtNum = 'court1';
 
   reservations: Array<any> = [];
   reservationsDisplay1: any;
@@ -28,32 +33,14 @@ export class ReservationsComponent implements OnInit {
   reservationsLeft = 0;
   error = '';
   maintenanceStatus: any;
+  anotherUser = '';
+  reserveAsAnotherUserMessage = '';
 
-  constructor(private router: Router, private reservationsService: ReservationsService) {
-    const tempTimes = new Array<string>(48);
-    let counter = 0;
-    let suffix = 'AM';
-    for (let i = 0; i < 2; i++) {
-      tempTimes[counter] = '12:00 ' + suffix;
-      counter++;
-      tempTimes[counter] = '12:30 ' + suffix;
-      counter++;
-      for (let hour = 1; hour < 12; hour++) {
-        tempTimes[counter] = hour + ':00 ' + suffix;
-        tempTimes[counter + 1] = hour + ':30 ' + suffix;
-        counter += 2;
-      }
-      suffix = 'PM';
-    }
-    counter = 0;
-    for (let i = 14; i < 45; i++) {
-      this.times[counter] = tempTimes[i];
-      counter++;
-    }
-  }
-  times: Array<string> = [];
+  constructor(private router: Router, private memberService: MemberService, private reservationsService: ReservationsService) { }
+  times: Array<string> = ['7:00 AM', '7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM', '9:00 PM', '9:30 PM', '10:00 PM'];
 
   ngOnInit(): void {
+    this.isLoaded = false;
     if (sessionStorage.getItem('memberInfo') == null) {
       this.router.navigate(['login']);
     } else if (sessionStorage.getItem('memberInfo') === 'admin') {
@@ -61,7 +48,19 @@ export class ReservationsComponent implements OnInit {
     } else {
       const memberls: any = sessionStorage.getItem('memberInfo');
       this.memberInfo = JSON.parse(memberls);
-      this.generateReservationTable(this.currentDate);
+      this.firstMemberInfo = JSON.parse(memberls);
+      this.reservationsService.getReservations().subscribe((resp) => {
+        sessionStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
+        this.generateReservationTable(this.currentDate);
+        this.isLoaded = true;
+      }, (err) => {
+        console.log(err);
+      });
+    }
+    if (this.firstMemberInfo.rolename === 'COACH') {
+      for (let i = 7; i < 14; i++) {
+        this.datesForNextWeek.push(new Date(Date.now() + i * this.nextDay));
+      }
     }
     for (const date of this.datesForNextWeek) {
       this.displayDatesForNextWeek.push(date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
@@ -72,11 +71,27 @@ export class ReservationsComponent implements OnInit {
       return a.court - b.court;
     });
   }
+
+  // tslint:disable-next-line: typedef
+  searchForUser() {
+    this.error = '';
+    this.reserveAsAnotherUserMessage = '';
+    this.anotherUser = this.anotherUser.toUpperCase();
+    this.memberService.findMemberByEmail({enteredEmail: this.anotherUser}).subscribe((resp) => {
+      this.memberInfo = resp.user;
+      this.generateReservationTable(this.currentDate);
+      this.reserveAsAnotherUserMessage = 'Success! You can now reserve as ' + this.memberInfo.email;
+    }, (err) => {
+      console.log(err);
+      this.error = err.error.error;
+    });
+  }
+
   // tslint:disable-next-line: typedef
   addReservation(index: number, court: number) {
     this.error = '';
     // tslint:disable-next-line: max-line-length
-    this.reservationsService.save({member: sessionStorage.getItem('memberInfo'), timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
+    this.reservationsService.save({member: this.memberInfo, timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
       sessionStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
       this.generateReservationTable(this.currentDate);
       console.log('Reservations saved');
@@ -105,7 +120,7 @@ export class ReservationsComponent implements OnInit {
   unreserve(index: number, court: number) {
     this.error = '';
     // tslint:disable-next-line: max-line-length
-    this.reservationsService.cancel({member: sessionStorage.getItem('memberInfo'), timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
+    this.reservationsService.cancel({member: this.memberInfo, timeslot: this.times[index], date: moment(new Date(this.currentDate)).format('YYYY-MM-DD'), courtnumber: court}).subscribe((resp) => {
       sessionStorage.setItem('allReservations', JSON.stringify(resp.newReservations));
       this.generateReservationTable(this.currentDate);
       console.log('Reservation canceled');
@@ -126,7 +141,6 @@ export class ReservationsComponent implements OnInit {
     this.displayDate = moment(new Date(this.currentDate)).format('MM-DD-YYYY');
     this.selectedIndex = this.datesForNextWeek.indexOf(date);
     let tempReservationLeft = 3;
-    console.log(this.selectedIndex);
       // tslint:disable-next-line: typedef
     const allReservations: any = sessionStorage.getItem('allReservations');
     if (allReservations) {
@@ -156,7 +170,7 @@ export class ReservationsComponent implements OnInit {
               membername : res.displayname,
                 courtnumber : res.court,
                 editable : false};
-            if (this.memberInfo.rolename === 'COACH') {
+            if (this.firstMemberInfo.rolename === 'COACH') {
               tempReservationLeft = 1000;
             } else if (res.user_fk === this.memberInfo.id) {
               tempReservationLeft -= 1;

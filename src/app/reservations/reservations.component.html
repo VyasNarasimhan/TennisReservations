@@ -1,17 +1,31 @@
-<div class="pageBackground bg-light">
-  <div id="reservations">
-    <h2 *ngIf="memberInfo.rolename === 'RESIDENT'">Number of Reservations you can still make: {{reservationsLeft}}</h2>
+<div class="bg-light" *ngIf="isLoaded">
+  <h2 *ngIf="firstMemberInfo.rolename === 'RESIDENT'">Number of Reservations you can still make: {{reservationsLeft}}
+  </h2>
+  <div id="ReserveAs" *ngIf="firstMemberInfo.rolename === 'COACH'">
     <mat-form-field>
-      <mat-label>Date: {{displayDate}}</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let date of displayDatesForNextWeek; let i = index" value="i"
-          (click)="generateReservationTable(datesForNextWeek[i])">{{date}}</mat-option>
-      </mat-select>
+      <mat-label>Reserve as: </mat-label>
+      <input matInput type="text" [(ngModel)]="anotherUser" maxlength="30">
     </mat-form-field>
+    <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForUser()">Search</button>
+    <div id="success">
+      <p>{{reserveAsAnotherUserMessage}}</p>
+    </div>
+    <div id="error" *ngIf="!!error" class="alert alert-danger">
+      <p>{{error}}</p>
+    </div>
+  </div>
+  <mat-form-field>
+    <mat-label>Date: {{displayDate}}</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let date of displayDatesForNextWeek; let i = index" value="i"
+        (click)="generateReservationTable(datesForNextWeek[i])">{{date}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="div-no-mobile">
     <div *ngFor="let info of maintenanceStatus">
       <p *ngIf="info.inmaintenance === true">{{info.message}}</p>
     </div>
-    <table class="table table-bordered tabletablebor">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th scope="col">Time</th>
@@ -25,8 +39,8 @@
         <tr *ngFor="let time of times; let i = index">
           <th scope="row">{{time}}</th>
           <td align="center"
-            *ngIf="!reservationsDisplay1[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false"><button
-              class="res-button" mat-raised-button (click)="addReservation(i, 1)">Reserve</button></td>
+            *ngIf="!reservationsDisplay1[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
+            <button class="res-button" mat-raised-button (click)="addReservation(i, 1)">Reserve</button></td>
           <td align="center"
             *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid === memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
             <button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 1)">Cancel</button></td>
@@ -36,13 +50,17 @@
           <td align="center" class="info"
             *ngIf="(reservationsLeft <= 0 && !reservationsDisplay1[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
             Unavailable</td>
-          <td align="center" *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay1[time] && maintenanceStatus[0].inmaintenance === false"></td>
-          <td align="center" *ngIf="maintenanceStatus[0].inmaintenance === true"></td>
-          <td align="center" *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay1[time] && maintenanceStatus[0].inmaintenance === false">{{reservationsDisplay1[time].membername}}</td>
-          
           <td align="center"
-            *ngIf="!reservationsDisplay2[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false"><button
-              class="res-button" mat-raised-button (click)="addReservation(i, 2)">Reserve</button></td>
+            *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay1[time] && maintenanceStatus[0].inmaintenance === false">
+          </td>
+          <td align="center" *ngIf="maintenanceStatus[0].inmaintenance === true"></td>
+          <td align="center"
+            *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay1[time] && maintenanceStatus[0].inmaintenance === false">
+            {{reservationsDisplay1[time].membername}}</td>
+
+          <td align="center"
+            *ngIf="!reservationsDisplay2[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
+            <button class="res-button" mat-raised-button (click)="addReservation(i, 2)">Reserve</button></td>
           <td align="center"
             *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid === memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
             <button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 2)">Cancel</button></td>
@@ -50,15 +68,19 @@
             *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid !== memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
             {{reservationsDisplay2[time].membername}}</td>
           <td align="center"
-            *ngIf="(reservationsLeft <= 0 && !reservationsDisplay2[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false"><button
-              class="res-button" mat-raised-button>Unavailable</button></td>
-          <td align="center" *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay2[time] && maintenanceStatus[1].inmaintenance === false"></td>
+            *ngIf="(reservationsLeft <= 0 && !reservationsDisplay2[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
+            <button class="res-button" mat-raised-button>Unavailable</button></td>
+          <td align="center"
+            *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay2[time] && maintenanceStatus[1].inmaintenance === false">
+          </td>
           <td align="center" *ngIf="maintenanceStatus[1].inmaintenance === true"></td>
-          <td align="center" *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay2[time] && maintenanceStatus[1].inmaintenance === false">{{reservationsDisplay2[time].membername}}</td>
+          <td align="center"
+            *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay2[time] && maintenanceStatus[1].inmaintenance === false">
+            {{reservationsDisplay2[time].membername}}</td>
 
           <td align="center"
-            *ngIf="!reservationsDisplay3[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false"><button
-              class="res-button" mat-raised-button (click)="addReservation(i, 3)">Reserve</button></td>
+            *ngIf="!reservationsDisplay3[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
+            <button class="res-button" mat-raised-button (click)="addReservation(i, 3)">Reserve</button></td>
           <td align="center"
             *ngIf="!!reservationsDisplay3[time] && reservationsDisplay3[time].memberid === memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
             <button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 3)">Cancel</button></td>
@@ -66,15 +88,19 @@
             *ngIf="!!reservationsDisplay3[time] && reservationsDisplay3[time].memberid !== memberInfo.id  && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
             {{reservationsDisplay3[time].membername}}</td>
           <td align="center"
-            *ngIf="(reservationsLeft <= 0 && !reservationsDisplay3[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false"><button
-              class="res-button" mat-raised-button>Unavailable</button></td>
-          <td align="center" *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay3[time] && maintenanceStatus[2].inmaintenance === false"></td>
+            *ngIf="(reservationsLeft <= 0 && !reservationsDisplay3[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
+            <button class="res-button" mat-raised-button>Unavailable</button></td>
+          <td align="center"
+            *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay3[time] && maintenanceStatus[2].inmaintenance === false">
+          </td>
           <td align="center" *ngIf="maintenanceStatus[2].inmaintenance === true"></td>
-          <td align="center" *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay3[time] && maintenanceStatus[2].inmaintenance === false">{{reservationsDisplay3[time].membername}}</td>
+          <td align="center"
+            *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay3[time] && maintenanceStatus[2].inmaintenance === false">
+            {{reservationsDisplay3[time].membername}}</td>
 
           <td align="center"
-            *ngIf="!reservationsDisplay4[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false"><button
-              class="res-button" mat-raised-button (click)="addReservation(i, 4)">Reserve</button></td>
+            *ngIf="!reservationsDisplay4[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
+            <button class="res-button" mat-raised-button (click)="addReservation(i, 4)">Reserve</button></td>
           <td align="center"
             *ngIf="!!reservationsDisplay4[time] && reservationsDisplay4[time].memberid === memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
             <button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 4)">Cancel</button></td>
@@ -82,16 +108,183 @@
             *ngIf="!!reservationsDisplay4[time] && reservationsDisplay4[time].memberid !== memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
             {{reservationsDisplay4[time].membername}}</td>
           <td align="center"
-            *ngIf="(reservationsLeft <= 0 && !reservationsDisplay4[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false"><button
-              class="res-button" mat-raised-button>Unavailable</button></td>
-          <td align="center" *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay4[time] && maintenanceStatus[3].inmaintenance === false"></td>
+            *ngIf="(reservationsLeft <= 0 && !reservationsDisplay4[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
+            <button class="res-button" mat-raised-button>Unavailable</button></td>
+          <td align="center"
+            *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay4[time] && maintenanceStatus[3].inmaintenance === false">
+          </td>
           <td align="center" *ngIf="maintenanceStatus[3].inmaintenance === true"></td>
-          <td align="center" *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay4[time] && maintenanceStatus[3].inmaintenance === false">{{reservationsDisplay4[time].membername}}</td>
+          <td align="center"
+            *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay4[time] && maintenanceStatus[3].inmaintenance === false">
+            {{reservationsDisplay4[time].membername}}</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div id="error">
+  <div class="div-only-mobile">
+    <div class="row mt-2">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Court</mat-label>
+          <mat-select [(ngModel)]="courtNum" name="courtnumber" #courtnumber="ngModel">
+            <mat-option value="court1">Court 1</mat-option>
+            <mat-option value="court2">Court 2</mat-option>
+            <mat-option value="court3">Court 3</mat-option>
+            <mat-option value="court4">Court 4</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="courtNum === 'court1'" class="row">
+      <div class="col">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Court</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let time of times; let i = index">
+              <th scope="row">{{time}}</th>
+              <td align="center"
+                *ngIf="!reservationsDisplay1[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
+                <button class="res-button" mat-raised-button (click)="addReservation(i, 1)">Reserve</button></td>
+              <td align="center"
+                *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid === memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
+                <button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 1)">Cancel</button>
+              </td>
+              <td align="center" class="info"
+                *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid !== memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
+                {{reservationsDisplay1[time].membername}}</td>
+              <td align="center" class="info"
+                *ngIf="(reservationsLeft <= 0 && !reservationsDisplay1[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
+                Unavailable</td>
+              <td align="center"
+                *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay1[time] && maintenanceStatus[0].inmaintenance === false">
+              </td>
+              <td align="center" *ngIf="maintenanceStatus[0].inmaintenance === true"></td>
+              <td align="center"
+                *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay1[time] && maintenanceStatus[0].inmaintenance === false">
+                {{reservationsDisplay1[time].membername}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="courtNum === 'court2'" class="row">
+      <div class="col">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Court</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let time of times; let i = index">
+              <th scope="row">{{time}}</th>
+              <td align="center"
+                *ngIf="!reservationsDisplay2[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
+                <button class="res-button" mat-raised-button (click)="addReservation(i, 2)">Reserve</button></td>
+              <td align="center"
+                *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid === memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
+                <button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 2)">Cancel</button>
+              </td>
+              <td align="center"
+                *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid !== memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
+                {{reservationsDisplay2[time].membername}}</td>
+              <td align="center"
+                *ngIf="(reservationsLeft <= 0 && !reservationsDisplay2[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
+                <button class="res-button" mat-raised-button>Unavailable</button></td>
+              <td align="center"
+                *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay2[time] && maintenanceStatus[1].inmaintenance === false">
+              </td>
+              <td align="center" *ngIf="maintenanceStatus[1].inmaintenance === true"></td>
+              <td align="center"
+                *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay2[time] && maintenanceStatus[1].inmaintenance === false">
+                {{reservationsDisplay2[time].membername}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="courtNum === 'court3'" class="row">
+      <div class="col">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Court</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let time of times; let i = index">
+              <th scope="row">{{time}}</th>
+              <td align="center"
+                *ngIf="!reservationsDisplay3[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
+                <button class="res-button" mat-raised-button (click)="addReservation(i, 3)">Reserve</button></td>
+              <td align="center"
+                *ngIf="!!reservationsDisplay3[time] && reservationsDisplay3[time].memberid === memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
+                <button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 3)">Cancel</button>
+              </td>
+              <td align="center"
+                *ngIf="!!reservationsDisplay3[time] && reservationsDisplay3[time].memberid !== memberInfo.id  && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
+                {{reservationsDisplay3[time].membername}}</td>
+              <td align="center"
+                *ngIf="(reservationsLeft <= 0 && !reservationsDisplay3[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
+                <button class="res-button" mat-raised-button>Unavailable</button></td>
+              <td align="center"
+                *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay3[time] && maintenanceStatus[2].inmaintenance === false">
+              </td>
+              <td align="center" *ngIf="maintenanceStatus[2].inmaintenance === true"></td>
+              <td align="center"
+                *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay3[time] && maintenanceStatus[2].inmaintenance === false">
+                {{reservationsDisplay3[time].membername}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="courtNum === 'court4'" class="row">
+      <div class="col">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Court</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let time of times; let i = index">
+              <th scope="row">{{time}}</th>
+              <td align="center"
+                *ngIf="!reservationsDisplay4[time] && reservationsLeft > 0 && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
+                <button class="res-button" mat-raised-button (click)="addReservation(i, 4)">Reserve</button></td>
+              <td align="center"
+                *ngIf="!!reservationsDisplay4[time] && reservationsDisplay4[time].memberid === memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
+                <button class="res-button" mat-raised-button color="primary" (click)="unreserve(i, 4)">Cancel</button>
+              </td>
+              <td align="center"
+                *ngIf="!!reservationsDisplay4[time] && reservationsDisplay4[time].memberid !== memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
+                {{reservationsDisplay4[time].membername}}</td>
+              <td align="center"
+                *ngIf="(reservationsLeft <= 0 && !reservationsDisplay4[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
+                <button class="res-button" mat-raised-button>Unavailable</button></td>
+              <td align="center"
+                *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay4[time] && maintenanceStatus[3].inmaintenance === false">
+              </td>
+              <td align="center" *ngIf="maintenanceStatus[3].inmaintenance === true"></td>
+              <td align="center"
+                *ngIf="compareTimeAndTimeSlot(time) === 1 && !!reservationsDisplay4[time] && maintenanceStatus[3].inmaintenance === false">
+                {{reservationsDisplay4[time].membername}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="error" *ngIf="!!error" class="alert alert-danger">
     <p>{{error}}</p>
   </div>
 </div>
