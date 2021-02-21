@@ -75,11 +75,7 @@ export class ReservationsComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   searchForUser() {
-<<<<<<< HEAD
-    this.error = '';
-=======
     this.reserveAsError = '';
->>>>>>> dev
     this.reserveAsAnotherUserMessage = '';
     this.anotherUser = this.anotherUser.toUpperCase();
     this.memberService.findMemberByEmail({enteredEmail: this.anotherUser}).subscribe((resp) => {
@@ -88,11 +84,7 @@ export class ReservationsComponent implements OnInit {
       this.reserveAsAnotherUserMessage = 'Success! You can now reserve as ' + this.memberInfo.email;
     }, (err) => {
       console.log(err);
-<<<<<<< HEAD
-      this.error = err.error.error;
-=======
       this.reserveAsError = err.error.error;
->>>>>>> dev
     });
   }
 
