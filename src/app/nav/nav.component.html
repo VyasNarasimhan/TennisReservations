@@ -6,6 +6,7 @@
         <a [routerLink]="['/home']">HOME</a>
         <a *ngIf="!memberService.isLoggedIn()" routerLink='/login'>LOGIN/REGISTER</a>
         <a *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()" routerLink='/reservations'>RESERVATIONS</a>
-        <a *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()" routerLink='/changepassword'>CHANGE PASSWORD</a> 
+        <a *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()" routerLink='/changepassword'>CHANGE PASSWORD</a>
+        <a *ngIf="memberService.isLoggedIn()" (click)="logout()">LOGOUT</a> 
       </div>
 </div>
