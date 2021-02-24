@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -11,6 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class NavComponent implements OnInit, OnDestroy {
 
+  navbarOpen = false;
   loggedIn: string | null = '';
   isAdmin = '';
   private subscription: Subscription | undefined;
@@ -41,6 +43,10 @@ export class NavComponent implements OnInit, OnDestroy {
     sessionStorage.setItem('loggedIn', 'false');
     this.memberService.logout();
     this.router.navigateByUrl('login');
+  }
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 
 }
