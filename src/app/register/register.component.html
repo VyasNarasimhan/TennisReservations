@@ -48,6 +48,18 @@
                 </mat-form-field>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <mat-form-field
+                    hintLabel="This is the email or username that you have registered with on the Wellesley website">
+                    <mat-label>Enter Wellesley ID</mat-label>
+                    <input matInput type="text" [(ngModel)]="data.wellesleyID" maxlength="50" #wellesleyID="ngModel"
+                        name="wellesleyID" pattern="^[a-zA-Z0-9.'\s@]{1,20}$" required>
+                    <mat-error *ngIf="wellesleyID?.errors?.pattern">Wellesley ID is invalid</mat-error>
+                    <mat-error *ngIf="wellesleyID?.errors?.required">Wellesley ID is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button color="primary" (click)="addUser()">Register</button>
