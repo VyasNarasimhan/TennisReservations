@@ -5,7 +5,7 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>Search for user</mat-label>
-      <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="30" required>
+      <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="50" required>
       <mat-error>{{getEmailErrorMessage()}}</mat-error>
     </mat-form-field>
     <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForUser()">Search</button>
@@ -137,6 +137,26 @@
           </div>
         </div>
       </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-card class="insertWellesleyID bg-light">
+  <mat-card-header>
+    <mat-card-title>Add new Wellesley Account</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Enter account email</mat-label>
+      <input matInput type="text" [(ngModel)]="newData.enteredEmail" [formControl]="email" maxlength="50" required>
+      <mat-error>{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter account username</mat-label>
+      <input matInput type="text" [(ngModel)]="newData.enteredUsername" maxlength="50">
+    </mat-form-field>
+    <button class="searchuserbutton" mat-raised-button color="primary" (click)="enterNewAccountInfo()">Enter</button>
+    <div *ngIf="!!wellesleyAccountError" id="error" class="alert alert-danger">
+      {{wellesleyAccountError}}
     </div>
   </mat-card-content>
 </mat-card>

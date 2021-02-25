@@ -16,6 +16,8 @@ export class RegisterComponent implements OnInit {
   hide = true;
   email = new FormControl('', [Validators.required, Validators.email]);
   regexpNumber: RegExp = new RegExp('^[a-zA-Z0-9.,!#]{6,14}$');
+  diplayNameRegEx: RegExp = new RegExp('^[a-zA-Z0-9. ]{1,20}$');
+  wellesleyIDRegEx: RegExp = new RegExp('^[a-zA-Z0-9.@_]{1,50}$');
 
   constructor(private memberService: MemberService, private router: Router, private reservationsService: ReservationsService) { }
 
@@ -46,8 +48,9 @@ export class RegisterComponent implements OnInit {
   // tslint:disable-next-line: typedef
   addUser() {
     this.error = '';
+    console.log((this.diplayNameRegEx.test(this.data.displayName)));
     // tslint:disable-next-line: max-line-length
-    if (this.inputErrors === '' && this.data.enteredPassword && this.data.confirmPassword && this.data.enteredPassword === this.data.confirmPassword && this.data.enteredEmail && this.data.displayName && this.data.enteredPassword.length >= 6 && this.data.enteredPassword.length <= 14 && this.regexpNumber.test(this.data.enteredPassword)) {
+    if (this.inputErrors === '' && this.data.enteredPassword && this.data.confirmPassword && this.data.enteredPassword === this.data.confirmPassword && this.data.enteredEmail && this.data.displayName && this.diplayNameRegEx.test(this.data.displayName) && this.data.enteredPassword.length >= 6 && this.data.enteredPassword.length <= 14 && this.regexpNumber.test(this.data.enteredPassword) && this.data.wellesleyID && this.wellesleyIDRegEx.test(this.data.wellesleyID)) {
       this.memberService.createUser(this.data).subscribe((resp) => {
         if (resp) {
           if (resp.updated) {
@@ -74,6 +77,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line: typedef
   login() {
     this.router.navigate(['login']);
   }

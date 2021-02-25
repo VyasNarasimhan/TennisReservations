@@ -15,16 +15,25 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       const existingUserResult = await db.query('SELECT email FROM users WHERE $1 = email', [user.enteredEmail.toUpperCase()]);
       const hash = bcrypt.hashSync(user.enteredPassword, SALT);
       if (existingUserResult.rows.length === 1) {
-        res.status(422).send({ error: 'User already exists'});
+        res.status(422).send({ error: 'User already exists' });
+      // tslint:disable-next-line: max-line-length
+      } else if ((await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0 && (await db.query('SELECT * FROM residents WHERE UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0) {
+        res.status(423).send({ error: 'Incorrect Wellesley Resident ID' });
       } else {
-        const id = (await db.query('SELECT id FROM roles WHERE rolename=\'RESIDENT\'')).rows[0].id;
-        res.send({
-          updated: (await db.query('insert into users (email, displayName, role, password) values ($1, $2, $3, $4)',
-            [
-              user.enteredEmail.toUpperCase(), user.displayName, id, hash
-            // tslint:disable-next-line: max-line-length
-            ])).rowCount, memberInfo: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [user.enteredEmail.toUpperCase()])).rows[0]
-        });
+        // tslint:disable-next-line: max-line-length
+        const wellesleyId = (await db.query('SELECT id FROM residents WHERE UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0 ? (await db.query('SELECT id FROM residents WHERE UPPER(user_email)=$1', [user.wellesleyID.toUpperCase()])).rows[0].id : (await db.query('SELECT id FROM residents WHERE UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rows[0].id;
+        if ((await db.query('SELECT * FROM users WHERE resident_fk=$1', [wellesleyId])).rowCount >= 2) {
+          res.status(424).send({ error: 'Account limit for this address has been reached' });
+        } else {
+          const id = (await db.query('SELECT id FROM roles WHERE rolename=\'RESIDENT\'')).rows[0].id;
+          res.send({
+            updated: (await db.query('insert into users (email, displayName, role, password, resident_fk) values ($1, $2, $3, $4, $5)',
+              [
+                user.enteredEmail.toUpperCase(), user.displayName, id, hash, wellesleyId
+              // tslint:disable-next-line: max-line-length
+              ])).rowCount, memberInfo: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [user.enteredEmail.toUpperCase()])).rows[0]
+          });
+        }
       }
       console.log('Saved ' + req.body.displayName);
     } else {
@@ -127,12 +136,28 @@ router.post('/user', async (req: Request, res: Response, next: NextFunction) => 
 });
 
 router.post('/changerole', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside changerole get');
+  console.log('Inside changerole post');
   const user = req.body;
   const newRole = (user.userRole === 'COACH') ? 'RESIDENT' : 'COACH';
   const newRoleId = (await db.query('SELECT id FROM roles WHERE rolename=$1', [newRole])).rows[0].id;
   try {
     res.send({updated: (await db.query('UPDATE users SET role=$1 WHERE email=$2', [newRoleId, user.email])), role: newRole});
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/newAccount', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside newAccount post');
+  const account = req.body;
+  try {
+    // tslint:disable-next-line: max-line-length
+    if ((await db.query('SELECT * FROM residents WHERE user_login = $1 AND user_email = $2', [account.enteredEmail, account.enteredUsername])).rowCount > 0) {
+      res.status(422).send({ error: 'Account info already exists' });
+    } else {
+      // tslint:disable-next-line: max-line-length
+      res.send({updated: (await db.query('INSERT INTO residents (user_email, user_login) VALUES ($1, $2)', [account.enteredEmail, account.enteredUsername]))});
+    }
   } catch (err) {
     return next(err);
   }

@@ -40,6 +40,10 @@ export class MemberService {
     return this.http.post(environment.apiRoot + '/tennis/members/changerole', data);
   }
 
+  createNewAccount(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members/newAccount', data);
+  }
+
   isLoggedIn(): boolean {
     const memberls: any = sessionStorage.getItem('memberInfo');
     const isLoggedIn = !!memberls;

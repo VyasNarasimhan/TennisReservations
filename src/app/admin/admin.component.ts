@@ -21,6 +21,8 @@ export class AdminComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   maintenanceForCourts: any;
   maintenanceError = '';
+  wellesleyAccountError = '';
+  newData: any = {};
   constructor(private memberService: MemberService, private router: Router, private reservationsService: ReservationsService) { }
 
   ngOnInit(): void {
@@ -91,6 +93,17 @@ export class AdminComponent implements OnInit {
     }, (err) => {
       console.log(err);
       this.maintenanceError = err.error.error;
+    });
+  }
+
+  // tslint:disable-next-line: typedef
+  enterNewAccountInfo() {
+    this.wellesleyAccountError = '';
+    this.memberService.createNewAccount(this.newData).subscribe((resp) => {
+      console.log('Account added');
+    }, (err) => {
+      console.log(err);
+      this.wellesleyAccountError = err.error.error;
     });
   }
 
