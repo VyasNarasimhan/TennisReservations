@@ -158,10 +158,10 @@ router.post('/newAccount', async (req: Request, res: Response, next: NextFunctio
   try {
     // tslint:disable-next-line: max-line-length
     if ((await db.query('SELECT * FROM residents WHERE user_login = $1 AND user_email = $2', [account.newEmail, account.enteredUsername])).rowCount > 0) {
-      res.status(422).send({ error: 'Account info already exists' });
+      res.status(422).send({ error: 'Wellesley Resident Account already exists' });
     } else {
       // tslint:disable-next-line: max-line-length
-      res.send({updated: (await db.query('INSERT INTO residents (user_email, user_login) VALUES ($1, $2)', [account.enteredEmail, account.enteredUsername]))});
+      res.send({updated: (await db.query('INSERT INTO residents (user_email, user_login) VALUES ($1, $2)', [account.newEmail, account.enteredUsername]))});
     }
   } catch (err) {
     return next(err);
