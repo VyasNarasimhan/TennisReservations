@@ -22,7 +22,9 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       // tslint:disable-next-line: max-line-length
       } else if ((await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 OR UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rows[0].active === false) {
         res.status(422).send({ error: 'Wellesley ID is deactivated'});
-      }else {
+      } else if (!user.wellesleyID) {
+        res.status(422).send({ error: 'No Wellesley ID was entered' });
+      } else {
         // tslint:disable-next-line: max-line-length
         const wellesleyId = (await db.query('SELECT id FROM residents WHERE UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0 ? (await db.query('SELECT id FROM residents WHERE UPPER(user_email)=$1', [user.wellesleyID.toUpperCase()])).rows[0].id : (await db.query('SELECT id FROM residents WHERE UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rows[0].id;
         if ((await db.query('SELECT * FROM users WHERE resident_fk=$1', [wellesleyId])).rowCount >= 2) {
