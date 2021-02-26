@@ -1,40 +1,40 @@
 <div class="logincardcontainer">
-<mat-card class="login-card bg-light">
+  <mat-card class="login-card bg-light">
     <mat-card-header>
-        <mat-card-title>LOGIN</mat-card-title>
+      <mat-card-title>LOGIN</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div id="loginpage">
-            <div class="row">
-                <div class="col-md-6">
-                    <mat-form-field appearance="standard">
-                        <mat-label>Enter your email</mat-label>
-                        <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="50"
-                            required>
-                        <mat-error>{{getEmailErrorMessage()}}</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <mat-form-field>
-                        <mat-label>Enter your password</mat-label>
-                        <input matInput type="password" [(ngModel)]="data.enteredPassword" #password="ngModel"
-                            maxlength="14" minlength="6" name="password" pattern="^[a-zA-Z0-9.,!#]{6,14}$" required>
-                        <mat-error *ngIf="password?.errors?.required">Password is required</mat-error>
-                        <mat-error *ngIf="password?.errors?.pattern">Password is invalid</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
+      <div id="loginpage">
+        <div class="row">
+          <div class="col-md-8">
+            <mat-form-field appearance="standard">
+              <mat-label>Enter your email</mat-label>
+              <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="50"
+                  required>
+              <mat-error>{{getEmailErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-md-8">
+            <mat-form-field>
+              <mat-label>Enter your password</mat-label>
+              <input matInput type="password" [(ngModel)]="data.enteredPassword" #password="ngModel"
+                  maxlength="14" minlength="6" name="password" pattern="^[a-zA-Z0-9.,!#]{6,14}$" required>
+              <mat-error *ngIf="password?.errors?.required">Password is required</mat-error>
+              <mat-error *ngIf="password?.errors?.pattern">Password is invalid</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
     </mat-card-content>
     <mat-card-actions>
-       <button mat-raised-button color="primary" (click)="validateUser()">Login</button>
-        <button mat-raised-button color="accent" (click)="forgotpwd()">Forgot Password</button>
-        <button mat-raised-button color="accent" (click)="register()">Create Account</button>        
+      <button mat-raised-button color="primary" (click)="validateUser()">Login</button>
+      <button mat-raised-button color="accent" (click)="forgotpwd()">Forgot Password</button>
+      <button mat-raised-button color="accent" (click)="register()">Create Account</button>
     </mat-card-actions>
     <div *ngIf="!!error" id="error" class="alert alert-danger">
         <p>{{error}}</p>
     </div>
-</mat-card>
+  </mat-card>
 </div>

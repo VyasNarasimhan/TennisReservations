@@ -1,38 +1,39 @@
+.res-form {
+  padding: 20px 4% 5px;
+  .searchuserbutton {
+    margin-left: 15px;
+  }
+}
+
 .res-button {
-    width: 100%;
-    display:block;
+  width: 100%;
+  display: block;
 }
 
 .reservedDisplay {
-    background-color: lightblue;
+  background-color: lightblue;
 }
 
 .table-bordered {
-    border: 1px solid black;
+  border: 1px solid black;
 }
-.table-bordered th, .table-bordered td {
-    border: 1px solid black;
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid black;
 }
 .dateColor {
-    margin-top: 20px;
-
+  margin-top: 20px;
 }
 
-
-.div-only-mobile {
-    display: none;
-}
-.div-no-mobile {
-    display: block;
-}
-@media screen and (max-width: 600px) {
-
-.div-no-mobile {
-    display:none
-}
-
-.div-only-mobile {
-    display: block;
-}
-
+@media only screen and (max-width: 768px) {
+  .res-form {
+    padding: 20px 4% 5px;
+    .searchuserbutton {
+      margin: 0;
+      width: 100%;
+    }
+  }
+  .sel-court-form {
+    padding: 0 4%;
+  }
 }

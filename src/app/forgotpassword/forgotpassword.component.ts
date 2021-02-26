@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MemberService } from '../services/member.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class ForgotpasswordComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   inputErrors = '';
 
-  constructor(private memberService: MemberService) { }
+  constructor(private memberService: MemberService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -45,6 +46,11 @@ export class ForgotpasswordComponent implements OnInit {
         this.error = err.error.error;
       });
     }
+  }
+
+  // tslint:disable-next-line: typedef
+  login() {
+    this.router.navigate(['login']);
   }
 
 }

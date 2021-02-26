@@ -1,42 +1,60 @@
 .row {
-    margin-left: 0px;
-    margin-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 mat-tab-group {
-    margin-top: 30px auto;
-    width: 50%;
+  margin-top: 30px auto;
+  width: 50%;
 }
-
 
 .searchuserbutton {
-    margin-bottom: 15px;
-    margin-left: 4px;
+  margin-bottom: 15px;
+  margin-left: 4px;
 }
-.searchresults{
-    margin-top: 10px;
-    margin-bottom: 5px;
-    border: solid;
-    border-radius: 0.5em;
-    border-color: #e1e1ea;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.div-only-mobile {
-    display: none;
-}
-.div-no-mobile {
-    display: block;
-}
-@media screen and (max-width:600px ) {
-
-.div-no-mobile {
-    display:none
+.searchresults {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border: solid;
+  border-radius: 0.5em;
+  border-color: #e1e1ea;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-.div-only-mobile {
-    display: block;
+.admin-menu {
+  margin-bottom: 15px;
+  .mat-raised-button {
+    margin-right: 20px;
+  }
 }
 
+@media only screen and (max-width: 768px) {
+  #admin-page {
+    .admin-menu {
+      margin-bottom: 0;
+    }
+    .mat-card {
+      padding: 30px 5%;
+      margin-top: 30px;
+      border-radius: 0;
+      mat-form-field {
+        width: 100%;
+        & + mat-form-field {
+          margin-top: 50px;
+        }
+      }
+      .mat-card-actions {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+    .mat-button,
+    .mat-raised-button,
+    .mat-stroked-button {
+      display: block;
+      margin: 0 0 10px;
+      width: 100%;
+    }
+  }
 }
