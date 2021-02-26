@@ -1,24 +1,26 @@
 footer {
-    position : fixed;
-    bottom : 0;
-    height : 100px;
-    width: 100%;
-    font-size: small;
-    background-color: #102538;
-    z-index: -1;
-  }
-
-  .maincontainer {
-    padding-bottom: 110px;
-    z-index: 1;
-    position: relative;
-}
+  position: fixed;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  font-size: small;
+  background-color: #102538;
+  z-index: -1;
 
   .contact {
-      margin-right: 10px;
-      float : right;
+    padding-top: 10px;
+    padding-right: 5%;
+    width: 100%;
+    text-align: right;
+    a {
+      text-decoration: none;
+      color: #FFFFFF;
+    }
   }
+}
 
-  .contact a {
-    text-decoration: none;
-  }
+.maincontainer {
+  padding-bottom: 110px;
+  z-index: 1;
+  position: relative;
+}

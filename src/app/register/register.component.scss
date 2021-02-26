@@ -1,34 +1,54 @@
-mat-form-field {
-    width: 50%;
-  }
-
-mat-card-content {
-  margin-bottom: 0px;
-  .row {
-    height: 70px;
-  }
-}
-
-.mat-card>.mat-card-actions {
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
 .registercardcontainer {
-  mat-card {
+  height: 458px;
+  width: 700px;
+  margin: auto;
+  margin-top: 50px;
+
+  .mat-card {
+    padding: 16px 30px;
+    & > .mat-card-actions {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
     mat-card-header {
-      .mat-card-header-text {
-        margin: 0 0px;
+      .mat-card-title {
+        margin-left: -16px;
       }
+    }
+    mat-card-content {
+      margin-bottom: 0px;
+      mat-form-field {
+        width: 100%;
+        margin-top: 12px;
+        &.confirm {
+          margin-top: 22px;
+        }
+      }
+    }
+    .mat-card-actions {
+      margin-left: 0;
     }
   }
 }
 
-@media only screen and (max-width: 600px) {
-  mat-form-field {
-    width: 100%;
-  }
-  .mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
-    margin: 0 0px;
+@media only screen and (max-width: 768px) {
+  .registercardcontainer {
+    width: calc(100vw - 32px);
+    margin: 30px 16px;
+    .mat-card {
+      padding: 30px 5%;
+      mat-form-field {
+        width: 100%;
+      }
+      .mat-card-actions {
+        margin-left: 0;
+        margin-right: 0;
+        .mat-button, .mat-raised-button, .mat-stroked-button {
+          display: block;
+          margin: 0 0 15px;
+          width: 100%;
+        }
+      }
+    }
   }
 }
