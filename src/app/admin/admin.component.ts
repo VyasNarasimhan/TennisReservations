@@ -153,5 +153,4 @@ export class AdminComponent implements OnInit {
       this.wellesleyAccountError = err.error.error;
     });
   }
-
 }
