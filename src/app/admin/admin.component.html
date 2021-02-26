@@ -144,6 +144,9 @@
           </div>
         </div>
       </div>
+      <div *ngIf="!!successMessageMaintenance" id="success" class="alert alert-success mt-2">
+        <p>{{successMessageMaintenance}}</p>
+      </div>
     </mat-card-content>
   </mat-card>
   <mat-card *ngIf="!!residentMaint && residentMaint" class=" bg-light">
@@ -173,6 +176,9 @@
         <div class="col">
           <button class="" mat-raised-button color="primary" (click)="enterNewAccountInfo()">Enter</button>
         </div>
+      </div>
+      <div *ngIf="!!successAddResident" id="success" class="alert alert-success mt-2">
+        <p>{{successAddResident}}</p>
       </div>
     </mat-card-content>
     <hr>
