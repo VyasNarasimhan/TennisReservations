@@ -206,3 +206,4 @@ router.post('/searchForResident', async (req: Request, res: Response, next: Next
     return next(err);
   }
 });
+
