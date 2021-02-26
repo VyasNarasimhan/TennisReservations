@@ -27,6 +27,9 @@ export class AdminComponent implements OnInit {
   newData: any = {};
   searchResident: any = {};
   residentFromDb: any;
+  successMessageMaintenance = '';
+  successAddResident = '';
+
   constructor(private memberService: MemberService, private router: Router, private reservationsService: ReservationsService) { }
 
   ngOnInit(): void {
@@ -79,6 +82,7 @@ export class AdminComponent implements OnInit {
   // tslint:disable-next-line: typedef
   changeMaintenanceInfo(index: number, newStatus: boolean) {
     this.maintenanceError = '';
+    this.successMessageMaintenance = '';
     this.maintenanceForCourts[index].inmaintenance = newStatus;
     this.reservationsService.changeMaintenanceInfo({values: this.maintenanceForCourts[index], court: index + 1}).subscribe((resp) => {
       console.log('Maintenance info changed');
@@ -91,8 +95,10 @@ export class AdminComponent implements OnInit {
   // tslint:disable-next-line: typedef
   changeMaintenanceMessage(index: number) {
     this.maintenanceError = '';
+    this.successMessageMaintenance = '';
     this.reservationsService.changeMaintenanceInfo({values: this.maintenanceForCourts[index], court: index + 1}).subscribe((resp) => {
       console.log('Message changed');
+      this.successMessageMaintenance = 'Message changed for Court ' + (index + 1);
     }, (err) => {
       console.log(err);
       this.maintenanceError = err.error.error;
@@ -101,9 +107,11 @@ export class AdminComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   enterNewAccountInfo() {
+    this.successAddResident = '';
     this.wellesleyAccountError = '';
     this.memberService.createNewAccount(this.newData).subscribe((resp) => {
       console.log('Account added');
+      this.successAddResident = 'New account added';
     }, (err) => {
       console.log(err);
       this.wellesleyAccountError = err.error.error;
@@ -145,5 +153,4 @@ export class AdminComponent implements OnInit {
       this.wellesleyAccountError = err.error.error;
     });
   }
-
 }

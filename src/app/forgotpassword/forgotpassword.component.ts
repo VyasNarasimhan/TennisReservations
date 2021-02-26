@@ -13,6 +13,7 @@ export class ForgotpasswordComponent implements OnInit {
   error = '';
   email = new FormControl('', [Validators.required, Validators.email]);
   inputErrors = '';
+  successMessage = '';
 
   constructor(private memberService: MemberService) { }
 
@@ -40,6 +41,7 @@ export class ForgotpasswordComponent implements OnInit {
       memberInfo = JSON.parse(memberInfo);
       this.memberService.resetPassword({data: this.data, userInfo: memberInfo}).subscribe((resp) => {
         console.log('Password updated!');
+        this.successMessage = 'Email has been sent';
       }, (err) => {
         console.log(err);
         this.error = err.error.error;
