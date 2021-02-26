@@ -1,36 +1,65 @@
 .tenniscourtimg {
-    padding-left: 30px;
-}
-
-.tenniscourtimg >img {
-    filter: drop-shadow(2px 2px 3px black)
+  padding-left: 30px;
+  & > img {
+    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.5));
+  }
 }
 
 .homebody {
-    mat-card {
-      mat-card-header {
-        .mat-card-header-text {
-            margin: 0 0px;
-            vertical-align: middle;
+  .mat-card {
+    padding-bottom: 40px;
+    .mat-card-header {
+      .mat-card-title {
+        margin-bottom: 0;
+        padding-left: 14px;
+        h2 {
+          margin-bottom: 0;
         }
       }
     }
+  }
 }
 
 mat-card-content {
-    padding-top: 20px;   
+  padding-top: 20px;
 }
- 
+
 mat-card-title {
-    padding-left: 30px;
+  padding-left: 30px;
 }
 
 .rulesdiv {
-    padding-left: 30px;
-    margin-top: 10px;
+  padding-left: 30px;
+  margin-top: 10px;
 }
 
 .row {
-    margin-left: 0px;
-    margin-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+@media only screen and (max-width: 768px) {
+  .homebody {
+    .mat-card {
+      padding-left: 0;
+      padding-right: 0;
+      .mat-card-header {
+        .mat-card-title {
+          h2 {
+            font-size: 18px;
+          }
+        }
+      }
+      .mat-card-content {
+        .tenniscourtimg {
+          padding: 0 0 20px 0;
+        }
+        .rulesdiv {
+          ol {
+            padding-inline-start: 25px;
+          }
+        }
+      }
+    }
+  }
 }

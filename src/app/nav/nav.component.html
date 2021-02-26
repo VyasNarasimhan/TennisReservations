@@ -1,33 +1,34 @@
 <div class="clearfix">
-    <div class="logo">
-        <img src = "../../assets/wellesley-logo-light.jpg" [routerLink]="['/home']"/>
+  <div class="logo">
+    <img src = "../../assets/wellesley-logo-light.jpg" [routerLink]="['/home']"/>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-light">
+
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="navbar-brand" mat-button [routerLink]="['/home']">HOME</a>
+        </li>
+        <li class="nav-item" *ngIf="!memberService.isLoggedIn()">
+          <a class="nav-link" (click)="navbarOpen=false;" mat-button routerLink='/login'>LOGIN/REGISTER</a>
+        </li>
+        <li class="nav-item" *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()">
+          <a (click)="navbarOpen=false;" class="nav-link" mat-button routerLink='/reservations'>RESERVATIONS</a>
+        </li>
+        <li class="nav-item" *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()">
+          <a (click)="navbarOpen=false;" class="nav-link" mat-button routerLink='/changepassword'>CHANGE PASSWORD</a>
+        </li>
+        <li class="nav-item" *ngIf="memberService.isLoggedIn()">
+          <a (click)="navbarOpen=false;" class="nav-link" mat-button class="nav-link" (click)="logout()">LOGOUT</a>
+        </li>
+      </ul>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" mat-button [routerLink]="['/home']">HOME</a>
-        
-        <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" (click)="navbarOpen=false;" *ngIf="!memberService.isLoggedIn()" mat-button routerLink='/login'>LOGIN/REGISTER</a>
-            </li>        
-              <li class="nav-item">
-                <a (click)="navbarOpen=false;" *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()" class="nav-link" mat-button routerLink='/reservations'>RESERVATIONS</a>
-            </li>
-              <li class="nav-item">
-                <a (click)="navbarOpen=false;" *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()" class="nav-link" mat-button routerLink='/changepassword'>CHANGE PASSWORD</a>
-            </li>
-              <li class="nav-item">
-                <a (click)="navbarOpen=false;" class="nav-link" *ngIf="memberService.isLoggedIn()" mat-button class="nav-link" (click)="logout()">LOGOUT</a>
-            </li>
-            </ul>
-        </div>
-        
-    </nav>
+  </nav>
 </div>
 
-    
- 
+
+
 
