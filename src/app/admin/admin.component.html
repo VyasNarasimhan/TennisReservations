@@ -1,3 +1,13 @@
+<div class="row">
+  <div class="col">
+    <button class="" mat-raised-button color="primary"
+      (click)="userMaint = true; courtMaint = false;residentMaint = false;">User Maintenance</button>
+    <button class="" mat-raised-button color="primary"
+      (click)="userMaint = false; courtMaint = true;residentMaint = false;">Court Maintenance</button>
+    <button class="" mat-raised-button color="primary"
+      (click)="userMaint = false; courtMaint = false;residentMaint = true;">Wellesley Resident Maintenance</button>
+  </div>
+</div>
 <mat-card *ngIf="(!!userMaint && userMaint) && isLoaded" class="searchForUser bg-light">
   <mat-card-header>
     <mat-card-title>User Maintenance</mat-card-title>
@@ -9,8 +19,6 @@
       <mat-error>{{getEmailErrorMessage(email)}}</mat-error>
     </mat-form-field>
     <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForUser()">Search</button>
-    <button class="searchuserbutton" mat-raised-button color="accent"
-      (click)="userMaint = false; courtMaint = true;">Court Maintenance</button>
 
     <div *ngIf="memberFromDb" class="row searchresults">
       <div class="col">
@@ -46,127 +54,155 @@
     <mat-card-title>Court Maintenance</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <button class="searchuserbutton" mat-raised-button color="accent"
-      (click)="userMaint = true; courtMaint = false;">User Maintenance</button>
-
-    
-    <div>
-      <div class="row mt-2">
-        <div class="col">
-            <mat-form-field appearance="fill">
-              <mat-label>Court 1 Under Maintenance? </mat-label>
-              <mat-select [(ngModel)]="maintenanceForCourts[0].inmaintenance" name="setMaintenance1" #setMaintenance1="ngModel" >
-                <mat-option [value]="true" (click)="changeMaintenanceInfo(0, true)">YES</mat-option>
-                <mat-option [value]="false" (click)="changeMaintenanceInfo(0, false)">NO</mat-option>
-              </mat-select>
-            </mat-form-field>            
+    <div class="row mt-2">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Court 1 Under Maintenance? </mat-label>
+          <mat-select [(ngModel)]="maintenanceForCourts[0].inmaintenance" name="setMaintenance1"
+            #setMaintenance1="ngModel">
+            <mat-option [value]="true" (click)="changeMaintenanceInfo(0, true)">YES</mat-option>
+            <mat-option [value]="false" (click)="changeMaintenanceInfo(0, false)">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="!!maintenanceForCourts[0].inmaintenance === true" class="row input-group mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Enter maintenance message"
+          aria-label="Enter maintenance message" aria-describedby="basic-addon1"
+          [(ngModel)]="maintenanceForCourts[0].message" maxlength="500" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" mat-raised-button color="primary"
+            (click)="changeMaintenanceMessage(0)" type="button">Update message for Court 1</button>
         </div>
       </div>
-      <div *ngIf="!!maintenanceForCourts[0].inmaintenance === true" class="row input-group mb-3">
-        <div class="col">
-          <input type="text" class="form-control" placeholder="Enter maintenance message"
-            aria-label="Enter maintenance message" aria-describedby="basic-addon1"
-            [(ngModel)]="maintenanceForCourts[0].message" maxlength="500" required>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" mat-raised-button color="primary" (click)="changeMaintenanceMessage(0)"
-              type="button">Update message for Court 1</button>
-          </div>
-        </div>
-      </div>      
-      <div class="row mt-2">
-        <div class="col">
-          <mat-form-field appearance="fill">
-            <mat-label>Court 2 Under Maintenance? </mat-label>
-            <mat-select [(ngModel)]="maintenanceForCourts[1].inmaintenance">
-              <mat-option [value]="true" (click)="changeMaintenanceInfo(1, true)">YES</mat-option>
-              <mat-option [value]="false" (click)="changeMaintenanceInfo(1, false)">NO</mat-option>
-            </mat-select>
-          </mat-form-field> 
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Court 2 Under Maintenance? </mat-label>
+          <mat-select [(ngModel)]="maintenanceForCourts[1].inmaintenance">
+            <mat-option [value]="true" (click)="changeMaintenanceInfo(1, true)">YES</mat-option>
+            <mat-option [value]="false" (click)="changeMaintenanceInfo(1, false)">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="!!maintenanceForCourts[1].inmaintenance === true" class="row input-group mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Enter maintenance message"
+          aria-label="Enter maintenance message" aria-describedby="basic-addon1"
+          [(ngModel)]="maintenanceForCourts[1].message" maxlength="500" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" mat-raised-button color="primary"
+            (click)="changeMaintenanceMessage(1)" type="button">Update message for Court 2</button>
         </div>
       </div>
-      <div *ngIf="!!maintenanceForCourts[1].inmaintenance === true" class="row input-group mb-3">
-        <div class="col">
-          <input type="text" class="form-control" placeholder="Enter maintenance message"
-            aria-label="Enter maintenance message" aria-describedby="basic-addon1"
-            [(ngModel)]="maintenanceForCourts[1].message" maxlength="500" required>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" mat-raised-button color="primary" (click)="changeMaintenanceMessage(1)"
-              type="button">Update message for Court 2</button>
-          </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Court 3 Under Maintenance? </mat-label>
+          <mat-select [(ngModel)]="maintenanceForCourts[2].inmaintenance">
+            <mat-option [value]="true" (click)="changeMaintenanceInfo(2, true)">YES</mat-option>
+            <mat-option [value]="false" (click)="changeMaintenanceInfo(2, false)">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="!!maintenanceForCourts[2].inmaintenance === true" class="row input-group mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Enter maintenance message"
+          aria-label="Enter maintenance message" aria-describedby="basic-addon1"
+          [(ngModel)]="maintenanceForCourts[2].message" maxlength="500" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" mat-raised-button color="primary"
+            (click)="changeMaintenanceMessage(2)" type="button">Update message for Court 3</button>
         </div>
       </div>
-      <div class="row mt-2">
-        <div class="col">
-          <mat-form-field appearance="fill">
-            <mat-label>Court 3 Under Maintenance? </mat-label>
-            <mat-select [(ngModel)]="maintenanceForCourts[2].inmaintenance">
-              <mat-option [value]="true" (click)="changeMaintenanceInfo(2, true)">YES</mat-option>
-              <mat-option [value]="false" (click)="changeMaintenanceInfo(2, false)">NO</mat-option>
-            </mat-select>
-          </mat-form-field> 
-        </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Court 4 Under Maintenance? </mat-label>
+          <mat-select [(ngModel)]="maintenanceForCourts[3].inmaintenance">
+            <mat-option [value]="true" (click)="changeMaintenanceInfo(3, true)">YES</mat-option>
+            <mat-option [value]="false" (click)="changeMaintenanceInfo(3, false)">NO</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-      <div *ngIf="!!maintenanceForCourts[2].inmaintenance === true" class="row input-group mb-3">
-        <div class="col">
-          <input type="text" class="form-control" placeholder="Enter maintenance message"
-            aria-label="Enter maintenance message" aria-describedby="basic-addon1"
-            [(ngModel)]="maintenanceForCourts[2].message" maxlength="500" required>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" mat-raised-button color="primary" (click)="changeMaintenanceMessage(2)"
-              type="button">Update message for Court 3</button>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-2">
-        <div class="col">
-          <mat-form-field appearance="fill">
-            <mat-label>Court 4 Under Maintenance? </mat-label>
-            <mat-select [(ngModel)]="maintenanceForCourts[3].inmaintenance">
-              <mat-option [value]="true" (click)="changeMaintenanceInfo(3, true)">YES</mat-option>
-              <mat-option [value]="false" (click)="changeMaintenanceInfo(3, false)">NO</mat-option>
-            </mat-select>
-          </mat-form-field> 
-        </div>
-      </div>
-      <div *ngIf="!!maintenanceForCourts[3].inmaintenance === true" class="row input-group mb-3">
-        <div class="col">
-          <input type="text" class="form-control" placeholder="Enter maintenance message"
-            aria-label="Enter maintenance message" aria-describedby="basic-addon1"
-            [(ngModel)]="maintenanceForCourts[3].message" maxlength="500" required>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" mat-raised-button color="primary" (click)="changeMaintenanceMessage(3)"
-              type="button">Update message for Court 4</button>
-          </div>
+    </div>
+    <div *ngIf="!!maintenanceForCourts[3].inmaintenance === true" class="row input-group mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Enter maintenance message"
+          aria-label="Enter maintenance message" aria-describedby="basic-addon1"
+          [(ngModel)]="maintenanceForCourts[3].message" maxlength="500" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" mat-raised-button color="primary"
+            (click)="changeMaintenanceMessage(3)" type="button">Update message for Court 4</button>
         </div>
       </div>
     </div>
   </mat-card-content>
 </mat-card>
-<mat-card class="insertWellesleyID bg-light">
+<mat-card *ngIf="!!residentMaint && residentMaint" class=" bg-light">
   <mat-card-header>
-    <mat-card-title>Add new Wellesley Account</mat-card-title>
+    <mat-card-title>Add new Wellesley Resident</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-form-field>
-      <mat-label>Enter account email</mat-label>
-      <input matInput type="text" [(ngModel)]="newData.newEmail" [formControl]="createEmail" maxlength="50" required>
-      <mat-error>{{getEmailErrorMessage(createEmail)}}</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Enter account username</mat-label>
-      <input matInput type="text" [(ngModel)]="newData.enteredUsername" maxlength="50">
-    </mat-form-field>
-    <button class="searchuserbutton" mat-raised-button color="primary" (click)="enterNewAccountInfo()">Enter</button>
-    <mat-form-field>
-      <mat-label>Enter Resident Email</mat-label>
-      <input matInput type="text" [(ngModel)]="searchResident.email" [formControl]="searchResidentEmail" maxlength="50" required>
-      <mat-error>{{getEmailErrorMessage(searchResidentEmail)}}</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Enter Resident Username</mat-label>
-      <input matInput type="text" [(ngModel)]="searchResident.username" maxlength="50" required>
-    </mat-form-field>
-    <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForResident()">Search</button>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>Enter Resident email</mat-label>
+          <input matInput type="text" [(ngModel)]="newData.newEmail" [formControl]="createEmail" maxlength="50"
+            required>
+          <mat-error>{{getEmailErrorMessage(createEmail)}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>Enter Resident username</mat-label>
+          <input matInput type="text" [(ngModel)]="newData.enteredUsername" maxlength="50">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="" mat-raised-button color="primary" (click)="enterNewAccountInfo()">Enter</button>
+      </div>
+    </div>
+  </mat-card-content>
+  <hr>
+
+  <mat-card-header>
+    <mat-card-title>Search for an existing Resident</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>Enter Resident Email</mat-label>
+          <input matInput type="text" [(ngModel)]="searchResident.email" [formControl]="searchResidentEmail"
+            maxlength="50" required>
+          <mat-error>{{getEmailErrorMessage(searchResidentEmail)}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>Enter Resident Username</mat-label>
+          <input matInput type="text" [(ngModel)]="searchResident.username" maxlength="50" required>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForResident()">Search</button>
+      </div>
+    </div>
     <div *ngIf="residentFromDb" class="row searchresults">
       <div class="col">
         <h6>Click on the Active Button to change the resident's active status from true to false and vice-versa.</h6>

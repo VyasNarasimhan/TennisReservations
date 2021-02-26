@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
   memberFromDb: any;
   userMaint = true;
   courtMaint = false;
+  residentMaint = false;
   loadError = '';
   data: any = {};
   email = new FormControl('', [Validators.required, Validators.email]);
