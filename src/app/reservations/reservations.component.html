@@ -48,7 +48,7 @@
           <td align="center" class="info"
             *ngIf="!!reservationsDisplay1[time] && reservationsDisplay1[time].memberid !== memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
             {{reservationsDisplay1[time].membername}}</td>
-          <td align="center" class="info"
+          <td align="center" class="alert alert-info"
             *ngIf="(reservationsLeft <= 0 && !reservationsDisplay1[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[0].inmaintenance === false">
             Unavailable</td>
           <td align="center"
@@ -68,9 +68,9 @@
           <td align="center"
             *ngIf="!!reservationsDisplay2[time] && reservationsDisplay2[time].memberid !== memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
             {{reservationsDisplay2[time].membername}}</td>
-          <td align="center"
+          <td align="center" class="alert alert-info"
             *ngIf="(reservationsLeft <= 0 && !reservationsDisplay2[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[1].inmaintenance === false">
-            <button class="res-button" mat-raised-button>Unavailable</button></td>
+            Unavailable</td>
           <td align="center"
             *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay2[time] && maintenanceStatus[1].inmaintenance === false">
           </td>
@@ -88,9 +88,9 @@
           <td align="center"
             *ngIf="!!reservationsDisplay3[time] && reservationsDisplay3[time].memberid !== memberInfo.id  && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
             {{reservationsDisplay3[time].membername}}</td>
-          <td align="center"
+          <td align="center" class="alert alert-info"
             *ngIf="(reservationsLeft <= 0 && !reservationsDisplay3[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[2].inmaintenance === false">
-            <button class="res-button" mat-raised-button>Unavailable</button></td>
+            Unavailable</td>
           <td align="center"
             *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay3[time] && maintenanceStatus[2].inmaintenance === false">
           </td>
@@ -108,9 +108,9 @@
           <td align="center"
             *ngIf="!!reservationsDisplay4[time] && reservationsDisplay4[time].memberid !== memberInfo.id && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
             {{reservationsDisplay4[time].membername}}</td>
-          <td align="center"
+          <td align="center" class="alert alert-info"
             *ngIf="(reservationsLeft <= 0 && !reservationsDisplay4[time]) && compareTimeAndTimeSlot(time) !== 1 && maintenanceStatus[3].inmaintenance === false">
-            <button class="res-button" mat-raised-button>Unavailable</button></td>
+            Unavailable</td>
           <td align="center"
             *ngIf="compareTimeAndTimeSlot(time) === 1 && !reservationsDisplay4[time] && maintenanceStatus[3].inmaintenance === false">
           </td>
