@@ -56,6 +56,18 @@ export class MemberService {
     return admin === 'admin';
   }
 
+  changeActiveStatus(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members/changeActive', data);
+  }
+
+  changeResidentActiveStatus(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members/changeActiveForResidents', data);
+  }
+
+  searchForResident(data: any): Observable<any> {
+    return this.http.post(environment.apiRoot + '/tennis/members/searchForResident', data);
+  }
+
   logout(): void {
     sessionStorage.removeItem('memberInfo');
     sessionStorage.removeItem('allReservations');

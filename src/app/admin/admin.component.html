@@ -6,7 +6,7 @@
     <mat-form-field>
       <mat-label>Search for user</mat-label>
       <input matInput type="text" [(ngModel)]="data.enteredEmail" [formControl]="email" maxlength="50" required>
-      <mat-error>{{getEmailErrorMessage()}}</mat-error>
+      <mat-error>{{getEmailErrorMessage(email)}}</mat-error>
     </mat-form-field>
     <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForUser()">Search</button>
     <button class="searchuserbutton" mat-raised-button color="accent"
@@ -29,6 +29,8 @@
           <div class="col">
             <span class="font-weight-bold"> Current Role: </span><span><button mat-raised-button color="primary"
                 (click)="changeRole()">{{memberFromDb.userRole}}</button></span>
+            <span class="font-weight-bold"> Active Status: </span><span><button mat-raised-button color="primary"
+                (click)="changeStatus()">{{memberFromDb.active}}</button></span>
           </div>
         </div>
       </div>
@@ -147,14 +149,45 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>Enter account email</mat-label>
-      <input matInput type="text" [(ngModel)]="newData.enteredEmail" [formControl]="email" maxlength="50" required>
-      <mat-error>{{getEmailErrorMessage()}}</mat-error>
+      <input matInput type="text" [(ngModel)]="newData.newEmail" [formControl]="createEmail" maxlength="50" required>
+      <mat-error>{{getEmailErrorMessage(createEmail)}}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Enter account username</mat-label>
       <input matInput type="text" [(ngModel)]="newData.enteredUsername" maxlength="50">
     </mat-form-field>
     <button class="searchuserbutton" mat-raised-button color="primary" (click)="enterNewAccountInfo()">Enter</button>
+    <mat-form-field>
+      <mat-label>Enter Resident Email</mat-label>
+      <input matInput type="text" [(ngModel)]="searchResident.email" [formControl]="searchResidentEmail" maxlength="50" required>
+      <mat-error>{{getEmailErrorMessage(searchResidentEmail)}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter Resident Username</mat-label>
+      <input matInput type="text" [(ngModel)]="searchResident.username" maxlength="50" required>
+    </mat-form-field>
+    <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForResident()">Search</button>
+    <div *ngIf="residentFromDb" class="row searchresults">
+      <div class="col">
+        <h6>Click on the Active Button to change the resident's active status from true to false and vice-versa.</h6>
+        <div class="row">
+          <div class="col">
+            <span class="font-weight-bold">User Email: </span><span>{{residentFromDb.user_email}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span class="font-weight-bold">Username: </span><span>{{residentFromDb.user_login}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span class="font-weight-bold"> Active Status: </span><span><button mat-raised-button color="primary"
+                (click)="changeResidentStatus()">{{residentFromDb.active}}</button></span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div *ngIf="!!wellesleyAccountError" id="error" class="alert alert-danger">
       {{wellesleyAccountError}}
     </div>

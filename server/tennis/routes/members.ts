@@ -17,13 +17,16 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       if (existingUserResult.rows.length === 1) {
         res.status(422).send({ error: 'User already exists' });
       // tslint:disable-next-line: max-line-length
-      } else if ((await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0 && (await db.query('SELECT * FROM residents WHERE UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0) {
-        res.status(423).send({ error: 'Incorrect Wellesley Resident ID' });
-      } else {
+      } else if ((await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 OR UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0) {
+        res.status(422).send({ error: 'Incorrect Wellesley Resident ID' });
+      // tslint:disable-next-line: max-line-length
+      } else if ((await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 OR UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rows[0].active === false) {
+        res.status(422).send({ error: 'Wellesley ID is deactivated'});
+      }else {
         // tslint:disable-next-line: max-line-length
         const wellesleyId = (await db.query('SELECT id FROM residents WHERE UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0 ? (await db.query('SELECT id FROM residents WHERE UPPER(user_email)=$1', [user.wellesleyID.toUpperCase()])).rows[0].id : (await db.query('SELECT id FROM residents WHERE UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rows[0].id;
         if ((await db.query('SELECT * FROM users WHERE resident_fk=$1', [wellesleyId])).rowCount >= 2) {
-          res.status(424).send({ error: 'Account limit for this address has been reached' });
+          res.status(422).send({ error: 'Account limit for this address has been reached' });
         } else {
           const id = (await db.query('SELECT id FROM roles WHERE rolename=\'RESIDENT\'')).rows[0].id;
           res.send({
@@ -55,18 +58,20 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
           if (email === 'ADMIN' && password === 'Wellesley1234') {
             res.send({memberInfo: 'admin', allReservations: null});
           } else if (email === 'ADMIN' && password !== 'Wellesley1234') {
-            res.status(401).send({ error: 'Incorrect username or password' });
+            res.status(422).send({ error: 'Incorrect username or password' });
           } else {
             // tslint:disable-next-line: max-line-length
             const member = (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [email])).rows[0];
-            if (bcrypt.compareSync(password, member.password)) {
+            if (bcrypt.compareSync(password, member.password) && member.active) {
               res.send({memberInfo : member});
-            } else {
-              res.status(401).send({ error: 'Incorrect username or password' });
+            } else if (!member.active) {
+              res.status(422).send({ error: 'Account has been deactivated'});
+            }else {
+              res.status(422).send({ error: 'Incorrect username or password' });
             }
           }
         } else {
-          res.status(401).send({ error: 'Incorrect username or password' });
+          res.status(422).send({ error: 'Incorrect username or password' });
         }
     } catch (err) {
         console.log('Not found');
@@ -86,7 +91,7 @@ router.post('/change', async (req: Request, res: Response, next: NextFunction) =
         res.send({updated: changePassword});
       }
       else {
-        res.status(401).send({ error: 'Could not change password' });
+        res.status(422).send({ error: 'Could not change password' });
       }
   } catch (err) {
       console.log('change password error');
@@ -110,7 +115,7 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
         emailservice.sendEmail(emailservice.buildPasswordResetEmailConfig('wellesleyhoa.tennis@gmail.com', email, newPass));
         res.send({updated: changePassword, newPassword: newPass});
       } else {
-        res.status(401).send({ error: 'Could not change password or password was blank' });
+        res.status(422).send({ error: 'Could not change password or password was blank' });
       }
   } catch (err) {
       console.log('Error during forgot password .. Not found');
@@ -128,7 +133,7 @@ router.post('/user', async (req: Request, res: Response, next: NextFunction) => 
       // tslint:disable-next-line: max-line-length
       res.send({user: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [req.body.enteredEmail])).rows[0], role: userRole});
     } else {
-      res.status(402).send({error: 'Could not find user with that email'});
+      res.status(422).send({error: 'Could not find user with that email'});
     }
   } catch (err) {
     return next(err);
@@ -152,11 +157,50 @@ router.post('/newAccount', async (req: Request, res: Response, next: NextFunctio
   const account = req.body;
   try {
     // tslint:disable-next-line: max-line-length
-    if ((await db.query('SELECT * FROM residents WHERE user_login = $1 AND user_email = $2', [account.enteredEmail, account.enteredUsername])).rowCount > 0) {
+    if ((await db.query('SELECT * FROM residents WHERE user_login = $1 AND user_email = $2', [account.newEmail, account.enteredUsername])).rowCount > 0) {
       res.status(422).send({ error: 'Account info already exists' });
     } else {
       // tslint:disable-next-line: max-line-length
       res.send({updated: (await db.query('INSERT INTO residents (user_email, user_login) VALUES ($1, $2)', [account.enteredEmail, account.enteredUsername]))});
+    }
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/changeActive', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside changeActive post');
+  const user = req.body;
+  try {
+    const newActive = !user.active;
+    // tslint:disable-next-line: max-line-length
+    res.send({updated: (await db.query('UPDATE users SET active=$1 WHERE email=$2', [newActive, user.email.toUpperCase()])), active: newActive});
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/changeActiveForResidents', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside changeActiveResidents post');
+  const user = req.body;
+  try {
+    const newActive = !user.active;
+    // tslint:disable-next-line: max-line-length
+    res.send({updated: (await db.query('UPDATE residents SET active=$1 WHERE UPPER(user_email)=$2 and UPPER(user_login)=$3', [newActive, user.user_email.toUpperCase(), user.user_login.toUpperCase()])), active: newActive});
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/searchForResident', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside search resident post');
+  try {
+    // tslint:disable-next-line: max-line-length
+    const residentQuery = (await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 and UPPER(user_login)=$2', [req.body.email.toUpperCase(), req.body.username.toUpperCase()]));
+    if (residentQuery.rowCount > 0) {
+      res.send({resident: residentQuery.rows[0]});
+    } else {
+      res.status(422).send({ error: 'Could not find resident with that username and email' });
     }
   } catch (err) {
     return next(err);

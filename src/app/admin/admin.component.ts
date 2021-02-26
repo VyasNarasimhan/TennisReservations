@@ -18,11 +18,14 @@ export class AdminComponent implements OnInit {
   loadError = '';
   data: any = {};
   email = new FormControl('', [Validators.required, Validators.email]);
-  // tslint:disable-next-line: max-line-length
+  createEmail = new FormControl('', [Validators.required, Validators.email]);
+  searchResidentEmail = new FormControl('', [Validators.required, Validators.email]);
   maintenanceForCourts: any;
   maintenanceError = '';
   wellesleyAccountError = '';
   newData: any = {};
+  searchResident: any = {};
+  residentFromDb: any;
   constructor(private memberService: MemberService, private router: Router, private reservationsService: ReservationsService) { }
 
   ngOnInit(): void {
@@ -53,11 +56,11 @@ export class AdminComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  getEmailErrorMessage() {
-    if (this.email.hasError('required')) {
+  getEmailErrorMessage(email: any) {
+    if (email.hasError('required')) {
       return 'Email is required';
     }
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    return email.hasError('email') ? 'Not a valid email' : '';
   }
 
   // tslint:disable-next-line: typedef
@@ -76,7 +79,6 @@ export class AdminComponent implements OnInit {
   changeMaintenanceInfo(index: number, newStatus: boolean) {
     this.maintenanceError = '';
     this.maintenanceForCourts[index].inmaintenance = newStatus;
-    console.log(this.maintenanceForCourts[index]);
     this.reservationsService.changeMaintenanceInfo({values: this.maintenanceForCourts[index], court: index + 1}).subscribe((resp) => {
       console.log('Maintenance info changed');
     }, (err) => {
@@ -101,6 +103,42 @@ export class AdminComponent implements OnInit {
     this.wellesleyAccountError = '';
     this.memberService.createNewAccount(this.newData).subscribe((resp) => {
       console.log('Account added');
+    }, (err) => {
+      console.log(err);
+      this.wellesleyAccountError = err.error.error;
+    });
+  }
+
+  // tslint:disable-next-line: typedef
+  changeStatus() {
+    this.loadError = '';
+    this.memberService.changeActiveStatus(this.memberFromDb).subscribe((resp) => {
+      console.log('Active status changed');
+      this.memberFromDb.active = resp.active;
+    }, (err) => {
+      console.log(err);
+      this.loadError = err.error.error;
+    });
+  }
+
+  // tslint:disable-next-line: typedef
+  changeResidentStatus() {
+    this.wellesleyAccountError = '';
+    this.memberService.changeResidentActiveStatus(this.residentFromDb).subscribe((resp) => {
+      console.log('Resident status changed');
+      this.residentFromDb.active = resp.active;
+    }, (err) => {
+      console.log(err);
+      this.wellesleyAccountError = err.error.error;
+    });
+  }
+
+  // tslint:disable-next-line: typedef
+  searchForResident() {
+    this.wellesleyAccountError = '';
+    this.memberService.searchForResident(this.searchResident).subscribe((resp) => {
+      console.log('Resident found');
+      this.residentFromDb = resp.resident;
     }, (err) => {
       console.log(err);
       this.wellesleyAccountError = err.error.error;
