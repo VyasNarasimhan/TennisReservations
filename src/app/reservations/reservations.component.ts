@@ -64,7 +64,7 @@ export class ReservationsComponent implements OnInit {
       }
     }
     for (const date of this.datesForNextWeek) {
-      this.displayDatesForNextWeek.push(date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
+      this.displayDatesForNextWeek.push(moment(new Date(date)).format('dddd MM-DD-YYYY'));
     }
     const temp: any = sessionStorage.getItem('maintenanceInfo');
     this.maintenanceStatus = JSON.parse(temp);
@@ -139,7 +139,7 @@ export class ReservationsComponent implements OnInit {
     this.reservationsDisplay3 = {};
     this.reservationsDisplay4 = {};
     this.currentDate = date;
-    this.displayDate = moment(new Date(this.currentDate)).format('MM-DD-YYYY');
+    this.displayDate = moment(new Date(this.currentDate)).format('dddd MM-DD-YYYY');
     this.selectedIndex = this.datesForNextWeek.indexOf(date);
     let tempReservationLeft = 3;
       // tslint:disable-next-line: typedef
