@@ -52,11 +52,11 @@
         <div class="col">
           <mat-form-field
               hintLabel="This is the email or username that you or someone in your household has registered with on the Wellesley website (wellesleyhoa.com)">
-            <mat-label>Enter Wellesley ID</mat-label>
+            <mat-label>Enter WellesleyHOA Website Email or Username</mat-label>
             <input matInput type="text" [(ngModel)]="data.wellesleyID" maxlength="50" #wellesleyID="ngModel"
                 name="wellesleyID" pattern="^[a-zA-Z0-9.'\s@_]{1,50}$" required>
-            <mat-error *ngIf="wellesleyID?.errors?.pattern">Wellesley ID is invalid</mat-error>
-            <mat-error *ngIf="wellesleyID?.errors?.required">Wellesley ID is required</mat-error>
+            <mat-error *ngIf="wellesleyID?.errors?.pattern">Email or username is invalid</mat-error>
+            <mat-error *ngIf="wellesleyID?.errors?.required">Email or username is required</mat-error>
           </mat-form-field>
         </div>
       </div>
