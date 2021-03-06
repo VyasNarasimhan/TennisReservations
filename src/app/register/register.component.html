@@ -65,7 +65,11 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="addUser()">Register</button>
-      <button mat-raised-button color="accent" (click)="login()">Login</button>
+      <hr>
+      <mat-card-header>
+        <mat-card-title>Already have an account?</mat-card-title>
+      </mat-card-header>
+      <button class="loginButton" mat-raised-button color="accent" (click)="login()">Login</button>
     <div *ngIf="!!error" id="error" class="alert alert-danger">
       <p>{{error}}</p>
     </div>
