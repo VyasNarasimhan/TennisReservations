@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
     this.error = '';
     console.log((this.diplayNameRegEx.test(this.data.displayName)));
     // tslint:disable-next-line: max-line-length
-    if (this.inputErrors === '' && this.data.enteredPassword && this.data.confirmPassword && this.data.enteredPassword === this.data.confirmPassword && this.data.enteredEmail && this.data.displayName && this.diplayNameRegEx.test(this.data.displayName) && this.data.enteredPassword.length >= 6 && this.data.enteredPassword.length <= 14 && this.regexpNumber.test(this.data.enteredPassword) && this.data.wellesleyID && this.wellesleyIDRegEx.test(this.data.wellesleyID)) {
+    if (this.inputErrors === '' && this.data.enteredPassword && this.data.confirmPassword && this.data.enteredPassword === this.data.confirmPassword && this.data.enteredEmail && this.data.displayName && this.diplayNameRegEx.test(this.data.displayName) && this.data.enteredPassword.length >= 6 && this.data.enteredPassword.length <= 14 && this.regexpNumber.test(this.data.enteredPassword) /*&& this.data.wellesleyID && this.wellesleyIDRegEx.test(this.data.wellesleyID)*/) {
       this.memberService.createUser(this.data).subscribe((resp) => {
         if (resp) {
           if (resp.updated) {

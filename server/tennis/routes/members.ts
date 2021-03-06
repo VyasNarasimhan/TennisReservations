@@ -16,8 +16,10 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       const hash = bcrypt.hashSync(user.enteredPassword, SALT);
       if (existingUserResult.rows.length === 1) {
         res.status(422).send({ error: 'User already exists' });
+      }
+      /*
       // tslint:disable-next-line: max-line-length
-      } else if ((await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 OR UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0) {
+      else if ((await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 OR UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rowCount === 0) {
         res.status(422).send({ error: 'Incorrect Wellesley Resident ID' });
       // tslint:disable-next-line: max-line-length
       } else if ((await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 OR UPPER(user_login)=$1', [user.wellesleyID.toUpperCase()])).rows[0].active === false) {
@@ -40,6 +42,16 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
           });
         }
       }
+      */
+     // delete following lines when Tami wants to reenable resident link with account
+      const id = (await db.query('SELECT id FROM roles WHERE rolename=\'RESIDENT\'')).rows[0].id;
+      res.send({
+        updated: (await db.query('insert into users (email, displayName, role, password) values ($1, $2, $3, $4)',
+          [
+            user.enteredEmail.toUpperCase(), user.displayName, id, hash
+          // tslint:disable-next-line: max-line-length
+          ])).rowCount, memberInfo: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [user.enteredEmail.toUpperCase()])).rows[0]
+      });
       console.log('Saved ' + req.body.displayName);
     } else {
       res.send({ updated: 0 });
