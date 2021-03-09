@@ -20,7 +20,7 @@ export class MemberService {
   constructor(private http: HttpClient) { }
 
   checkUserIsValid(data: any): Observable<any> {
-    return this.http.post(environment.apiRoot + '/tennis/members', data);
+    return this.http.get(environment.apiRoot + '/tennis/members/' + data.enteredEmail + '/' + data.enteredPassword);
   }
   createUser(data: any): Observable<any> {
     return this.http.put(environment.apiRoot + '/tennis/members', data);
@@ -33,7 +33,7 @@ export class MemberService {
   }
 
   findMemberByEmail(data: any): Observable<any> {
-    return this.http.post(environment.apiRoot + '/tennis/members/user', data);
+    return this.http.get(environment.apiRoot + '/tennis/members/user/' + data.enteredEmail);
   }
 
   changeRole(data: any): Observable<any> {
@@ -65,7 +65,7 @@ export class MemberService {
   }
 
   searchForResident(data: any): Observable<any> {
-    return this.http.post(environment.apiRoot + '/tennis/members/searchForResident', data);
+    return this.http.get(environment.apiRoot + '/tennis/members/searchForResident/' + data.email + '/' + data.username);
   }
 
   logout(): void {

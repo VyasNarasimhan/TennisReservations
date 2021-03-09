@@ -59,13 +59,12 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   } catch (err) {
     return next(err);
   }
-
 });
 
-router.post('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/:enteredEmail/:enteredPassword', async (req: Request, res: Response, next: NextFunction) => {
     console.log('Inside members post' + req);
     try {
-        const user = req.body;
+        const user = req.params;
         if (user) {
           const email = user.enteredEmail.toUpperCase();
           const password = user.enteredPassword;
@@ -137,15 +136,15 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
   }
 });
 
-router.post('/user', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/user/:enteredEmail', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside user get');
   console.log(req.body);
   try {
-    const getUser = (await db.query('SELECT * FROM users WHERE email=$1', [req.body.enteredEmail])).rows;
+    const getUser = (await db.query('SELECT * FROM users WHERE email=$1', [req.params.enteredEmail])).rows;
     if (getUser.length > 0) {
       const userRole = (await db.query('SELECT rolename FROM roles WHERE id=$1', [getUser[0].role])).rows[0];
       // tslint:disable-next-line: max-line-length
-      res.send({user: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [req.body.enteredEmail])).rows[0], role: userRole});
+      res.send({user: (await db.query('SELECT u.*, r.rolename FROM users u, roles r where u.role = r.id and $1 = u.email', [req.params.enteredEmail])).rows[0], role: userRole});
     } else {
       res.status(422).send({error: 'Could not find user with that email'});
     }
@@ -211,11 +210,11 @@ router.post('/changeActiveForResidents', async (req: Request, res: Response, nex
   }
 });
 
-router.post('/searchForResident', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Inside search resident post');
+router.get('/searchForResident/:email/:username', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside search resident get');
   try {
     // tslint:disable-next-line: max-line-length
-    const residentQuery = (await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 and UPPER(user_login)=$2', [req.body.email.toUpperCase(), req.body.username.toUpperCase()]));
+    const residentQuery = (await db.query('SELECT * FROM residents WHERE UPPER(user_email)=$1 and UPPER(user_login)=$2', [req.params.email.toUpperCase(), req.params.username.toUpperCase()]));
     if (residentQuery.rowCount > 0) {
       res.send({resident: residentQuery.rows[0]});
     } else {
