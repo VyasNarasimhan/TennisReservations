@@ -2,11 +2,12 @@
   <div class="row mt-3">
     <div class="col admin-menu">
       <button class="" mat-raised-button color="accent"
-        (click)="userMaint = true; courtMaint = false;residentMaint = false;">User Maintenance</button>
+        (click)="userMaint = true; courtMaint = false; residentMaint = false; this.successDeleteReservations = '';">User Maintenance</button>
       <button class="" mat-raised-button color="accent"
-        (click)="userMaint = false; courtMaint = true;residentMaint = false;">Court Maintenance</button>
+        (click)="userMaint = false; courtMaint = true; residentMaint = false; this.successDeleteReservations = '';">Court Maintenance</button>
       <button class="" mat-raised-button color="accent"
-        (click)="userMaint = false; courtMaint = false;residentMaint = true;">Wellesley Resident Maintenance</button>
+        (click)="userMaint = false; courtMaint = false; residentMaint = true; this.successDeleteReservations = '';">Wellesley Resident Maintenance</button>
+      <button mat-raised-button color="primary" (click)="deleteOldReservations()">Delete reservations from 6 months ago</button>
     </div>
   </div>
   <mat-card *ngIf="(!!userMaint && userMaint) && isLoaded" class="searchForUser bg-light">
@@ -236,4 +237,8 @@
       </div>
     </mat-card-content>
   </mat-card>
+  <hr>
+  <div *ngIf="!!successDeleteReservations" id="error" class="alert alert-success">
+    {{successDeleteReservations}}
+  </div>
 </div>
