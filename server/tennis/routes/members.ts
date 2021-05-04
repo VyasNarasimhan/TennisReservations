@@ -61,10 +61,10 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get('/:enteredEmail/:enteredPassword', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
     console.log('Inside members post' + req);
     try {
-        const user = req.params;
+        const user = req.body;
         if (user) {
           const email = user.enteredEmail.toUpperCase();
           const password = user.enteredPassword;
@@ -138,7 +138,7 @@ router.post('/forgot', async (req: Request, res: Response, next: NextFunction) =
 
 router.get('/user/:enteredEmail', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside user get');
-  console.log(req.body);
+  console.log(req.params);
   try {
     const getUser = (await db.query('SELECT * FROM users WHERE email=$1', [req.params.enteredEmail])).rows;
     if (getUser.length > 0) {

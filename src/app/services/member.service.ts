@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
-import { SearchMeta } from '../models/search-meta';
-import { catchError, debounceTime, distinctUntilChanged, map, merge, switchMap, tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -20,7 +18,7 @@ export class MemberService {
   constructor(private http: HttpClient) { }
 
   checkUserIsValid(data: any): Observable<any> {
-    return this.http.get(environment.apiRoot + '/tennis/members/' + data.enteredEmail + '/' + data.enteredPassword);
+    return this.http.post(environment.apiRoot + '/tennis/members/login', data);
   }
   createUser(data: any): Observable<any> {
     return this.http.put(environment.apiRoot + '/tennis/members', data);
