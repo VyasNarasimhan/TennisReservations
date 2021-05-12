@@ -15,7 +15,7 @@ export class ReservationsComponent implements OnInit {
   memberInfo: any;
   firstMemberInfo: any;
 
-  courtNum = 'court1';
+  courtNum = 1;
 
   reservations: Array<any> = [];
   reservationsDisplay1: any;
@@ -36,6 +36,7 @@ export class ReservationsComponent implements OnInit {
   anotherUser = '';
   reserveAsAnotherUserMessage = '';
   reserveAsError = '';
+  someMaintenance = false;
 
   constructor(private router: Router, private memberService: MemberService, private reservationsService: ReservationsService) { }
   times: Array<string> = ['7:00 AM', '7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM', '9:00 PM', '9:30 PM', '10:00 PM'];
@@ -71,6 +72,12 @@ export class ReservationsComponent implements OnInit {
     this.maintenanceStatus.sort((a: any, b: any) => {
       return a.court - b.court;
     });
+    for (const court of this.maintenanceStatus) {
+      if (court.inmaintenance) {
+        this.someMaintenance = true;
+        break;
+      }
+    }
   }
 
   // tslint:disable-next-line: typedef
@@ -196,5 +203,6 @@ export class ReservationsComponent implements OnInit {
       tempReservationLeft = 0;
     }
     this.reservationsLeft = tempReservationLeft;
+    this.reservations = [this.reservationsDisplay1, this.reservationsDisplay2, this.reservationsDisplay3, this.reservationsDisplay4];
   }
 }
