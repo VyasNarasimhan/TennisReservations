@@ -21,6 +21,9 @@
         <li class="nav-item" *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()">
           <a (click)="navbarOpen=false;" class="nav-link" mat-button routerLink='/changepassword'>CHANGE PASSWORD</a>
         </li>
+        <li class="nav-item" *ngIf="memberService.isLoggedIn() && !memberService.checkIsAdmin()">
+          <a (click)="navbarOpen=false; launchMyReservationsModal();" mat-button>MY RESERVATIONS</a>
+        </li>
         <li class="nav-item" *ngIf="memberService.isLoggedIn()">
           <a (click)="navbarOpen=false;" class="nav-link" mat-button class="nav-link" (click)="logout()">LOGOUT</a>
         </li>

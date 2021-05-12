@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MemberService } from '../services/member.service';
 import { Router } from '@angular/router';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Subscription } from 'rxjs';
+import { MyreservationsComponent } from '../myreservations/myreservations.component';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class NavComponent implements OnInit, OnDestroy {
   isAdmin = '';
   private subscription: Subscription | undefined;
   memberService: MemberService;
-  constructor(private membService: MemberService, private router: Router) {
+  constructor(private membService: MemberService, private router: Router, private ngbModal: NgbModal) {
     this.memberService = membService;
   }
 
@@ -45,8 +47,13 @@ export class NavComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('login');
   }
 
+  // tslint:disable-next-line: typedef
   toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
+  }
+
+  launchMyReservationsModal() {
+    const resModal = this.ngbModal.open(MyreservationsComponent);
   }
 
 }
