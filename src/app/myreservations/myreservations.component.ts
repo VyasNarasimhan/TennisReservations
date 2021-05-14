@@ -20,13 +20,13 @@ export class MyreservationsComponent implements OnInit {
     const allReservationsString: any = sessionStorage.getItem('allReservations');
     const allReservations: any = JSON.parse(allReservationsString);
     for (const reservation of allReservations) {
+      // tslint:disable-next-line: max-line-length
       if (reservation.user_fk === this.memberInfo.id && !reservation.canceled) {
-        this.reservations.push({court: reservation.court, timeslot: reservation.timeslot, date: moment(new Date(reservation.reservation_date)).format('MM-DD-YYYY')});
+        // tslint:disable-next-line: max-line-length
+        this.reservations.push({court: reservation.court, timeslot: reservation.timeslot, date: moment(new Date(reservation.reservation_date)), display: moment(new Date(reservation.reservation_date)).format('MM-DD-YYYY')});
       }
     }
-    this.reservations.sort((a: any, b: any) => {
-      return a.reservation_date - b.reservation_date;
-    });
+    this.reservations.sort((a, b) => a.date - b.date);
   }
 
 }
