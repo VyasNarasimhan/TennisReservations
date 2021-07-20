@@ -224,3 +224,25 @@ router.get('/searchForResident/:email/:username', async (req: Request, res: Resp
     return next(err);
   }
 });
+
+router.get('/sendFeedbackEmail/:name/:email/:feedback', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside send feedback email');
+  try {
+    // tslint:disable-next-line: max-line-length
+    emailservice.sendEmail(emailservice.buildFeedbackEmailConfig(req.params.name, req.params.email, 'wellesleyhoa.tennis@gmail.com', req.params.feedback));
+    res.send({ success: 'Feedback has been sent'});
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+});
+
+router.get('/getAllUsers', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside getAllUsers');
+  try {
+    const users = (await db.query('SELECT * FROM users'));
+    res.send({users: users.rows});
+  } catch (err) {
+    return next(err);
+  }
+});

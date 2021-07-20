@@ -22,6 +22,7 @@ import { AdminComponent } from './admin/admin.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatIconModule } from '@angular/material/icon';
 import { MyreservationsComponent } from './myreservations/myreservations.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MyreservationsComponent } from './myreservations/myreservations.compone
     NavComponent,
     HomeComponent,
     AdminComponent,
-    MyreservationsComponent
+    MyreservationsComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

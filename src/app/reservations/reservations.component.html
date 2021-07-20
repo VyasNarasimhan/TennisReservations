@@ -2,13 +2,21 @@
   <div class="res-form">
     <h2 *ngIf="firstMemberInfo.rolename === 'RESIDENT'">Number of Reservations you can still make: {{reservationsLeft}}</h2>
     <div id="ReserveAs" *ngIf="firstMemberInfo.rolename === 'COACH'">
-      <mat-form-field>
-        <mat-label>Reserve as: </mat-label>
-        <input matInput type="text" [(ngModel)]="anotherUser" maxlength="30">
-      </mat-form-field>
-      <button class="searchuserbutton" mat-raised-button color="primary" (click)="searchForUser()">Search</button>
-      <div id="success">
+      <form>
+        <mat-form-field>
+          <mat-label>Reserve as: </mat-label>
+          <input matInput type="text" list="users" [(ngModel)]="anotherUser" name="anotherUser" maxlength="30">
+          <datalist id="users">
+            <select>
+              <option *ngFor="let user of usersBySearch" [value]="user.email"><h6>{{user.displayname}}</h6></option>
+            </select>
+          </datalist>
+        </mat-form-field>
+        <button type="submit" class="searchuserbutton" mat-raised-button color="primary" (click)="searchForUser()">Search</button>
+      </form>
+      <div id="success" *ngIf="!!reserveAsAnotherUserMessage" class="alert alert-success">
         <p>{{reserveAsAnotherUserMessage}}</p>
+        <button mat-raised-button color="accent" (click)="revertUser()">Revert</button>
       </div>
       <div id="error" *ngIf="!!reserveAsError" class="alert alert-danger">
         <p>{{reserveAsError}}</p>

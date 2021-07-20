@@ -66,6 +66,15 @@ export class MemberService {
     return this.http.get(environment.apiRoot + '/tennis/members/searchForResident/' + data.email + '/' + data.username);
   }
 
+  sendFeedback(data: any): Observable<any> {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get(environment.apiRoot + '/tennis/members/sendFeedbackEmail/' + data.name + '/' + data.email + '/' + data.feedback);
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(environment.apiRoot + '/tennis/members/getAllUsers/');
+  }
+
   logout(): void {
     sessionStorage.removeItem('memberInfo');
     sessionStorage.removeItem('allReservations');

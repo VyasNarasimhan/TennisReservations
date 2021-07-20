@@ -62,6 +62,46 @@ const fns = {
       };
 
       return params;
+    },
+    buildFeedbackEmailConfig : (name: string, from: string, to: string, feedback: string): any => {
+      // send email to the user
+      // Set the parameters
+      const params = {
+        Destination: {
+          /* required */
+          CcAddresses: [
+            /* more items */
+          ],
+          ToAddresses: [
+            to, // RECEIVER_ADDRESS
+            /* more To-email addresses */
+          ],
+        },
+        Message: {
+          /* required */
+          Body: {
+            /* required */
+            Html: {
+              Charset: "UTF-8",
+              Data: "<head></head><body>Feedback from " + name + " at " + from + ". Feedback: " + feedback + "</body>",
+            },
+            Text: {
+              Charset: "UTF-8",
+              Data: "",
+            },
+          },
+          Subject: {
+            Charset: "UTF-8",
+            Data: "Wellesley Tennis Reservations Feedback",
+          },
+        },
+        Source: from, // SENDER_ADDRESS
+        ReplyToAddresses: [
+          /* more items */
+        ],
+      };
+
+      return params;
     }
 };
 

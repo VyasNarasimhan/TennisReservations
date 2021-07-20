@@ -37,6 +37,7 @@ export class ReservationsComponent implements OnInit {
   reserveAsAnotherUserMessage = '';
   reserveAsError = '';
   someMaintenance = false;
+  usersBySearch: Array<any> = [];
 
   constructor(private router: Router, private memberService: MemberService, private reservationsService: ReservationsService) { }
   times: Array<string> = ['7:00 AM', '7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM', '9:00 PM', '9:30 PM', '10:00 PM'];
@@ -53,8 +54,14 @@ export class ReservationsComponent implements OnInit {
       this.firstMemberInfo = JSON.parse(memberls);
       this.reservationsService.getReservations().subscribe((resp) => {
         sessionStorage.setItem('allReservations', JSON.stringify(resp.allReservations));
-        this.generateReservationTable(this.currentDate);
-        this.isLoaded = true;
+        this.memberService.getAllUsers().subscribe((response) => {
+          this.usersBySearch = response.users;
+          this.generateReservationTable(this.currentDate);
+          this.isLoaded = true;
+        }, (error) => {
+          console.log(error);
+          this.reserveAsError = error.error.error;
+        });
       }, (err) => {
         console.log(err);
       });
@@ -84,11 +91,11 @@ export class ReservationsComponent implements OnInit {
   searchForUser() {
     this.reserveAsError = '';
     this.reserveAsAnotherUserMessage = '';
-    this.anotherUser = this.anotherUser.toUpperCase();
-    this.memberService.findMemberByEmail({enteredEmail: this.anotherUser}).subscribe((resp) => {
+    this.anotherUser = this.anotherUser;
+    this.memberService.findMemberByEmail({enteredEmail: this.anotherUser.toUpperCase()}).subscribe((resp) => {
       this.memberInfo = resp.user;
       this.generateReservationTable(this.currentDate);
-      this.reserveAsAnotherUserMessage = 'Success! You can now reserve as ' + this.memberInfo.email;
+      this.reserveAsAnotherUserMessage = 'You can now reserve as ' + this.anotherUser;
     }, (err) => {
       console.log(err);
       this.reserveAsError = err.error.error;
@@ -138,6 +145,13 @@ export class ReservationsComponent implements OnInit {
       this.error = err.error.error;
     });
   }
+
+  // tslint:disable-next-line: typedef
+  revertUser() {
+    this.memberInfo = this.firstMemberInfo;
+    this.reserveAsAnotherUserMessage = '';
+    this.anotherUser = '';
+  }
   // tslint:disable-next-line: typedef
   generateReservationTable(date: Date) {
     this.error = '';
@@ -148,7 +162,7 @@ export class ReservationsComponent implements OnInit {
     this.currentDate = date;
     this.displayDate = moment(new Date(this.currentDate)).format('dddd MM-DD-YYYY');
     this.selectedIndex = this.datesForNextWeek.indexOf(date);
-    let tempReservationLeft = 3;
+    let tempReservationLeft = 4;
       // tslint:disable-next-line: typedef
     const allReservations: any = sessionStorage.getItem('allReservations');
     if (allReservations) {

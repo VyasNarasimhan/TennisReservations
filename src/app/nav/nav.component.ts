@@ -5,6 +5,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Subscription } from 'rxjs';
 import { MyreservationsComponent } from '../myreservations/myreservations.component';
+import { FeedbackComponent } from '../feedback/feedback.component';
 
 
 @Component({
@@ -52,8 +53,13 @@ export class NavComponent implements OnInit, OnDestroy {
     this.navbarOpen = !this.navbarOpen;
   }
 
+  // tslint:disable-next-line: typedef
   launchMyReservationsModal() {
     const resModal = this.ngbModal.open(MyreservationsComponent);
   }
 
+  // tslint:disable-next-line: typedef
+  launchFeedbackModal() {
+    const feedModal = this.ngbModal.open(FeedbackComponent);
+  }
 }
