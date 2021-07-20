@@ -1,0 +1,23 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Give Feedback</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ngbActiveModal.dismiss('X')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body container">
+        <p>Have any suggestions for us to improve the site? Want to report a bug? Have any questions? Enter here.</p>
+        <textarea style="border:solid;" matInput [(ngModel)]="data.feedback" rows=10 maxlength="255"></textarea>
+    </div>
+    <div class="modal-footer">
+        <button type="button" mat-raised-button color="accent" data-dismiss="modal" (click)="ngbActiveModal.close('Close')">Close</button>
+        <button type="button" mat-raised-button color="primary" (click)="sendFeedback()">Send</button>
+    </div>
+    <div class="alert alert-success" *ngIf="!!successMessage">
+        <p>{{successMessage}}</p>
+    </div>
+    <div class="alert alert-danger" *ngIf="!!errorMessage">
+        <p>{{errorMessage}}</p>
+    </div>
+</div>
+  

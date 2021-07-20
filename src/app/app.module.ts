@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,8 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatIconModule } from '@angular/material/icon';
+import { MyreservationsComponent } from './myreservations/myreservations.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { MatIconModule } from '@angular/material/icon';
     ForgotpasswordComponent,
     NavComponent,
     HomeComponent,
-    AdminComponent
+    AdminComponent,
+    MyreservationsComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

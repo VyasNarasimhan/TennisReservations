@@ -73,3 +73,13 @@ router.get('/getReservations', async (req: Request, res: Response, next: NextFun
     return next(err);
   }
 });
+
+router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Inside reservations delete');
+  try {
+    res.send({deleteReservations: (await db.query('DELETE FROM reservations WHERE dateCreated < CURRENT_DATE - 180'))});
+  } catch (err) {
+    console.log('Could not get reservations');
+    return next(err);
+  }
+});

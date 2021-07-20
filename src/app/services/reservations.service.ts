@@ -25,4 +25,7 @@ export class ReservationsService {
   getReservations(): Observable<any> {
     return this.http.get(environment.apiRoot + '/tennis/reservations/getReservations');
   }
+  deleteReservations(): Observable<any> {
+    return this.http.delete(environment.apiRoot + '/tennis/reservations');
+  }
 }

@@ -29,6 +29,7 @@ export class AdminComponent implements OnInit {
   residentFromDb: any;
   successMessageMaintenance = '';
   successAddResident = '';
+  successDeleteReservations = '';
 
   constructor(private memberService: MemberService, private router: Router, private reservationsService: ReservationsService) { }
 
@@ -151,6 +152,16 @@ export class AdminComponent implements OnInit {
     }, (err) => {
       console.log(err);
       this.wellesleyAccountError = err.error.error;
+    });
+  }
+  // tslint:disable-next-line: typedef
+  deleteOldReservations() {
+    this.successDeleteReservations = '';
+    this.reservationsService.deleteReservations().subscribe((resp) => {
+      console.log('Reservations Deleted');
+      this.successDeleteReservations = 'Reservations from 6 months ago successfully deleted';
+    }, (err) => {
+      console.log(err);
     });
   }
 }
